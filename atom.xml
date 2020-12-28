@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2020-12-27T08:47:26.449Z</updated>
+  <updated>2020-12-28T06:03:35.580Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端私服搭建及验证</title>
+    <link href="https://JamesLiAndroid.github.io/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/"/>
+    <id>https://JamesLiAndroid.github.io/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/</id>
+    <published>2020-12-28T05:58:03.000Z</published>
+    <updated>2020-12-28T06:03:35.580Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前端私服搭建&quot;&gt;&lt;a href=&quot;#前端私服搭建&quot; class=&quot;headerlink&quot; title=&quot;前端私服搭建&quot;&gt;&lt;/a&gt;前端私服搭建&lt;/h1&gt;&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>12月份济南买车指南</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;CKA备考学习&quot;&gt;&lt;a href=&quot;#CKA备考学习&quot; class=&quot;headerlink&quot; title=&quot;CKA备考学习&quot;&gt;&lt;/a&gt;CKA备考学习&lt;/h1&gt;&lt;h2 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>log-pilot+kafka+ELK构建生产级日志管理系统</title>
-    <link href="https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/"/>
-    <id>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</id>
-    <published>2020-07-10T14:13:14.000Z</published>
-    <updated>2020-10-14T02:53:10.370Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;log-pilot-kafka-ELK构建生产级日志管理体系&quot;&gt;&lt;a href=&quot;#log-pilot-kafka-ELK构建生产级日志管理体系&quot; class=&quot;headerlink&quot;
         
       
     
