@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2020-12-28T07:42:48.507Z</updated>
+  <updated>2020-12-31T01:49:04.820Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python文件路径问题</title>
+    <link href="https://JamesLiAndroid.github.io/2020/12/31/python-wen-jian-lu-jing-wen-ti/"/>
+    <id>https://JamesLiAndroid.github.io/2020/12/31/python-wen-jian-lu-jing-wen-ti/</id>
+    <published>2020-12-31T01:46:31.000Z</published>
+    <updated>2020-12-31T01:49:04.820Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;python路径问题&quot;&gt;&lt;a href=&quot;#python路径问题&quot; class=&quot;headerlink&quot; title=&quot;python路径问题&quot;&gt;&lt;/a&gt;python路径问题&lt;/h1&gt;&lt;h2 id=&quot;路径描述和解决方案&quot;&gt;&lt;a href=&quot;#路径描述和解决方案&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Springboot拆分依赖构建微服务方案</title>
     <link href="https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/"/>
     <id>https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/</id>
     <published>2020-12-28T07:39:31.000Z</published>
-    <updated>2020-12-28T07:42:48.507Z</updated>
+    <updated>2020-12-28T08:32:02.925Z</updated>
     
     <summary type="html">
     
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;kafka学习-2&quot;&gt;&lt;a href=&quot;#kafka学习-2&quot; class=&quot;headerlink&quot; title=&quot;kafka学习 2&quot;&gt;&lt;/a&gt;kafka学习 2&lt;/h1&gt;&lt;h2 id=&quot;压缩策略&quot;&gt;&lt;a href=&quot;#压缩策略&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于ElasticSearch的数据清理以及日志清理</title>
-    <link href="https://JamesLiAndroid.github.io/2020/07/15/guan-yu-elasticsearch-de-shu-ju-qing-li-yi-ji-ri-zhi-qing-li/"/>
-    <id>https://JamesLiAndroid.github.io/2020/07/15/guan-yu-elasticsearch-de-shu-ju-qing-li-yi-ji-ri-zhi-qing-li/</id>
-    <published>2020-07-15T00:59:19.000Z</published>
-    <updated>2020-08-21T01:55:22.536Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
         
       
     
