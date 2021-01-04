@@ -290,7 +290,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,14 +432,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.6k
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    7 分
                 </div>
                 
                 
@@ -532,6 +532,35 @@ COPY ./target/test-opt-visualmodel-1.0.0-SNAPSHOT.jar /app
 ENTRYPOINT ["sh", "-c", "java -Dloader.path=\"libs/\" -XX:MaxRAMPercentage=75.0 -XX:MaxRAM=1000m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -javaagent:/app/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.namespace=${SKYWALKING_NAMESPACE} -Dskywalking.agent.service_name=${SKYWALKING_TARGET_SERVICE_NAME} -Dskywalking.collector.backend_service=${SKYWALKING_IP_PORT}  -Dspring.profiles.active=${CHANNEL} -Dspring.cloud.client.ip-address=${IP_ADDR} -Dnacos_ip=${NACOS_IP} -Dnacos_namespace=${NACOS_NAMESPACE} -jar test-opt-visualmodel-1.0.0-SNAPSHOT.jar"]
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>主要是修改了两点，一是将依赖jar包集合所在的文件夹copy到对应目录，另一个就是启动命令指定依赖jar包的路径信息。</p>
+<h2 id="调整"><a href="#调整" class="headerlink" title="调整"></a>调整</h2><ol>
+<li>ide中的调整启动方式</li>
+</ol>
+<p>需要在intellij idea编辑器中，添加启动参数，如下图：</p>
+<p><img src="idea%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4.png" alt></p>
+<p>主要是将<strong>-Dloader.path=”libs/“</strong>添加到启动命令行中。</p>
+<ol start="2">
+<li>异常信息：Error running “Application”:Command line is too long.Shorten command line for or also for Spring Boot configuration.</li>
+</ol>
+<p>解决方式：在项目所在的<em>.idea</em>文件夹中，找到<strong>workspace.xml</strong>文件，然后在文件中搜索<em>PropertiesComponent</em>，在该标签的内容中插入：</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dynamic.classpath<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>最终修改后如下：</p>
+<pre class="line-numbers language-xml"><code class="language-xml">
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>component</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>PropertiesComponent<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>ExpandSpringBootJavaOptionsPanel<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>RunOnceActivity.ShowReadmeOnStart<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>WebServerToolWindowFactoryState<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>false<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>aspect.path.notification.shown<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>last_opened_file_path<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>$PROJECT_DIR$/pom.xml<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>nodejs_interpreter_path.stuck_in_default_project<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>undefined stuck path<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>nodejs_npm_path_reset_for_default_project<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>nodejs_package_manager_path<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>npm<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>settings.editor.selected.configurable<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>MavenSettings<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 新增一行解决异常信息 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>dynamic.classpath<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>property</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>component</span><span class="token punctuation">></span></span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>需要调整好多东西，参考文章中的内容需要辩证看待，另外，也需要自己去实践，将方案做出来！</p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
 <li><a href="https://blog.csdn.net/ttzommed/article/details/106759670" target="_blank" rel="noopener">Springboot2.3.0分层打包</a></li>
@@ -539,6 +568,7 @@ ENTRYPOINT ["sh", "-c", "java -Dloader.path=\"libs/\" -XX:MaxRAMPercentage=75.0 
 <li><a href="https://blog.csdn.net/weixin_44460333/article/details/104624236" target="_blank" rel="noopener">https://blog.csdn.net/weixin_44460333/article/details/104624236</a></li>
 <li><a href="https://juejin.cn/post/6844904119338008583" target="_blank" rel="noopener">https://juejin.cn/post/6844904119338008583</a></li>
 <li><a href="https://blog.csdn.net/weixin_44460333/article/details/103020487" target="_blank" rel="noopener">Docker参考</a></li>
+<li><a href="https://stackoverflow.com/questions/47926382/how-to-configure-shorten-command-line-method-for-whole-project-in-intellij" target="_blank" rel="noopener">运行异常解决</a></li>
 </ul>
 
             </div>
@@ -1010,7 +1040,7 @@ ENTRYPOINT ["sh", "-c", "java -Dloader.path=\"libs/\" -XX:MaxRAMPercentage=75.0 
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="python文件路径问题">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="python文件路径问题">
                         
                         <span class="card-title">python文件路径问题</span>
                     </div>
@@ -1045,7 +1075,7 @@ X_train, y_train, X_test, y_test, scaler = load_dataset(r'../data/test.csv')
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="前端私服搭建及验证">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="前端私服搭建及验证">
                         
                         <span class="card-title">前端私服搭建及验证</span>
                     </div>
@@ -1232,7 +1262,7 @@ npm-hosted:
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">191.7k</span>
+            <span class="white-color">191.9k</span>
             
 
             <br>
