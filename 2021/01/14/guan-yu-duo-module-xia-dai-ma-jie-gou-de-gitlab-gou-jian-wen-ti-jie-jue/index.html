@@ -522,18 +522,21 @@
 </tbody></table>
 <p>然后添加触发的token信息，最后在Optional filter部分添加匹配的内容，如下：</p>
 <ul>
-<li>匹配文本（Text）<pre><code></code></pre></li>
+<li>匹配文本（Text）</li>
 </ul>
-<p>$ref $changed_files，</p>
-<pre><code>
-中间有空格分隔，表示两个参数信息，获取的内容组合为一个字符串
+<pre class="line-numbers language-R"><code class="language-R">
+$ref $changed_files，
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>中间有空格分隔，表示两个参数信息，获取的内容组合为一个字符串</p>
+<ul>
+<li>正则表达式（Expression）</li>
+</ul>
+<pre class="line-numbers language-R"><code class="language-R">
+develop\s(.*"(test-micro-service-app-mng/)[^"]+?"){1,}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>匹配特定分支，加上文件夹路径信息，和上面的匹配文本进行对比。如果满足则启动构建，否则不启动。</p>
+<p>这样就能区分在特定分支下提交的内容能够匹配并触发构建。</p>
 
-* 正则表达式（Expression）
-</code></pre><p>develop\s(.*”(test-micro-service-app-mng/)[^”]+?”){1,}</p>
-<pre><code>
-匹配特定分支，加上文件夹路径信息，和上面的匹配文本进行对比。如果满足则启动构建，否则不启动。
-
-这样就能区分在特定分支下提交的内容能够匹配并触发构建。</code></pre>
             </div>
             <hr />
 
