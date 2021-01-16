@@ -295,7 +295,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -450,14 +450,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    835
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    6 分
                 </div>
                 
                 
@@ -572,7 +572,92 @@
     root@10:/# gitlab-rake gitlab:check SANITIZE=true
 
     // 输入exit退出</code></pre><p>这时访问192.168.1.198:8181，可以访问到新的gitlab，用之前的用户名密码进行登录即可。但是可能之前的ssh_key会不可用。</p>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<h2 id="补充：使用rpm的方式安装gitlab"><a href="#补充：使用rpm的方式安装gitlab" class="headerlink" title="补充：使用rpm的方式安装gitlab"></a>补充：使用rpm的方式安装gitlab</h2><pre><code>$ wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-12.2.5-ce.0.el7.x86_64.rpm
+
+$ sudo yum install -y policycoreutils-python
+
+$ sudo rpm -i gitlab-ce-12.2.5-ce.0.el7.x86_64.rpm
+warning: gitlab-ce-12.2.5-ce.0.el7.x86_64.rpm: Header V4 RSA/SHA1 Signature, key ID f27eab47: NOKEY
+It looks like GitLab has not been configured yet; skipping the upgrade script.
+
+       *.                  *.
+      ***                 ***
+     *****               *****
+    .******             *******
+    ********            ********
+   ,,,,,,,,,***********,,,,,,,,,
+  ,,,,,,,,,,,*********,,,,,,,,,,,
+  .,,,,,,,,,,,*******,,,,,,,,,,,,
+      ,,,,,,,,,*****,,,,,,,,,.
+         ,,,,,,,****,,,,,,
+            .,,,***,,,,
+                ,*,.
+
+
+
+     _______ __  __          __
+    / ____(_) /_/ /   ____ _/ /_
+   / / __/ / __/ /   / __ `/ __ \
+  / /_/ / / /_/ /___/ /_/ / /_/ /
+  \____/_/\__/_____/\__,_/_.___/
+
+
+Thank you for installing GitLab!
+GitLab was unable to detect a valid hostname for your instance.
+Please configure a URL for your GitLab instance by setting `external_url`
+configuration in /etc/gitlab/gitlab.rb file.
+Then, you can start your GitLab instance by running the following command:
+  sudo gitlab-ctl reconfigure
+
+For a comprehensive list of configuration options please see the Omnibus GitLab readme
+https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
+
+$ sudo vim /etc/gitlab/gitlab.rb
+// 修改external-url如下：
+external_url &#39;http://192.168.1.198:8181&#39;
+
+// 配置刷新
+$ sudo gitlab-ctl reconfigure
+
+// 重启
+$ sudo gitlab-ctl restart
+</code></pre><p>启动完成后，访问<a href="http://192.168.1.198:8181，重新设置管理员密码，即可进行登录！" target="_blank" rel="noopener">http://192.168.1.198:8181，重新设置管理员密码，即可进行登录！</a></p>
+<h2 id="定时备份并发送备份文件到服务器"><a href="#定时备份并发送备份文件到服务器" class="headerlink" title="定时备份并发送备份文件到服务器"></a>定时备份并发送备份文件到服务器</h2><p>脚本信息编写如下：</p>
+<pre class="line-numbers language-bash"><code class="language-bash">
+<span class="token comment" spellcheck="true">#!/bin/bash</span>
+<span class="token comment" spellcheck="true"># 参数信息</span>
+remote_user<span class="token operator">=</span><span class="token string">'root'</span>
+remote_host<span class="token operator">=</span><span class="token string">'192.168.1.62'</span>
+remote_passwd<span class="token operator">=</span><span class="token string">'123456'</span>
+<span class="token comment" spellcheck="true"># 备份docker中的gitlab信息</span>
+docker <span class="token function">exec</span> -t gitlab gitlab-rake gitlab:backup:create
+<span class="token comment" spellcheck="true"># 判断文件是否存在</span>
+bak_file_tar<span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">ls</span> /home/centos/gitlab/data/backups/ <span class="token operator">|</span> <span class="token function">grep</span> gitlab_backup<span class="token variable">`</span></span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token operator">!</span> -f <span class="token string">"<span class="token variable">$bak_file_tar</span>"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token keyword">echo</span> <span class="token string">"备份文件 <span class="token variable">$bak_file_tar</span> 存在，开始传输"</span>
+    sshpass -p <span class="token variable">$remote_passwd</span> <span class="token function">scp</span> -r /home/centos/gitlab/data/backups/ <span class="token variable">$remote_user@</span><span class="token variable">$remote_host</span>:/home/backup/gitlab/
+    <span class="token comment" spellcheck="true"># sshpass -p $remote_passwd scp -r /home/centos/gitlab/data/backups $remote_user@$remote_host:~/</span>
+    <span class="token keyword">echo</span> <span class="token string">"=============传输完毕================="</span>
+<span class="token keyword">fi</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>主要是在docker中进行备份，由于我们的gitlab做了外部路径的映射，可以在外部路径直接传输备份文件。</p>
+<p>在操作之前需要先安装sshpass工具，安装完成后需要先执行以下scp命令连接一下陌生的主机，获取主机指纹信息，获取完成后sshpass工具才能正常运行，如下：</p>
+<pre><code>
+# yum install sshpass -y
+
+# scp workflow.txt root@192.168.1.62:~/
+The authenticity of host &#39;192.168.1.62 (192.168.1.62)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:rFFMBntJrMa/7ljJbRngqNmqhA/eFuuEZ2qmPqRh34k.
+ECDSA key fingerprint is MD5:59:df:64:7c:48:3c:af:67:96:55:54:93:f1:5c:cb:c5.
+Are you sure you want to continue connecting (yes/no)?yes
+Warning: Permanently added &#39;192.168.1.62&#39; (ECDSA) to the list of known hosts.
+root@192.168.1.62&#39;s password:
+
+// ctrl+c终止执行
+
+// 执行上面编写的脚本
+# sh +x send.sh
+</code></pre><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
 <li>文件权限问题，所属</li>
 </ul>
 <p>必须将文件所有者修改，同容器所在卷所有者信息一致。否则容易导致恢复不成功！</p>
@@ -1056,7 +1141,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Hello World">
                         
                         <span class="card-title">Hello World</span>
                     </div>
@@ -1090,7 +1175,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="ELK单机日志系统搭建">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="ELK单机日志系统搭建">
                         
                         <span class="card-title">ELK单机日志系统搭建</span>
                     </div>
@@ -1286,7 +1371,7 @@
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">191.9k</span>
+            <span class="white-color">193.2k</span>
             
 
             <br>

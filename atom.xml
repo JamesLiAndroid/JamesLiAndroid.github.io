@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2020-12-31T01:57:12.876Z</updated>
+  <updated>2021-01-14T12:27:32.520Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于多module下代码结构的gitlab构建问题解决</title>
+    <link href="https://JamesLiAndroid.github.io/2021/01/14/guan-yu-duo-module-xia-dai-ma-jie-gou-de-gitlab-gou-jian-wen-ti-jie-jue/"/>
+    <id>https://JamesLiAndroid.github.io/2021/01/14/guan-yu-duo-module-xia-dai-ma-jie-gou-de-gitlab-gou-jian-wen-ti-jie-jue/</id>
+    <published>2021-01-14T12:21:23.000Z</published>
+    <updated>2021-01-14T12:27:32.520Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于多module代码结构的gitlab构建问题解决&quot;&gt;&lt;a href=&quot;#关于多module代码结构的gitlab构建问题解决&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>python文件路径问题</title>
@@ -43,7 +65,7 @@
     <link href="https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/"/>
     <id>https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/</id>
     <published>2020-12-28T07:39:31.000Z</published>
-    <updated>2021-01-04T02:44:49.813Z</updated>
+    <updated>2021-01-14T12:29:16.847Z</updated>
     
     <summary type="html">
     
@@ -429,28 +451,6 @@
         
         
           &lt;h2 id=&quot;问题场景&quot;&gt;&lt;a href=&quot;#问题场景&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="https://JamesLiAndroid.github.io/2020/07/19/kafka-xue-xi-2/"/>
-    <id>https://JamesLiAndroid.github.io/2020/07/19/kafka-xue-xi-2/</id>
-    <published>2020-07-19T07:25:55.380Z</published>
-    <updated>2020-07-19T23:37:41.243Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;kafka学习-2&quot;&gt;&lt;a href=&quot;#kafka学习-2&quot; class=&quot;headerlink&quot; title=&quot;kafka学习 2&quot;&gt;&lt;/a&gt;kafka学习 2&lt;/h1&gt;&lt;h2 id=&quot;压缩策略&quot;&gt;&lt;a href=&quot;#压缩策略&quot;
         
       
     
