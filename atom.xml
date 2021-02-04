@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-01-16T02:25:44.133Z</updated>
+  <updated>2021-02-04T07:09:35.732Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS 7 备份与恢复</title>
+    <link href="https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/"/>
+    <id>https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/</id>
+    <published>2021-02-04T06:48:10.000Z</published>
+    <updated>2021-02-04T07:09:35.732Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;CentOS-7-备份与恢复&quot;&gt;&lt;a href=&quot;#CentOS-7-备份与恢复&quot; class=&quot;headerlink&quot; title=&quot;CentOS 7 备份与恢复&quot;&gt;&lt;/a&gt;CentOS 7 备份与恢复&lt;/h1&gt;&lt;h2 id=&quot;迁移环境介绍&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于多module下代码结构的gitlab构建问题解决</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;kafka教学&quot;&gt;&lt;a href=&quot;#kafka教学&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>centos下不同jdk版本共存的问题</title>
-    <link href="https://JamesLiAndroid.github.io/2020/07/21/centos-xia-bu-tong-jdk-ban-ben-gong-cun-de-wen-ti/"/>
-    <id>https://JamesLiAndroid.github.io/2020/07/21/centos-xia-bu-tong-jdk-ban-ben-gong-cun-de-wen-ti/</id>
-    <published>2020-07-21T02:10:36.000Z</published>
-    <updated>2020-08-21T02:17:51.585Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;问题场景&quot;&gt;&lt;a href=&quot;#问题场景&quot; class=&quot;headerlink&quot;
         
       
     
