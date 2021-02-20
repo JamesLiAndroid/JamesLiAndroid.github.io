@@ -292,7 +292,7 @@ $ docker export jenkins_official &amp;gt; jenkins_2.208">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -434,14 +434,14 @@ $ docker export jenkins_official &amp;gt; jenkins_2.208">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.6k
+                    3.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    19 分
+                    20 分
                 </div>
                 
                 
@@ -850,6 +850,32 @@ $ docker inspect c1746bb41658
 <li><p>快速批量删除Jenkins构建清理磁盘空间并按参数保留最近构建</p>
 </li>
 </ol>
+<h2 id="jenkins升级"><a href="#jenkins升级" class="headerlink" title="jenkins升级"></a>jenkins升级</h2><p>这里从2.204版本升级到2.263.4_LTS版本。</p>
+<p>直接从<a href="https://updates.jenkins-ci.org/download/war/" target="_blank" rel="noopener">官网</a>下载2.263.4版本的war包。</p>
+<p>首先备份之前的war包，通过下面的命令进行：</p>
+<pre><code>
+// 全局查找war包信息
+# find / -name jenkins.war
+/usr/lib/jenkins/jenkins.war
+
+// 停止jenkins运行
+# systemctl stop jenkins
+
+// 一般默认路径为/usr/lib/jenkins/
+
+# cd /usr/lib/jenkins
+# mv jenkins.war /root/jenkins_backup
+</code></pre><p>备份完成后，下载war包，也可以选择在客户机下载后再拷贝进去。</p>
+<pre><code>
+// 下载war包信息
+# wget https://updates.jenkins-ci.org/download/war/2.274/jenkins.war
+</code></pre><p>下载完成war包后，再重新启动jenkins服务。</p>
+<pre><code>
+# systemctl restart jenkins
+
+// 查看端口号
+# sudo netstat -nlp | grep 9090
+</code></pre><p>这样就完成了jenkins的升级。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>jenkins备份相对不那么好做，由于历史的原因，一些配置的设定上并没有那么合理，需要在迁移完成后重新进行设置，并且一定构建一支工程进行测试，确保测试无误后，投入使用。</p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a href="https://blog.csdn.net/liliwang90/article/details/104690491" target="_blank" rel="noopener">快速批量删除Jenkins构建清理磁盘空间并按参数保留最近构建</a></li>
@@ -1332,7 +1358,7 @@ $ docker inspect c1746bb41658
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="前端微服务在jenkins下的构建改造">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="前端微服务在jenkins下的构建改造">
                         
                         <span class="card-title">前端微服务在jenkins下的构建改造</span>
                     </div>
@@ -1366,7 +1392,7 @@ $ docker inspect c1746bb41658
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结">
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结">
                         
                         <span class="card-title">关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结</span>
                     </div>
@@ -1548,7 +1574,7 @@ Eureka不能相互注册成为集群
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">195.6k</span>
+            <span class="white-color">195.7k</span>
             
 
             <br>

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2020/08/02/jenkins-de-bei-fen-he-qian-yi/</loc>
+    
+    <lastmod>2021-02-20T02:22:32.340Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/</loc>
     
     <lastmod>2021-02-04T07:09:35.732Z</lastmod>
@@ -93,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
     
@@ -114,7 +121,7 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/08/02/jenkins-de-bei-fen-he-qian-yi/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/08/k8s-zhong-pod-yun-xing-de-wen-ti-pai-cha/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -128,21 +135,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/08/k8s-zhong-pod-yun-xing-de-wen-ti-pai-cha/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    
+    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
