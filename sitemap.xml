@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2021/03/06/quan-lian-lu-hui-du-fa-bu-shi-jian/</loc>
+    
+    <lastmod>2021-03-06T05:29:40.468Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
     
-    <lastmod>2021-02-22T01:55:49.253Z</lastmod>
+    <lastmod>2021-03-03T07:41:47.119Z</lastmod>
     
   </url>
   
@@ -107,6 +114,13 @@
   </url>
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
+    
+    <lastmod>2020-10-14T02:53:43.437Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
@@ -115,13 +129,6 @@
   
   <url>
     <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.437Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
     
@@ -142,14 +149,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/08/k8s-zhong-pod-yun-xing-de-wen-ti-pai-cha/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/08/k8s-zhong-pod-yun-xing-de-wen-ti-pai-cha/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -478,14 +485,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     
