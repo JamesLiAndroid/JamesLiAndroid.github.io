@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-03-06T05:29:40.468Z</updated>
+  <updated>2021-03-19T07:44:41.435Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>k8s一阶段学习记录</title>
+    <link href="https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/"/>
+    <id>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</id>
+    <published>2021-03-19T07:42:08.000Z</published>
+    <updated>2021-03-19T07:44:41.435Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;k8s学习&lt;/p&gt;
+&lt;h2 id=&quot;第一章-kubeadm方式安装k8s集群&quot;&gt;&lt;a href=&quot;#第一章-kubeadm方式安装k8s集群&quot; class=&quot;headerlink&quot; title=&quot;第一章 kubeadm方式安装k8s集群&quot;&gt;&lt;/a&gt;第一章
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>全链路灰度发布实践</title>
@@ -429,28 +452,6 @@
         
         
           &lt;h2 id=&quot;前端微服务–微前端&quot;&gt;&lt;a href=&quot;#前端微服务–微前端&quot; class=&quot;headerlink&quot; title=&quot;前端微服务–微前端&quot;&gt;&lt;/a&gt;前端微服务–微前端&lt;/h2&gt;&lt;p&gt;微前端架构是一种类似于微服务的架构，它将微服务的理念应用于浏览器端，即将 Web
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>jenkins的备份和迁移</title>
-    <link href="https://JamesLiAndroid.github.io/2020/08/02/jenkins-de-bei-fen-he-qian-yi/"/>
-    <id>https://JamesLiAndroid.github.io/2020/08/02/jenkins-de-bei-fen-he-qian-yi/</id>
-    <published>2020-08-02T02:15:38.000Z</published>
-    <updated>2021-02-20T02:22:32.340Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;h2 id=&quot;jenkins导出镜像&quot;&gt;&lt;a href=&quot;#jenkins导出镜像&quot; class=&quot;headerlink&quot;
         
       
     

@@ -297,7 +297,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -452,7 +452,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    10.3k
+                    10.5k
                 </div>
                 
 
@@ -649,7 +649,7 @@
   # yum install -y jq
 
   // 13. 安装yum工具
-  # yum install -y yum-utls</code></pre><p>  注意：“-y”代表同意安装该程序，无需在安装时确定</p>
+  # yum install -y yum-utils</code></pre><p>  注意：“-y”代表同意安装该程序，无需在安装时确定</p>
 <p>  一条命令安装如下：</p>
 <pre><code>  # yum install -y wget git unzip net-tools curl vim telnet psmisc  tree sshpass jq</code></pre></li>
 </ul>
@@ -1820,7 +1820,24 @@ exclude=kernel*
 </ol>
 <p>执行 shell 脚本 \r 问题解决<br>一看应该是 windows 的回车换行跟 linux 换行差异，百度了一下，的确有很多类似问题，在 windows 下编辑 shell 文件，输入的回车是 “\r\n” ，导致在 linux 下执行 shell 脚本时报这个 \r 的错。<br>怎么办？想办法解决。<br>让开发或测试自己想办法转化或者在 linux 环境编辑这个 build.sh 很明显不现实，在服务器安装 dos2unix 来转化 build.sh 我又要在主从节点分别重新构建镜像，麻烦。想了想用替换的方式看能否实现，百度一下，使用 sed -i ‘s/\r//‘ 来处理 build.sh 后再执行，即 sed -i ‘s/\r//‘ build.sh &amp;&amp; bash build.sh，完美解决问题，大功告成！！！</p>
 <pre><code>$ sed -i &#39;s/\r//&#39; init.sh
-$ sed -i &#39;s/\r//&#39; ssh-keygen-send.sh</code></pre>
+$ sed -i &#39;s/\r//&#39; ssh-keygen-send.sh</code></pre><ol start="7">
+<li>使用yumdownloader对依赖库进行下载</li>
+</ol>
+<pre><code>// 创建下载的文件夹
+$ sudo mkdir -p /opt/download-package/
+
+// 如果未安装yum-utils，可以先安装
+$ sudo yum install yum-utils -y
+
+// 查看 yum-utils 软件包有没有 yumdownloader，如果有输出代表可用
+$ sudo rpm -ql yum-utils | grep yumdownloader
+/usr/bin/yumdownloader
+/usr/share/man/man1/yumdownloader.1.gz
+
+// 下载，--resolve：下载依赖，--destdir：指定下载目录， --donwloadonly：只下载不更新
+$ sudo yumdownloader java-1.8.0-openjdk.x86_64 --resolve --destdir=/opt/download-package/ --donwloadonly
+</code></pre><p><strong>注意：</strong>如果openjdk已经安装了，容易导致下载时无法下载相关的依赖信息。</p>
+
             </div>
             <hr />
 
@@ -2290,7 +2307,7 @@ $ sed -i &#39;s/\r//&#39; ssh-keygen-send.sh</code></pre>
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="持续集成实践大纲">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="持续集成实践大纲">
                         
                         <span class="card-title">持续集成实践大纲</span>
                     </div>
@@ -2346,7 +2363,7 @@ jenkins插件列表需要重新整理
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Hello World">
                         
                         <span class="card-title">Hello World</span>
                     </div>
@@ -2524,7 +2541,7 @@ jenkins插件列表需要重新整理
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">203.9k</span>
+            <span class="white-color">237.3k</span>
             
 
             <br>
