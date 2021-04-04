@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-03-19T08:00:12.790Z</updated>
+  <updated>2021-04-04T01:58:57.171Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -17,11 +17,25 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>k8s 1.20.5 二进制安装教程</title>
+    <link href="https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/"/>
+    <id>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</id>
+    <published>2021-04-04T01:58:57.000Z</published>
+    <updated>2021-04-04T01:58:57.171Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>k8s一阶段学习记录</title>
     <link href="https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/"/>
     <id>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</id>
     <published>2021-03-19T07:42:08.000Z</published>
-    <updated>2021-03-19T08:00:12.790Z</updated>
+    <updated>2021-03-19T09:51:55.009Z</updated>
     
     <summary type="html">
     
@@ -430,28 +444,6 @@
         
         
           &lt;h2 id=&quot;操作的范围&quot;&gt;&lt;a href=&quot;#操作的范围&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>前端微服务在jenkins下的构建改造</title>
-    <link href="https://JamesLiAndroid.github.io/2020/08/03/qian-duan-wei-fu-wu-zai-jenkins-xia-de-gou-jian-gai-zao/"/>
-    <id>https://JamesLiAndroid.github.io/2020/08/03/qian-duan-wei-fu-wu-zai-jenkins-xia-de-gou-jian-gai-zao/</id>
-    <published>2020-08-03T02:38:06.000Z</published>
-    <updated>2020-10-14T02:58:41.910Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;前端微服务–微前端&quot;&gt;&lt;a href=&quot;#前端微服务–微前端&quot; class=&quot;headerlink&quot; title=&quot;前端微服务–微前端&quot;&gt;&lt;/a&gt;前端微服务–微前端&lt;/h2&gt;&lt;p&gt;微前端架构是一种类似于微服务的架构，它将微服务的理念应用于浏览器端，即将 Web
         
       
     

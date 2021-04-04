@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</loc>
+    
+    <lastmod>2021-04-04T01:58:57.171Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
     
-    <lastmod>2021-03-19T08:00:12.790Z</lastmod>
+    <lastmod>2021-03-19T09:51:55.009Z</lastmod>
     
   </url>
   
@@ -142,7 +149,7 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -163,7 +170,7 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -492,14 +499,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     
