@@ -296,7 +296,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -471,7 +471,7 @@
 </thead>
 <tbody><tr>
 <td>k8s-master-01</td>
-<td>10.0.59.61</td>
+<td>192.168.123.61</td>
 <td>4核心 16G 80G SSD 千兆网络</td>
 <td>master</td>
 <td>CentOS 7.9 内核版本4.19</td>
@@ -479,7 +479,7 @@
 </tr>
 <tr>
 <td>k8s-master-02</td>
-<td>10.0.59.62</td>
+<td>192.168.123.62</td>
 <td>4核心 16G 80G SSD 千兆网络</td>
 <td>master</td>
 <td>CentOS 7.9 内核版本4.19</td>
@@ -487,7 +487,7 @@
 </tr>
 <tr>
 <td>k8s-master-03</td>
-<td>10.0.59.63</td>
+<td>192.168.123.63</td>
 <td>4核心 16G 80G SSD 千兆网络</td>
 <td>master</td>
 <td>CentOS 7.9 内核版本4.19</td>
@@ -495,7 +495,7 @@
 </tr>
 <tr>
 <td>k8s-worker-01</td>
-<td>10.0.59.71</td>
+<td>192.168.123.71</td>
 <td>4核心 16G 100G 普盘 千兆网络</td>
 <td>worker</td>
 <td>CentOS 7.9 内核版本4.19</td>
@@ -503,7 +503,7 @@
 </tr>
 <tr>
 <td>k8s-worker-02</td>
-<td>10.0.59.72</td>
+<td>192.168.123.72</td>
 <td>4核心 16G 100G 普盘 千兆网络</td>
 <td>worker</td>
 <td>CentOS 7.9 内核版本4.19</td>
@@ -511,7 +511,7 @@
 </tr>
 <tr>
 <td>k8s-worker-03</td>
-<td>10.0.59.73</td>
+<td>192.168.123.73</td>
 <td>4核心 16G 100G 普盘 千兆网络</td>
 <td>worker</td>
 <td>CentOS 7.9 内核版本4.19</td>
@@ -539,11 +539,11 @@
 <td>k8s pod 网段</td>
 </tr>
 <tr>
-<td>10.0.59.60</td>
+<td>192.168.123.60</td>
 <td>VIP，由keepalived提供，代理apiserver端口</td>
 </tr>
 </tbody></table>
-<p>使用了keepalived+haproxy实现kube-apiserver的高可用，设置虚拟ip为10.0.59.60，端口号为16443，通过这两个组件对apiserver服务进行代理，统一访问入口。</p>
+<p>使用了keepalived+haproxy实现kube-apiserver的高可用，设置虚拟ip为192.168.123.60，端口号为16443，通过这两个组件对apiserver服务进行代理，统一访问入口。</p>
 <p>安装的组件版本信息如下：</p>
 <table>
 <thead>
@@ -580,13 +580,13 @@
 <h3 id="第一部分：初始化"><a href="#第一部分：初始化" class="headerlink" title="第一部分：初始化"></a>第一部分：初始化</h3><p>在所有机器上同步执行，设置hosts信息：</p>
 <pre><code># vim /etc/hosts
 // 在文件后追加信息
-10.0.59.61 k8s-master-01
-10.0.59.62 k8s-master-02
-10.0.59.63 k8s-master-03
-10.0.59.60 k8s-master-lb
-10.0.59.71 k8s-worker-01
-10.0.59.72 k8s-worker-02
-10.0.59.73 k8s-worker-01
+192.168.123.61 k8s-master-01
+192.168.123.62 k8s-master-02
+192.168.123.63 k8s-master-03
+192.168.123.60 k8s-master-lb
+192.168.123.71 k8s-worker-01
+192.168.123.72 k8s-worker-02
+192.168.123.73 k8s-worker-01
 </code></pre><p>修改yum源，提供docker和kubernetes的安装源信息，以及准备docker的安装环境。</p>
 <pre><code># mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
 
@@ -767,7 +767,7 @@ libcrc32c              16384  4 nf_conntrack,nf_nat,xfs,ip_vs
     ],
     &quot;insecure-registries&quot;: [
         // 私有的harbor仓库地址
-        &quot;10.0.93.105&quot;
+        &quot;192.168.123.105&quot;
     ],
     &quot;live-restore&quot;: true,
     &quot;log-driver&quot;: &quot;json-file&quot;,
@@ -873,10 +873,10 @@ API version: 3.4
   &quot;CN&quot;: &quot;etcd&quot;,
   &quot;hosts&quot;: [
     &quot;127.0.0.1&quot;,
-    &quot;10.0.59.61&quot;,
-    &quot;10.0.59.62&quot;,
-    &quot;10.0.59.63&quot;,
-    &quot;10.0.59.60&quot;
+    &quot;192.168.123.61&quot;,
+    &quot;192.168.123.62&quot;,
+    &quot;192.168.123.63&quot;,
+    &quot;192.168.123.60&quot;
   ],
   &quot;key&quot;: {
     &quot;algo&quot;: &quot;rsa&quot;,
@@ -901,13 +901,13 @@ etcd-key.pem  etcd.pem
 #[Member]
 ETCD_NAME=&quot;k8s-master-01&quot;
 ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;
-ETCD_LISTEN_PEER_URLS=&quot;https://10.0.59.61:2380&quot;
-ETCD_LISTEN_CLIENT_URLS=&quot;https://10.0.59.61:2379,http://127.0.0.1:2379&quot;
+ETCD_LISTEN_PEER_URLS=&quot;https://192.168.123.61:2380&quot;
+ETCD_LISTEN_CLIENT_URLS=&quot;https://192.168.123.61:2379,http://127.0.0.1:2379&quot;
 
 #[Clustering]
-ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://10.0.59.61:2380&quot;
-ETCD_ADVERTISE_CLIENT_URLS=&quot;https://10.0.59.61:2379&quot;
-ETCD_INITIAL_CLUSTER=&quot;k8s-master-01=https://10.0.59.61:2380,k8s-master-02=https://10.0.59.62:2380,k8s-master-03=https://10.0.59.63:2380&quot;
+ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://192.168.123.61:2380&quot;
+ETCD_ADVERTISE_CLIENT_URLS=&quot;https://192.168.123.61:2379&quot;
+ETCD_INITIAL_CLUSTER=&quot;k8s-master-01=https://192.168.123.61:2380,k8s-master-02=https://192.168.123.62:2380,k8s-master-03=https://192.168.123.63:2380&quot;
 ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;
 ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;
 
@@ -917,13 +917,13 @@ ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;
 #[Member]
 ETCD_NAME=&quot;k8s-master-02&quot;
 ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;
-ETCD_LISTEN_PEER_URLS=&quot;https://10.0.59.62:2380&quot;
-ETCD_LISTEN_CLIENT_URLS=&quot;https://10.0.59.62:2379,http://127.0.0.1:2379&quot;
+ETCD_LISTEN_PEER_URLS=&quot;https://192.168.123.62:2380&quot;
+ETCD_LISTEN_CLIENT_URLS=&quot;https://192.168.123.62:2379,http://127.0.0.1:2379&quot;
 
 #[Clustering]
-ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://10.0.59.62:2380&quot;
-ETCD_ADVERTISE_CLIENT_URLS=&quot;https://10.0.59.62:2379&quot;
-ETCD_INITIAL_CLUSTER=&quot;k8s-master-01=https://10.0.59.61:2380,k8s-master-02=https://10.0.59.62:2380,k8s-master-03=https://10.0.59.63:2380&quot;
+ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://192.168.123.62:2380&quot;
+ETCD_ADVERTISE_CLIENT_URLS=&quot;https://192.168.123.62:2379&quot;
+ETCD_INITIAL_CLUSTER=&quot;k8s-master-01=https://192.168.123.61:2380,k8s-master-02=https://192.168.123.62:2380,k8s-master-03=https://192.168.123.63:2380&quot;
 ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;
 ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;
 
@@ -933,13 +933,13 @@ ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;
 #[Member]
 ETCD_NAME=&quot;k8s-master-03&quot;
 ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;
-ETCD_LISTEN_PEER_URLS=&quot;https://10.0.59.63:2380&quot;
-ETCD_LISTEN_CLIENT_URLS=&quot;https://10.0.59.63:2379,http://127.0.0.1:2379&quot;
+ETCD_LISTEN_PEER_URLS=&quot;https://192.168.123.63:2380&quot;
+ETCD_LISTEN_CLIENT_URLS=&quot;https://192.168.123.63:2379,http://127.0.0.1:2379&quot;
 
 #[Clustering]
-ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://10.0.59.63:2380&quot;
-ETCD_ADVERTISE_CLIENT_URLS=&quot;https://10.0.59.63:2379&quot;
-ETCD_INITIAL_CLUSTER=&quot;k8s-master-01=https://10.0.59.61:2380,k8s-master-02=https://10.0.59.62:2380,k8s-master-03=https://10.0.59.63:2380&quot;
+ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;https://192.168.123.63:2380&quot;
+ETCD_ADVERTISE_CLIENT_URLS=&quot;https://192.168.123.63:2379&quot;
+ETCD_INITIAL_CLUSTER=&quot;k8s-master-01=https://192.168.123.61:2380,k8s-master-02=https://192.168.123.62:2380,k8s-master-03=https://192.168.123.63:2380&quot;
 ETCD_INITIAL_CLUSTER_TOKEN=&quot;etcd-cluster&quot;
 ETCD_INITIAL_CLUSTER_STATE=&quot;new&quot;
 </code></pre><p>配置项解析如下：</p>
@@ -1001,13 +1001,13 @@ WantedBy=multi-user.target
 # systemctl status etcd
 </code></pre><p>注：第一次启动可能会卡一段时间，因为节点会等待其他节点启动</p>
 <p>在k8s-master-01节点执行，查看集群状态：</p>
-<pre><code># ETCDCTL_API=3 /usr/local/bin/etcdctl --write-out=table --cacert=/etc/etcd/ssl/ca.pem --cert=/etc/etcd/ssl/etcd.pem --key=/etc/etcd/ssl/etcd-key.pem --endpoints=https://10.0.59.61:2379,https://10.0.59.62:2379,https://10.0.59.63:2379 endpoint health
+<pre><code># ETCDCTL_API=3 /usr/local/bin/etcdctl --write-out=table --cacert=/etc/etcd/ssl/ca.pem --cert=/etc/etcd/ssl/etcd.pem --key=/etc/etcd/ssl/etcd-key.pem --endpoints=https://192.168.123.61:2379,https://192.168.123.62:2379,https://192.168.123.63:2379 endpoint health
 +-------------------------+--------+-------------+-------+
 |        ENDPOINT         | HEALTH |    TOOK     | ERROR |
 +-------------------------+--------+-------------+-------+
-| https://10.0.59.61:2379 |   true |   7.71134ms |       |
-| https://10.0.59.62:2379 |   true |  8.459485ms |       |
-| https://10.0.59.63:2379 |   true | 11.253605ms |       |
+| https://192.168.123.61:2379 |   true |   7.71134ms |       |
+| https://192.168.123.62:2379 |   true |  8.459485ms |       |
+| https://192.168.123.63:2379 |   true | 11.253605ms |       |
 +-------------------------+--------+-------------+-------+
 </code></pre><h3 id="kube-apiserver"><a href="#kube-apiserver" class="headerlink" title="kube-apiserver"></a>kube-apiserver</h3><p><em>在apiserver安装时，注意其ip地址配置为127.0.0.1，在健康检查时可能无法通过，出现请求400 bad request的情况，无需担心，可正常使用。</em></p>
 <p>首先创建工作目录如下：</p>
@@ -1024,13 +1024,13 @@ WantedBy=multi-user.target
   &quot;CN&quot;: &quot;kubernetes&quot;,
   &quot;hosts&quot;: [
     &quot;127.0.0.1&quot;,
-    &quot;10.0.59.61&quot;,
-    &quot;10.0.59.62&quot;,
-    &quot;10.0.59.63&quot;,
-    &quot;10.0.59.71&quot;,
-    &quot;10.0.59.72&quot;,
-    &quot;10.0.59.73&quot;,
-    &quot;10.0.59.60&quot;,
+    &quot;192.168.123.61&quot;,
+    &quot;192.168.123.62&quot;,
+    &quot;192.168.123.63&quot;,
+    &quot;192.168.123.71&quot;,
+    &quot;192.168.123.72&quot;,
+    &quot;192.168.123.73&quot;,
+    &quot;192.168.123.60&quot;,
     &quot;10.96.0.1&quot;,
     &quot;kubernetes&quot;,
     &quot;kubernetes.default&quot;,
@@ -1073,9 +1073,9 @@ EOF
 
 KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
   --anonymous-auth=false \
-  --bind-address=10.0.59.61 \
+  --bind-address=192.168.123.61 \
   --secure-port=6443 \
-  --advertise-address=10.0.59.61 \
+  --advertise-address=192.168.123.61 \
   --insecure-port=0 \
   --authorization-mode=Node,RBAC \
   --runtime-config=api/all=true \
@@ -1094,7 +1094,7 @@ KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRest
   --etcd-cafile=/etc/etcd/ssl/ca.pem \
   --etcd-certfile=/etc/etcd/ssl/etcd.pem \
   --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem \
-  --etcd-servers=https://10.0.59.61:2379,https://10.0.59.62:2379,https://10.0.59.63:2379 \
+  --etcd-servers=https://192.168.123.61:2379,https://192.168.123.62:2379,https://192.168.123.63:2379 \
   --enable-swagger-ui=true \
   --allow-privileged=true \
   --apiserver-count=3 \
@@ -1114,9 +1114,9 @@ KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRest
 
 KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
   --anonymous-auth=false \
-  --bind-address=10.0.59.62 \
+  --bind-address=192.168.123.62 \
   --secure-port=6443 \
-  --advertise-address=10.0.59.62 \
+  --advertise-address=192.168.123.62 \
   --insecure-port=0 \
   --authorization-mode=Node,RBAC \
   --runtime-config=api/all=true \
@@ -1135,7 +1135,7 @@ KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRest
   --etcd-cafile=/etc/etcd/ssl/ca.pem \
   --etcd-certfile=/etc/etcd/ssl/etcd.pem \
   --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem \
-  --etcd-servers=https://10.0.59.61:2379,https://10.0.59.62:2379,https://10.0.59.63:2379 \
+  --etcd-servers=https://192.168.123.61:2379,https://192.168.123.62:2379,https://192.168.123.63:2379 \
   --enable-swagger-ui=true \
   --allow-privileged=true \
   --apiserver-count=3 \
@@ -1154,9 +1154,9 @@ KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRest
 
 KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRestriction,LimitRanger,ServiceAccount,DefaultStorageClass,ResourceQuota \
   --anonymous-auth=false \
-  --bind-address=10.0.59.63 \
+  --bind-address=192.168.123.63 \
   --secure-port=6443 \
-  --advertise-address=10.0.59.63 \
+  --advertise-address=192.168.123.63 \
   --insecure-port=0 \
   --authorization-mode=Node,RBAC \
   --runtime-config=api/all=true \
@@ -1175,7 +1175,7 @@ KUBE_APISERVER_OPTS=&quot;--enable-admission-plugins=NamespaceLifecycle,NodeRest
   --etcd-cafile=/etc/etcd/ssl/ca.pem \
   --etcd-certfile=/etc/etcd/ssl/etcd.pem \
   --etcd-keyfile=/etc/etcd/ssl/etcd-key.pem \
-  --etcd-servers=https://10.0.59.61:2379,https://10.0.59.62:2379,https://10.0.59.63:2379 \
+  --etcd-servers=https://192.168.123.61:2379,https://192.168.123.62:2379,https://192.168.123.63:2379 \
   --enable-swagger-ui=true \
   --allow-privileged=true \
   --apiserver-count=3 \
@@ -1243,7 +1243,7 @@ WantedBy=multi-user.target
 // 如果出现以下信息，说明启动成功
 transport: loopyWriter.run returning. connection error: desc = &quot;transport is closing&quot;
 </code></pre><p>另一个方式是通过curl请求apiserver的地址</p>
-<pre><code># curl --insecure https://10.0.59.61:6443/
+<pre><code># curl --insecure https://192.168.123.61:6443/
 {
   &quot;kind&quot;: &quot;Status&quot;,
   &quot;apiVersion&quot;: &quot;v1&quot;,
@@ -1319,9 +1319,9 @@ backend k8s-master
     option tcp-check
     balance roundrobin
     default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
-    server  k8s-master-01 10.0.59.61:6443 check
-    server  k8s-master-02 10.0.59.62:6443 check
-    server  k8s-master-03 10.0.59.63:6443 check
+    server  k8s-master-01 192.168.123.61:6443 check
+    server  k8s-master-02 192.168.123.62:6443 check
+    server  k8s-master-03 192.168.123.63:6443 check
 </code></pre><p>编辑完成后可以使用以下命令检查配置文件合法性：</p>
 <pre><code># haproxy -c -f /etc/haproxy/haproxy.cfg
 </code></pre><p>配置keepalived的内容，<em>所有Master几点的配置不同，注意区分。</em></p>
@@ -1346,7 +1346,7 @@ vrrp_instance VI_1 {
     state MASTER
     interface ens192
     virtual_router_id 51
-    mcat_src_ip 10.0.59.61
+    mcat_src_ip 192.168.123.61
     priority 101
     nopreempt
     advert_int 2
@@ -1355,7 +1355,7 @@ vrrp_instance VI_1 {
         auth_pass K8SHA_KA_AUTH
     }
     virtual_ipaddress {
-        10.0.59.60
+        192.168.123.60
     }
     track_script {
        chk_apiserver
@@ -1382,7 +1382,7 @@ vrrp_instance VI_1 {
     state MASTER
     interface ens192
     virtual_router_id 51
-    mcat_src_ip 10.0.59.62
+    mcat_src_ip 192.168.123.62
     priority 100
     nopreempt
     advert_int 2
@@ -1391,7 +1391,7 @@ vrrp_instance VI_1 {
         auth_pass K8SHA_KA_AUTH
     }
     virtual_ipaddress {
-        10.0.59.60
+        192.168.123.60
     }
     track_script {
        chk_apiserver
@@ -1418,7 +1418,7 @@ vrrp_instance VI_1 {
     state BACKUP
     interface ens192
     virtual_router_id 51
-    mcat_src_ip 10.0.59.63
+    mcat_src_ip 192.168.123.63
     priority 100
     nopreempt
     advert_int 2
@@ -1427,7 +1427,7 @@ vrrp_instance VI_1 {
         auth_pass K8SHA_KA_AUTH
     }
     virtual_ipaddress {
-        10.0.59.60
+        192.168.123.60
     }
     track_script {
        chk_apiserver
@@ -1472,24 +1472,24 @@ fi
 </code></pre><p>启动完成之后，查看vip信息，然后ping一下该vip，自此keepalived和haproxy就安装完成了。</p>
 <pre><code>
 # ip a | grep 60
-    inet 10.0.59.60/32 scope global ens192
+    inet 192.168.123.60/32 scope global ens192
 
-# ping 10.0.59.60
-PING 10.0.59.60 (10.0.59.60) 56(84) bytes of data.
-64 bytes from 10.0.59.60: icmp_seq=1 ttl=64 time=0.244 ms
-64 bytes from 10.0.59.60: icmp_seq=2 ttl=64 time=0.124 ms
-64 bytes from 10.0.59.60: icmp_seq=3 ttl=64 time=0.115 ms
-64 bytes from 10.0.59.60: icmp_seq=4 ttl=64 time=0.091 ms
+# ping 192.168.123.60
+PING 192.168.123.60 (192.168.123.60) 56(84) bytes of data.
+64 bytes from 192.168.123.60: icmp_seq=1 ttl=64 time=0.244 ms
+64 bytes from 192.168.123.60: icmp_seq=2 ttl=64 time=0.124 ms
+64 bytes from 192.168.123.60: icmp_seq=3 ttl=64 time=0.115 ms
+64 bytes from 192.168.123.60: icmp_seq=4 ttl=64 time=0.091 ms
 
-# telnet 10.0.59.60 16443
-Trying 10.0.59.60...
-Connected to 10.0.59.60.
+# telnet 192.168.123.60 16443
+Trying 192.168.123.60...
+Connected to 192.168.123.60.
 Escape character is &#39;^]&#39;.
 Connection closed by foreign host.
 
 
 // 访问查看是否生效
-#  curl --insecure https://10.0.59.60:16443/
+#  curl --insecure https://192.168.123.60:16443/
 {
   &quot;kind&quot;: &quot;Status&quot;,
   &quot;apiVersion&quot;: &quot;v1&quot;,
@@ -1539,7 +1539,7 @@ admin-key.pem  admin.pem
 # cp admin*.pem /etc/kubernetes/ssl/
 </code></pre><h4 id="2-创建kubeconfig配置文件"><a href="#2-创建kubeconfig配置文件" class="headerlink" title="2. 创建kubeconfig配置文件"></a>2. 创建kubeconfig配置文件</h4><p>kubeconfig 为 kubectl 的配置文件，包含访问 apiserver 的所有信息，如 apiserver 地址、CA 证书和自身使用的证书。创建过程如下：</p>
 <pre><code>// 设置集群参数，--server为虚拟ip地址
-# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://10.0.59.60:16443 --kubeconfig=kube.config
+# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.123.60:16443 --kubeconfig=kube.config
 
 // 设置客户端认证参数
 # kubectl config set-credentials admin --client-certificate=admin.pem --client-key=admin-key.pem --embed-certs=true --kubeconfig=kube.config
@@ -1559,7 +1559,7 @@ admin-key.pem  admin.pem
 </code></pre><p>设置完成后，就可以与kube-apiserver通信了。这里要注意，我们只把kubectl工具放到k8s-master-01节点上，通过该节点进行k8s集群的命令行操作。在其它节点上严禁使用kubectl工具。更稳妥的办法是将~/.kube/config文件拷贝到其它机器上，运行查看信息。</p>
 <p>上述步骤完成后，kubectl就可以与kube-apiserver通信了。操作如下：</p>
 <pre><code># kubectl cluster-info
-Kubernetes control plane is running at https://10.0.59.60:16443
+Kubernetes control plane is running at https://192.168.123.60:16443
 
 To further debug and diagnose cluster problems, use &#39;kubectl cluster-info dump&#39;.
 
@@ -1596,9 +1596,9 @@ default     service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        44
     },
     &quot;hosts&quot;: [
       &quot;127.0.0.1&quot;,
-      &quot;10.0.59.61&quot;,
-      &quot;10.0.59.62&quot;,
-      &quot;10.0.59.63&quot;
+      &quot;192.168.123.61&quot;,
+      &quot;192.168.123.62&quot;,
+      &quot;192.168.123.63&quot;
     ],
     &quot;names&quot;: [
       {
@@ -1622,7 +1622,7 @@ default     service/kubernetes   ClusterIP   10.96.0.1    &lt;none&gt;        44
 kube-controller-manager-key.pem  kube-controller-manager.pem
 </code></pre><h4 id="2-创建kube-controller-manager的kubeconfig"><a href="#2-创建kube-controller-manager的kubeconfig" class="headerlink" title="2.创建kube-controller-manager的kubeconfig"></a>2.创建kube-controller-manager的kubeconfig</h4><p>在k8s-master-01节点上，创建kubeconfig文件</p>
 <pre><code>// 设置集群参数
-# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://10.0.59.60:16443 --kubeconfig=kube-controller-manager.kubeconfig
+# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.123.60:16443 --kubeconfig=kube-controller-manager.kubeconfig
 
 // 设置客户端认证参数
 # kubectl config set-credentials system:kube-controller-manager --client-certificate=kube-controller-manager.pem --client-key=kube-controller-manager-key.pem --embed-certs=true --kubeconfig=kube-controller-manager.kubeconfig
@@ -1694,9 +1694,9 @@ WantedBy=multi-user.target
     &quot;CN&quot;: &quot;system:kube-scheduler&quot;,
     &quot;hosts&quot;: [
       &quot;127.0.0.1&quot;,
-      &quot;10.0.59.61&quot;,
-      &quot;10.0.59.62&quot;,
-      &quot;10.0.59.63&quot;
+      &quot;192.168.123.61&quot;,
+      &quot;192.168.123.62&quot;,
+      &quot;192.168.123.63&quot;
     ],
     &quot;key&quot;: {
         &quot;algo&quot;: &quot;rsa&quot;,
@@ -1723,7 +1723,7 @@ WantedBy=multi-user.target
 # ls kube-scheduler*.pem
 kube-scheduler-key.pem  kube-scheduler.pem
 </code></pre><h4 id="2-创建kube-scheduler的kubeconfig"><a href="#2-创建kube-scheduler的kubeconfig" class="headerlink" title="2. 创建kube-scheduler的kubeconfig"></a>2. 创建kube-scheduler的kubeconfig</h4><pre><code>// 设置集群参数
-# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://10.0.59.60:16443 --kubeconfig=kube-scheduler.kubeconfig
+# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.123.60:16443 --kubeconfig=kube-scheduler.kubeconfig
 
 // 设置客户端认证参数
 # kubectl config set-credentials system:kube-scheduler --client-certificate=kube-scheduler.pem --client-key=kube-scheduler-key.pem --embed-certs=true --kubeconfig=kube-scheduler.kubeconfig
@@ -1787,7 +1787,7 @@ WantedBy=multi-user.target
 # BOOTSTRAP_TOKEN=$(awk -F &quot;,&quot; &#39;{print $1}&#39; /etc/kubernetes/token.csv)
 
 // 设置集群参数
-# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://10.0.59.60:16443 --kubeconfig=kubelet-bootstrap.kubeconfig
+# kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.123.60:16443 --kubeconfig=kubelet-bootstrap.kubeconfig
 
 // 设置客户端认证参数
 # kubectl config set-credentials kubelet-bootstrap --token=${BOOTSTRAP_TOKEN} --kubeconfig=kubelet-bootstrap.kubeconfig
@@ -1825,7 +1825,7 @@ WantedBy=multi-user.target
       &quot;cacheUnauthorizedTTL&quot;: &quot;30s&quot;
     }
   },
-  &quot;address&quot;: &quot;10.0.59.61&quot;,
+  &quot;address&quot;: &quot;192.168.123.61&quot;,
   &quot;port&quot;: 10250,
   &quot;readOnlyPort&quot;: 10255,
   &quot;cgroupDriver&quot;: &quot;systemd&quot;,
@@ -1963,7 +1963,7 @@ k8s-worker-03   NotReady   &lt;none&gt;   74s   v1.20.5
 # ls kube-proxy*.pem
 kube-proxy-key.pem  kube-proxy.pem
 </code></pre><h4 id="2-创建kubeconfig文件"><a href="#2-创建kubeconfig文件" class="headerlink" title="2. 创建kubeconfig文件"></a>2. 创建kubeconfig文件</h4><p>在k8s-master-01节点上执行。</p>
-<pre><code># kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://10.0.59.60:16443 --kubeconfig=kube-proxy.kubeconfig
+<pre><code># kubectl config set-cluster kubernetes --certificate-authority=ca.pem --embed-certs=true --server=https://192.168.123.60:16443 --kubeconfig=kube-proxy.kubeconfig
 
 # kubectl config set-credentials kube-proxy --client-certificate=kube-proxy.pem --client-key=kube-proxy-key.pem --embed-certs=true --kubeconfig=kube-proxy.kubeconfig
 
@@ -1974,13 +1974,13 @@ kube-proxy-key.pem  kube-proxy.pem
 <pre><code># vim /etc/kubernetes/kube-proxy.yaml
 
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
-bindAddress: 10.0.59.61
+bindAddress: 192.168.123.61
 clientConnection:
   kubeconfig: /etc/kubernetes/kube-proxy.kubeconfig
 clusterCIDR: 172.16.0.0/16
-healthzBindAddress: 10.0.59.61:10256
+healthzBindAddress: 192.168.123.61:10256
 kind: KubeProxyConfiguration
-metricsBindAddress: 10.0.59.61:10249
+metricsBindAddress: 192.168.123.61:10249
 mode: &quot;ipvs&quot;
 </code></pre><p><strong>注意：</strong>在复制到各个节点上时，除了<em>clusterCIDR</em>不需要变更之外，其它的ip地址均需要变更为节点的ip地址。</p>
 <p>创建服务启动文件如下：</p>
@@ -2349,7 +2349,7 @@ NAME                                READY   STATUS    RESTARTS   AGE
 nginx-deployment-559d658b74-hx64t   1/1     Running   0          25h
 
 // 访问测试
-# curl 10.0.59.61:30001
+# curl 192.168.123.61:30001
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -2852,7 +2852,7 @@ Commercial support is available at
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
                         
                         <span class="card-title">k8s 1.20.5 二进制安装教程</span>
                     </div>
@@ -2893,7 +2893,7 @@ Commercial support is available at
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="k8s一阶段学习记录">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="k8s一阶段学习记录">
                         
                         <span class="card-title">k8s一阶段学习记录</span>
                     </div>
@@ -3081,7 +3081,7 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">248.6k</span>
+            <span class="white-color">249.1k</span>
             
 
             <br>
