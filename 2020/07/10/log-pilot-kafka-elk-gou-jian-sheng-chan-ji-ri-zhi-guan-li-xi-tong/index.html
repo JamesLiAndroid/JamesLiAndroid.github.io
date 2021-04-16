@@ -493,23 +493,23 @@ log-pilot具有以">
 </tr>
 </thead>
 <tbody><tr>
-<td>10.0.66.237</td>
+<td>192.168.229.237</td>
 <td>ELK服务所在机器</td>
 </tr>
 <tr>
-<td>10.0.66.206</td>
+<td>192.168.229.206</td>
 <td>kafka</td>
 </tr>
 <tr>
-<td>10.0.66.206</td>
+<td>192.168.229.206</td>
 <td>zookeeeper</td>
 </tr>
 <tr>
-<td>10.0.66.209</td>
+<td>192.168.229.209</td>
 <td>zookeeper</td>
 </tr>
 <tr>
-<td>10.0.66.201</td>
+<td>192.168.229.201</td>
 <td>zookeeper</td>
 </tr>
 </tbody></table>
@@ -581,7 +581,7 @@ log-pilot具有以">
 <td>logstash配置文件目录</td>
 </tr>
 </tbody></table>
-<h3 id="3-安装ELK"><a href="#3-安装ELK" class="headerlink" title="3. 安装ELK"></a>3. 安装ELK</h3><h4 id="3-1-使用脚本进行安装"><a href="#3-1-使用脚本进行安装" class="headerlink" title="3.1 使用脚本进行安装"></a>3.1 使用脚本进行安装</h4><p>登录10.0.66.237服务器，执行下面的命令进行安装</p>
+<h3 id="3-安装ELK"><a href="#3-安装ELK" class="headerlink" title="3. 安装ELK"></a>3. 安装ELK</h3><h4 id="3-1-使用脚本进行安装"><a href="#3-1-使用脚本进行安装" class="headerlink" title="3.1 使用脚本进行安装"></a>3.1 使用脚本进行安装</h4><p>登录192.168.229.237服务器，执行下面的命令进行安装</p>
 <pre><code># cd ~
 # wget -O elk762.sh http://www.bigops.com/bigops-install/elk762.sh
 # sh +x elk762.sh
@@ -630,7 +630,7 @@ $ sudo bash cerebro.sh
 </code></pre><p>安装完成后，开启cerebro对应的端口信息：</p>
 <pre><code>$ sudo firewall-cmd --add-port=9000/tcp --zone=public --permanent
 
-$ sudo firewall-cmd --reload</code></pre><p>直接访问<a href="http://10.0.66.237:9000，登录时*输入用户名elastic，输入密码11111*，即可进入。" target="_blank" rel="noopener">http://10.0.66.237:9000，登录时*输入用户名elastic，输入密码11111*，即可进入。</a></p>
+$ sudo firewall-cmd --reload</code></pre><p>直接访问<a href="http://192.168.229.237:9000，登录时*输入用户名elastic，输入密码11111*，即可进入。" target="_blank" rel="noopener">http://192.168.229.237:9000，登录时*输入用户名elastic，输入密码11111*，即可进入。</a></p>
 <h2 id="kafka部署"><a href="#kafka部署" class="headerlink" title="kafka部署"></a>kafka部署</h2><p>首先部署zookeeper，在201、206、209上部署zookeeper，参考<strong>Linux系统初始化以及部署</strong>文档进行安装。</p>
 <p>然后安装kafka：</p>
 <pre><code>$ cd  ~ &amp;&amp; mkdir kafka
@@ -645,9 +645,9 @@ $ vim config/server.properties
 // 修改下面几个选项
 
 // 设置监听器
-advertised.listeners=PLAINTEXT://10.0.66.206:9092
+advertised.listeners=PLAINTEXT://192.168.229.206:9092
 // 设置zookeeper连接
-zookeeper.connect=10.0.66.206:21810,10.0.66.209:21810,10.0.66.201:21810
+zookeeper.connect=192.168.229.206:21810,192.168.229.209:21810,192.168.229.201:21810
 
 // :wq保存退出
 </code></pre><p>最后启动kafka服务：</p>
@@ -656,32 +656,32 @@ zookeeper.connect=10.0.66.206:21810,10.0.66.209:21810,10.0.66.201:21810
 $ ps -ef | grep kafka
 // 查看是否开启
 </code></pre><p>下面简单测试一下kafka是否能正常运行，创建topic的操作如下：</p>
-<pre><code>$ ./bin/kafka-topics.sh --create --zookeeper 10.0.66.206:21810,10.0.66.209:21810,10.0.66.201:21810 --replication-factor 1 --partitions 1 --topic test
+<pre><code>$ ./bin/kafka-topics.sh --create --zookeeper 192.168.229.206:21810,192.168.229.209:21810,192.168.229.201:21810 --replication-factor 1 --partitions 1 --topic test
 
 // 查看已经创建的topic
-$ ./bin/kafka-topics.sh --list --zookeeper 10.0.66.206:21810
+$ ./bin/kafka-topics.sh --list --zookeeper 192.168.229.206:21810
 __consumer_offsets
 test
 </code></pre><p>出现了test说明已经创建完成了。</p>
 <p>稍后进行产生消息和消费消息的操作：</p>
 <pre><code>// 产生消息
-$ ./bin/kafka-console-producer.sh --broker-list PLAINTEXT://10.0.66.206:9092 --topic test
+$ ./bin/kafka-console-producer.sh --broker-list PLAINTEXT://192.168.229.206:9092 --topic test
 &gt;{&quot;key&quot;:&quot;value&quot;}
 
 // 消费消息
-$ ./bin/kafka-console-consumer.sh --bootstrap-server 10.0.66.206:9092 --topic test --from-beginning
+$ ./bin/kafka-console-consumer.sh --bootstrap-server 192.168.229.206:9092 --topic test --from-beginning
 {&quot;key&quot;:&quot;value&quot;}
 </code></pre><p>这样消息就能进行消费了，kafka就能正常运行了。</p>
 <h2 id="docker日志收集实践"><a href="#docker日志收集实践" class="headerlink" title="docker日志收集实践"></a>docker日志收集实践</h2><p>目前开发环境中，服务部署使用docker容器进行，需要对docker容器进行日志收集。</p>
-<h3 id="1-log-pilot部署"><a href="#1-log-pilot部署" class="headerlink" title="1. log-pilot部署"></a>1. log-pilot部署</h3><p>登录开发环境部署机器10.0.66.199，拉取log-pilot官方镜像，并进行启动，以非交互式不保存任何数据的方式启动，便于我们调试。</p>
+<h3 id="1-log-pilot部署"><a href="#1-log-pilot部署" class="headerlink" title="1. log-pilot部署"></a>1. log-pilot部署</h3><p>登录开发环境部署机器192.168.229.199，拉取log-pilot官方镜像，并进行启动，以非交互式不保存任何数据的方式启动，便于我们调试。</p>
 <pre><code>$ docker pull registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
 
-$ docker run --rm -it --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=10.0.66.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
+$ docker run --rm -it --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=192.168.229.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
 </code></pre><p>在运行log-pilot容器时，需要指定以下全局变量：</p>
 <ul>
 <li><p>LOGGING_OUTPUT=kafka<br>指定日志信息写入kafka</p>
 </li>
-<li><p>KAFKA_BROKERS=10.0.66.206:9092<br>指定kafka的服务器地址信息</p>
+<li><p>KAFKA_BROKERS=192.168.229.206:9092<br>指定kafka的服务器地址信息</p>
 </li>
 <li><p>KAFKA_DEFAULT_TOPIC=test<br>指定默认写入的topic为test，不强制要求</p>
 </li>
@@ -710,7 +710,7 @@ $ docker run --rm -it --name log-pilot --privileged -v /var/run/docker.sock:/var
 <p>这样，就可以启动了日志收集的工具。但是目前我们要停止该容器，ctrl+c就可以停止该程序，先将kafka写入logstash走通。</p>
 <h3 id="2-kafka测试写入Logstash"><a href="#2-kafka测试写入Logstash" class="headerlink" title="2. kafka测试写入Logstash"></a>2. kafka测试写入Logstash</h3><p>登录到kafka所在机器，启动我们上述使用的命令，向<em>test</em>所在的topic中写入数据，如下：</p>
 <pre><code>// 产生消息
-$ ./bin/kafka-console-producer.sh --broker-list PLAINTEXT://10.0.66.206:9092 --topic test
+$ ./bin/kafka-console-producer.sh --broker-list PLAINTEXT://192.168.229.206:9092 --topic test
 &gt;{&quot;key&quot;:&quot;value&quot;}
 </code></pre><p>然后转到ELK安装的机器上，对Logstash先进行停用，配置kafka写入的内容，以命令行方式启动Logstash，如下：</p>
 <pre><code>$ sudo systemctl stop logstash
@@ -722,7 +722,7 @@ $ sudo vim kafa.conf
 // 写入以下信息
 input{
     kafka {
-        bootstrap_servers =&gt; &quot;10.0.66.206:9092&quot;
+        bootstrap_servers =&gt; &quot;192.168.229.206:9092&quot;
         topics =&gt; [&quot;test&quot;]
         codec =&gt; &quot;json&quot;
     }
@@ -741,7 +741,7 @@ output {
             codec =&gt; rubydebug
         }
         #elasticsearch {
-        #        hosts =&gt; [&quot;10.0.66.237:9200&quot;]
+        #        hosts =&gt; [&quot;192.168.229.237:9200&quot;]
         #        user =&gt; &quot;elastic&quot;
         #        password =&gt; &quot;111111&quot;
         #        index =&gt; &quot;filebeat-%{+yyyy.MM.dd}&quot;
@@ -754,7 +754,7 @@ output {
 $ sudo /opt/logstash/bin/logstash --path.settings /opt/logstash/config -f /opt/logstash-conf/kafka.conf --verbose --debug
 </code></pre><p>目前不需要设置写入到ES，直接在命令行中输出日志信息。这样命令行中会输出的信息如下：</p>
 <pre><code>[2020-07-10T14:09:11,039][DEBUG][logstash.filters.grok    ][main] Running grok filter {:event=&gt;#&lt;LogStash::Event:0x4f54382f&gt;}
-[2020-07-10T14:09:11,039][DEBUG][org.apache.kafka.clients.consumer.internals.Fetcher][main] [Consumer clientId=logstash-0, groupId=logstash] Sending READ_UNCOMMITTED IncrementalFetchRequest(toSend=(test-0), toForget=(), implied=()) to broker 10.0.66.206:9092 (id: 0 rack: null)
+[2020-07-10T14:09:11,039][DEBUG][org.apache.kafka.clients.consumer.internals.Fetcher][main] [Consumer clientId=logstash-0, groupId=logstash] Sending READ_UNCOMMITTED IncrementalFetchRequest(toSend=(test-0), toForget=(), implied=()) to broker 192.168.229.206:9092 (id: 0 rack: null)
 [2020-07-10T14:09:11,045][DEBUG][logstash.filters.grok    ][main] Event now:  {:event=&gt;#&lt;LogStash::Event:0x4f54382f&gt;}
 {
     &quot;@timestamp&quot; =&gt; 2020-07-10T06:09:10.937Z,
@@ -770,7 +770,7 @@ $ sudo /opt/logstash/bin/logstash --path.settings /opt/logstash/config -f /opt/l
 <pre><code>$ sudo systemctl restart logstash
 </code></pre><h3 id="3-log-pilot写入kafka"><a href="#3-log-pilot写入kafka" class="headerlink" title="3. log-pilot写入kafka"></a>3. log-pilot写入kafka</h3><p>这里启动log-pilot镜像，更换写入的topic，来测试从log-pilot将日志写入kafka中。</p>
 <p>在开发环境部署机器中，我们启动一个数据字典服务，利用log-pilot来采集该服务所在docker镜像的日志信息，启动方式如下：</p>
-<pre><code>$ docker run -d -p 19090:19090 -e CHANNEL=&quot;standalone&quot; -e IP_ADDR=&quot;10.0.66.199&quot; -e NACOS_IP=&quot;10.0.66.206:18848&quot; -e NACOS_NAMESPACE=&quot;858b37b1-35be-4564-a24e-dc2c322d5784&quot;  -e SKYWALKING_NAMESPACE=&quot;test-dev&quot; -e SKYWALKING_TARGET_SERVICE_NAME=&quot;test-data-dict-develop&quot; -e SKYWALKING_IP_PORT=&quot;10.0.66.208:11800&quot; --label aliyun.logs.dict=stdout --label aliyun.logs.dict.tags=&quot;topic=test,env=dev,service=test-data-dict&quot;  --name test-dict 10.0.66.202:5000/test-data-dict-develop:$BUILD_NUMBER
+<pre><code>$ docker run -d -p 19090:19090 -e CHANNEL=&quot;standalone&quot; -e IP_ADDR=&quot;192.168.229.199&quot; -e NACOS_IP=&quot;192.168.229.206:18848&quot; -e NACOS_NAMESPACE=&quot;858b37b1-35be-4564-a24e-dc2c322d5784&quot;  -e SKYWALKING_NAMESPACE=&quot;test-dev&quot; -e SKYWALKING_TARGET_SERVICE_NAME=&quot;test-data-dict-develop&quot; -e SKYWALKING_IP_PORT=&quot;192.168.229.208:11800&quot; --label aliyun.logs.dict=stdout --label aliyun.logs.dict.tags=&quot;topic=test,env=dev,service=test-data-dict&quot;  --name test-dict 192.168.229.202:5000/test-data-dict-develop:$BUILD_NUMBER
 </code></pre><p>这里比起之前的启动命令，多出了两个参数：</p>
 <ul>
 <li><p>–label aliyun.logs.dict=stdout<br>指定日志所属的服务，stdout表示采集docker输出的日志信息</p>
@@ -779,9 +779,9 @@ $ sudo /opt/logstash/bin/logstash --path.settings /opt/logstash/config -f /opt/l
 </li>
 </ul>
 <p>启动数据字典之后，用与上文同样的方式启动log-pilot镜像，这样就开启了收集日志的工作：</p>
-<pre><code>$ docker run --rm -it --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=10.0.66.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
+<pre><code>$ docker run --rm -it --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=192.168.229.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
 </code></pre><p>如何验证数据字典服务的日志已经被写入到消息队列中？我们可以通过命令行中kafka-console-consumer.sh工具来实现</p>
-<pre><code>$ ./bin/kafka-console-consumer.sh --bootstrap-server 10.0.66.206:9092 --topic test --from-beginning
+<pre><code>$ ./bin/kafka-console-consumer.sh --bootstrap-server 192.168.229.206:9092 --topic test --from-beginning
 {&quot;key&quot;:&quot;value&quot;}
 </code></pre><p>另外也可以通过kafka的图形化客户端来查看，本人开发机使用win7 64位系统。下载<a href="https://www.kafkatool.com/download.html" target="_blank" rel="noopener">kafka Tool 2.0.7</a>，如下图：</p>
 <p><img src="kafkatool%E4%B8%8B%E8%BD%BD.png" alt></p>
@@ -804,7 +804,7 @@ $ sudo vim kafa.conf
 // 写入以下信息
 input{
     kafka {
-        bootstrap_servers =&gt; &quot;10.0.66.206:9092&quot;
+        bootstrap_servers =&gt; &quot;192.168.229.206:9092&quot;
         topics =&gt; [&quot;test&quot;]
         codec =&gt; &quot;json&quot;
     }
@@ -823,7 +823,7 @@ output {
         #    codec =&gt; rubydebug
         #}
         elasticsearch {
-                hosts =&gt; [&quot;10.0.66.237:9200&quot;]
+                hosts =&gt; [&quot;192.168.229.237:9200&quot;]
                 user =&gt; &quot;elastic&quot;
                 password =&gt; &quot;111111&quot;
                 index =&gt; &quot;filebeat-%{+yyyy.MM.dd}&quot;
@@ -838,11 +838,11 @@ $ sudo systemctl start logstash
 <p>要注意，这里的<strong>index =&gt; “filebeat-%{+yyyy.MM.dd}”</strong>，是我们后续再kibana中配置显示是所需要匹配的索引信息。</p>
 <h3 id="4-2-修改log-pilot的启动方式"><a href="#4-2-修改log-pilot的启动方式" class="headerlink" title="4.2 修改log-pilot的启动方式"></a>4.2 修改log-pilot的启动方式</h3><p>登录开发环境机器，停止目前在命令行中运行的log-pilot容器信息，使用下面的命令正式启动：</p>
 <pre><code>
-$ docker run -d --restart always --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=10.0.66.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
+$ docker run -d --restart always --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=192.168.229.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  registry.cn-hangzhou.aliyuncs.com/acs/log-pilot:0.9.7-filebeat
 </code></pre><p>这样log-pilot就可以在后台运行了。</p>
 <h3 id="5-kibana设置和展示"><a href="#5-kibana设置和展示" class="headerlink" title="5. kibana设置和展示"></a>5. kibana设置和展示</h3><p>在前面我们的的ELK体系已经搭建完成了，这样就可以直接登录kibana系统了。</p>
 <ul>
-<li><p>地址：10.0.66.237:5601</p>
+<li><p>地址：192.168.229.237:5601</p>
 </li>
 <li><p>用户名：elastic</p>
 </li>
@@ -921,13 +921,13 @@ $ docker build -t log-pilot-self:0.9.7-filebeat .
 $ docker images | grep log-pilot-self
 log-pilot-self                                    0.9.7-filebeat      a0a464bd4dc1        31 hours ago        119MB
 
-$ docker tag log-pilot-self:0.9.7-filebeat 10.0.66.202:5000/log-pilot-self:0.9.7-filebeat
+$ docker tag log-pilot-self:0.9.7-filebeat 192.168.229.202:5000/log-pilot-self:0.9.7-filebeat
 
-$ docker push 10.0.66.202:5000/log-pilot-self:0.9.7-filebeat
+$ docker push 192.168.229.202:5000/log-pilot-self:0.9.7-filebeat
 </code></pre><p>这样就操作完成了，最后需要替换一下之前运行的log-pilot镜像信息。</p>
-<pre><code>$ docker run -d --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=10.0.66.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  10.0.66.202:5000/log-pilot-self:0.9.7-filebeat
+<pre><code>$ docker run -d --name log-pilot --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /etc/localtime:/etc/localtime -v /:/host:ro --cap-add SYS_ADMIN -e &#39;LOGGING_OUTPUT=kafka&#39; -e &#39;KAFKA_BROKERS=192.168.229.206:9092&#39; -e &#39;KAFKA_DEFAULT_TOPIC=test&#39;  192.168.229.202:5000/log-pilot-self:0.9.7-filebeat
 </code></pre><p>这样再去查看日志信息时，就大大减少了断开的情况。</p>
-<h2 id="k8s日志收集实践"><a href="#k8s日志收集实践" class="headerlink" title="k8s日志收集实践"></a>k8s日志收集实践</h2><h3 id="1-log-pilot部署-1"><a href="#1-log-pilot部署-1" class="headerlink" title="1. log-pilot部署"></a>1. log-pilot部署</h3><p>转到k8s管理机，登录到10.0.66.240上，首先编写部署的配置文件，如下：</p>
+<h2 id="k8s日志收集实践"><a href="#k8s日志收集实践" class="headerlink" title="k8s日志收集实践"></a>k8s日志收集实践</h2><h3 id="1-log-pilot部署-1"><a href="#1-log-pilot部署-1" class="headerlink" title="1. log-pilot部署"></a>1. log-pilot部署</h3><p>转到k8s管理机，登录到192.168.229.240上，首先编写部署的配置文件，如下：</p>
 <pre><code>
 $ mkdir log-pilot &amp;&amp; cd log-pilot/
 
@@ -958,7 +958,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: log-pilot
-        image: 10.0.66.202:5000/log-pilot-self:0.9.7-filebeat
+        image: 192.168.229.202:5000/log-pilot-self:0.9.7-filebeat
         resources:
           limits:
             memory: 500Mi
@@ -973,7 +973,7 @@ spec:
           - name: &quot;LOGGING_OUTPUT&quot;
             value: &quot;kafka&quot;
           - name: &quot;KAFKA_BROKERS&quot;
-            value: &quot;10.0.66.206:9092&quot;
+            value: &quot;192.168.229.206:9092&quot;
           - name: &quot;KAFKA_DEFAULT_TOPIC&quot;
             value: &quot;test&quot;
         volumeMounts:

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
+    <lastmod>2021-04-16</lastmod>
+  </url>  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/25/kafka-jiao-xue/</loc>
+    <lastmod>2021-04-16</lastmod>
+  </url>  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
+    <lastmod>2021-04-16</lastmod>
+  </url>  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/08/k8s-zhong-pod-yun-xing-de-wen-ti-pai-cha/</loc>
+    <lastmod>2021-04-16</lastmod>
+  </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/01/18/gitlab-bei-fen/</loc>
     <lastmod>2021-04-15</lastmod>
   </url>  <url>
@@ -9,9 +21,6 @@
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
     <lastmod>2021-03-19</lastmod>
-  </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
-    <lastmod>2021-03-09</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2021/03/06/quan-lian-lu-hui-du-fa-bu-shi-jian/</loc>
     <lastmod>2021-03-06</lastmod>
@@ -55,31 +64,25 @@
     <loc>https://JamesLiAndroid.github.io/2020/08/03/qian-duan-wei-fu-wu-zai-jenkins-xia-de-gou-jian-gai-zao/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/08/k8s-zhong-pod-yun-xing-de-wen-ti-pai-cha/</loc>
-    <lastmod>2020-10-14</lastmod>
-  </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/09/gitlab-qian-yi-he-zhuan-ru-cao-zuo-ji-lu/</loc>
-    <lastmod>2020-10-14</lastmod>
-  </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/10/03/ddd-ling-yu-qu-dong-she-ji-de-xue-xi/</loc>
@@ -105,9 +108,6 @@
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/07/15/guan-yu-elasticsearch-de-shu-ju-qing-li-yi-ji-ri-zhi-qing-li/</loc>
     <lastmod>2020-08-21</lastmod>
-  </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/25/kafka-jiao-xue/</loc>
-    <lastmod>2020-08-01</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/07/12/cka-bei-kao-xue-xi/</loc>
     <lastmod>2020-07-24</lastmod>
