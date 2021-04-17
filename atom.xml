@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-04-04T02:19:26.710Z</updated>
+  <updated>2021-04-17T01:14:20.852Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>两个gitlab之间的仓库同步问题解决</title>
+    <link href="https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/"/>
+    <id>https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/</id>
+    <published>2021-04-16T09:26:34.000Z</published>
+    <updated>2021-04-17T01:14:20.852Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;a href=&quot;#两个gitlab之间的仓库同步问题解决&quot; class=&quot;headerlink&quot; title=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;/a&gt;两个gitlab之间的仓库同步问题解决&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>k8s 1.20.5 二进制安装教程</title>
@@ -430,28 +452,6 @@
         
         
           &lt;h2 id=&quot;内网环境地址准备&quot;&gt;&lt;a href=&quot;#内网环境地址准备&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>内网迁移-：方案与规划</title>
-    <link href="https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-fang-an-yu-gui-hua/"/>
-    <id>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-fang-an-yu-gui-hua/</id>
-    <published>2020-08-21T02:12:53.000Z</published>
-    <updated>2020-08-21T02:13:09.376Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;操作的范围&quot;&gt;&lt;a href=&quot;#操作的范围&quot; class=&quot;headerlink&quot;
         
       
     

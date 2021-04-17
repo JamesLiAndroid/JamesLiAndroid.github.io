@@ -4,15 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="jenkins批量复制job到新的view中的执行脚本, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="keywords" content="两个gitlab之间的仓库同步问题解决, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="jenkins批量复制job到新的view中的groovy脚本
-import hudson.model.*
-
-def str_view = &#34;icp-cloud-develop&#34;
-def str_new_view = &#34;icp-cloud-">
+    <meta name="description" content="两个gitlab之间的仓库同步问题解决问题场景由于我们在用户现场进行开发，而公司本部这边存放有我们自己的基础平台代码，而两边开发的过程中，不可避免的存在代码同步的问题。中间还存在VPN的连接问题，于是在这样的环境下实现代码同步，而且是尽可能">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +16,7 @@ def str_new_view = &#34;icp-cloud-">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>jenkins批量复制job到新的view中的执行脚本 | 时代与猫的脚步</title>
+    <title>两个gitlab之间的仓库同步问题解决 | 时代与猫的脚步</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -294,13 +290,13 @@ def str_new_view = &#34;icp-cloud-">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/25.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        jenkins批量复制job到新的view中的执行脚本
+                        两个gitlab之间的仓库同步问题解决
                     </div>
                 </div>
             </div>
@@ -422,7 +418,7 @@ def str_new_view = &#34;icp-cloud-">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-11-02
+                    2021-04-16
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -436,14 +432,14 @@ def str_new_view = &#34;icp-cloud-">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    207
+                    2.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    9 分
                 </div>
                 
                 
@@ -454,58 +450,229 @@ def str_new_view = &#34;icp-cloud-">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="jenkins批量复制job到新的view中的groovy脚本"><a href="#jenkins批量复制job到新的view中的groovy脚本" class="headerlink" title="jenkins批量复制job到新的view中的groovy脚本"></a>jenkins批量复制job到新的view中的groovy脚本</h1><pre class="line-numbers language-groovy"><code class="language-groovy">
-<span class="token keyword">import</span> hudson<span class="token operator">.</span>model<span class="token operator">.</span><span class="token operator">*</span>
+                <h1 id="两个gitlab之间的仓库同步问题解决"><a href="#两个gitlab之间的仓库同步问题解决" class="headerlink" title="两个gitlab之间的仓库同步问题解决"></a>两个gitlab之间的仓库同步问题解决</h1><h2 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h2><p>由于我们在用户现场进行开发，而公司本部这边存放有我们自己的基础平台代码，而两边开发的过程中，不可避免的存在代码同步的问题。中间还存在VPN的连接问题，于是在这样的环境下实现代码同步，而且是尽可能的自动同步。</p>
+<p>经过了解，查找了各项资料，发现一个问题，就是绝大部分都是自有或者本地gitlab和github之间进行的同步，不好找gitlab和gitlab之间的同步方式。虽然理论上应该是一致的，但实际操作上还有不同。</p>
+<p>根据我英明领导的要求，要实现全双工通信，也就是说，在两个gitlab上创建互为镜像的项目，这两个项目可以定期的互相同步各自的代码。现在我只能实现单向通信，就是只有一侧进行同步，实现的是一种主从模式，如果有朋友能实现互相同步的，请联系我。但是我想了下，两个项目间互为镜像，是不是会造成先有鸡后有蛋的问题？就是必须先有一个项目，才能将另一个项目作为该项目的镜像？</p>
+<h2 id="实现方案介绍"><a href="#实现方案介绍" class="headerlink" title="实现方案介绍"></a>实现方案介绍</h2><h3 id="环境以及必备工具介绍"><a href="#环境以及必备工具介绍" class="headerlink" title="环境以及必备工具介绍"></a>环境以及必备工具介绍</h3><ul>
+<li><p>两个gitlab</p>
+<ul>
+<li>公司本部gitlab版本：12.2.5，ip地址（内网）：192.168.166.202:8181。</li>
+<li>客户现场gitlab版本：12.4.2，ip地址（内网）：192.168.229.52:8181。</li>
+</ul>
+</li>
+</ul>
+<p>操作时均使用root账号操作，这一步比较危险，最好控制下权限，尽可能使用该项目的developer角色或者reporter角色的用户来进行操作。</p>
+<p>在公司本部创建项目，studentmanagement2，以该项目进行测试。</p>
+<ul>
+<li>两个开源项目</li>
+</ul>
+<p>借助两个开源项目实现，分别是：</p>
+<ul>
+<li><a href="https://github.com/samrocketman/gitlab-mirrors.git" target="_blank" rel="noopener">git-mirrors</a>  </li>
+<li><a href="https://github.com/doctormo/python-gitlab3.git" target="_blank" rel="noopener">python-gitlab3</a></li>
+</ul>
+<p>在python 2.7环境下运行，api兼容测试的gitlab版本。将这个中转程序放到客户现场的gitlab所在的机器上。</p>
+<h3 id="基本概念介绍"><a href="#基本概念介绍" class="headerlink" title="基本概念介绍"></a>基本概念介绍</h3><h4 id="1-git-mirrors"><a href="#1-git-mirrors" class="headerlink" title="1. git mirrors"></a>1. git mirrors</h4><p>引用开源中国的解释如下：</p>
+<pre><code>$ git clone --mirror $URL
 
-<span class="token keyword">def</span> str_view <span class="token operator">=</span> <span class="token string">"icp-cloud-develop"</span>
-<span class="token keyword">def</span> str_new_view <span class="token operator">=</span> <span class="token string">"icp-cloud-212-develop-single"</span>
-<span class="token keyword">def</span> str_search <span class="token operator">=</span> <span class="token string">"icp-cloud-"</span>
-<span class="token keyword">def</span> str_replace <span class="token operator">=</span> <span class="token string">"icp-cloud-212-"</span>
+$ git clone --bare $URL
 
-<span class="token keyword">def</span> view <span class="token operator">=</span> Hudson<span class="token operator">.</span>instance<span class="token operator">.</span><span class="token function">getView</span><span class="token punctuation">(</span>str_view<span class="token punctuation">)</span>
+等同于
 
-<span class="token comment" spellcheck="true">//copy all projects of a view</span>
-<span class="token keyword">for</span><span class="token punctuation">(</span>item <span class="token keyword">in</span> view<span class="token operator">.</span><span class="token function">getItems</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>item<span class="token operator">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token function">contains</span><span class="token punctuation">(</span>str_search<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 说明文字，表示跳过未匹配到的job，可加可不加</span>
-      <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"but $item.name ignore "</span><span class="token punctuation">)</span>
-      <span class="token keyword">continue</span>
-  <span class="token punctuation">}</span>
+$ (cd $(basename $URL) &amp;&amp; git remote add --mirror=fetch origin $URL)
 
-  <span class="token comment" spellcheck="true">//create the new project name</span>
-  newName <span class="token operator">=</span> item<span class="token operator">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token function">replace</span><span class="token punctuation">(</span>str_search<span class="token punctuation">,</span> str_replace<span class="token punctuation">)</span>
+当前的man-page如何表达：
 
+相比之下--bare，--mirror不仅将源的本地分支映射到目标的本地分支，它还映射所有引用（包括远程分支，注释等）并设置refspec配置，以便所有这些引用都被git remote update目标存储库中的a覆盖。
+</code></pre><p>简单来说，–bare就是裸克隆，只克隆该分支的信息。而–mirror是完整的镜像克隆，克隆所有相关的提交信息，包含不同的分支！</p>
+<h4 id="2-整个实现流程介绍"><a href="#2-整个实现流程介绍" class="headerlink" title="2. 整个实现流程介绍"></a>2. 整个实现流程介绍</h4><p>核心是依靠git-mirrors项目进行中转，利用python-gitlab3依赖进行gitlab接口的调用。通过脚本利用git clone –mirror选项从公司本部的gitlab库，同步到客户现场的gitlab库中，并在中转机器上设置定时任务，进行定时同步。</p>
+<p>示意图如下：</p>
+<p><img src="%E5%90%8C%E6%AD%A5%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt></p>
+<h3 id="实际操作流程"><a href="#实际操作流程" class="headerlink" title="实际操作流程"></a>实际操作流程</h3><h4 id="0-为客户现场中转主机进行环境配置"><a href="#0-为客户现场中转主机进行环境配置" class="headerlink" title="0. 为客户现场中转主机进行环境配置"></a>0. 为客户现场中转主机进行环境配置</h4><p>默认都在centos用户下安装，生成证书信息等操作。</p>
+<p>安装git</p>
+<pre><code>$ sudo yum install -y git
+</code></pre><p>已有python2.7的情况下，配置虚拟环境：</p>
+<pre><code>// 安装pip
+$ curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
+$ sudo python get-pip.py
 
-  <span class="token comment" spellcheck="true">// copy the job, disable and save it</span>
-  <span class="token keyword">def</span> job 
-  <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      job <span class="token operator">=</span> Hudson<span class="token operator">.</span>instance<span class="token operator">.</span><span class="token function">copy</span><span class="token punctuation">(</span>item<span class="token punctuation">,</span> newName<span class="token punctuation">)</span>
-  <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>IllegalArgumentException e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 重名的处理</span>
-      <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"$newName job is exists"</span><span class="token punctuation">)</span>
-      <span class="token keyword">continue</span>
-  <span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">// 获取异常的处理</span>
-      <span class="token function">println</span><span class="token punctuation">(</span>e<span class="token operator">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-      <span class="token keyword">continue</span>
-  <span class="token punctuation">}</span>
-  job<span class="token operator">.</span>disabled <span class="token operator">=</span> <span class="token boolean">true</span>
-  job<span class="token operator">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+// 安装virtualenv
+$ pip install virtualenv
 
-  <span class="token comment" spellcheck="true">// update the workspace to avoid having two projects point to the same location</span>
-  <span class="token comment" spellcheck="true">//AbstractProject project = job</span>
-  <span class="token comment" spellcheck="true">//def new_workspace = project.getCustomWorkspace().replace(str_search, str_replace)</span>
-  <span class="token comment" spellcheck="true">//project.setCustomWorkspace(new_workspace)</span>
-  <span class="token comment" spellcheck="true">//project.save()</span>
+// 生成虚拟环境
+$ mkdir git_repository_sync &amp;&amp; virtualenv venv --python=python2.7
+</code></pre><p>安装python-gitlab</p>
+<pre><code>$ yum install python-setuptools
 
-  Hudson<span class="token operator">.</span>instance<span class="token operator">.</span><span class="token function">getView</span><span class="token punctuation">(</span>str_new_view<span class="token punctuation">)</span><span class="token operator">.</span><span class="token function">add</span><span class="token punctuation">(</span>job<span class="token punctuation">)</span>
-  <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">" $item.name copied as $newName"</span><span class="token punctuation">)</span>
+$ git clone https://github.com/alexvh/python-gitlab3.git
 
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>注意，这里在使用之前，要先添加对应的View，添加时操作如下：</p>
-<p><img src="jenkins%E6%B7%BB%E5%8A%A0View%E7%9A%84%E9%97%AE%E9%A2%98.png" alt></p>
+$ cd python-gitlab3
+
+$ git checkout v0.5.8
+
+$ python setup.py install
+</code></pre><h4 id="1-在客户现场的gitlab中配置账号"><a href="#1-在客户现场的gitlab中配置账号" class="headerlink" title="1. 在客户现场的gitlab中配置账号"></a>1. 在客户现场的gitlab中配置账号</h4><ul>
+<li><p>登录GitLab</p>
+</li>
+<li><p>创建一个用户</p>
+</li>
+<li><p>为该用户赋予管理员权限。简单起见，笔者使用root 这个GitLab的内置账户。</p>
+</li>
+<li><p>在GitLab创建一个Group，名字为test，该名称在下面的配置文件中会用到。</p>
+</li>
+</ul>
+<h4 id="2-在虚拟机中配置用户并生成ssh-key"><a href="#2-在虚拟机中配置用户并生成ssh-key" class="headerlink" title="2. 在虚拟机中配置用户并生成ssh key"></a>2. 在虚拟机中配置用户并生成ssh key</h4><p>这一步需要在root用户下执行</p>
+<pre><code>// 创建新用户
+# adduser gitmirror
+
+// 切换用户
+# su - gitmirror
+
+// 生成ssh密钥
+$ ssh-keygen -t rsa -C
+
+// 或者加入公司本部的gitlab所在的用户邮箱信息
+$ ssh-keygen -t rsa -C &quot;admin@example.com&quot;
+
+// 查看生成的密钥信息
+$ more /home/gitmirror/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUdvDGqmvboURWy1YV1rexD+vRhkt4eEDoQuUBbQ6ceH6Ta/NRDPK6o/BnBC9n0AoSrXtHem5PYPnYKkLkv0yQo3JwtN/p07lH4SoN8/v+aHzCP87A5j1wSHA
+/6NB8CKefeZcR87llP/3P0v2gQukCcr3G1CaJeAhQ2lvLdimftgh83vvMv+28IJlt5UsJK0MqeQHw7uOA8//mgbEvZVHzzOGNpX/xkcj4lbCXhnLCyCr1/Q7LIKneJuxqZG1oyongIDU+yq3WFtNDGn8ORwIGVz
+XvA7sfTQF0npSsgKIJJKRkmn5+6pQtSB8WAYfrHc10qBzieFRlV5mZ7KYtySql admin@example.com
+</code></pre><p><strong>注意：</strong>如果切换gitmirror用户后生成了密钥信息，而python的虚拟环境建在centos用户下，那么需要将生成的证书信息导入到centos用户下，否则在执行git clone操作时，会出现找不到证书的情况。拷贝证书的操作如下：</p>
+<pre><code>// 记得备份原有证书
+
+// 拷贝证书操作
+# cp /home/gitmirror/.ssh/id_rsa* /home/centos/.ssh/ 
+</code></pre><h4 id="3-为公司本部的gitlab设置免密码登录"><a href="#3-为公司本部的gitlab设置免密码登录" class="headerlink" title="3. 为公司本部的gitlab设置免密码登录"></a>3. 为公司本部的gitlab设置免密码登录</h4><p>将上面生成的密钥信息拷贝的公司本部的gitlab用户中，操作如下：</p>
+<p><img src="gitlab%E6%B7%BB%E5%8A%A0ssh-key%E4%BF%A1%E6%81%AF.png" alt></p>
+<p>同样将该密钥信息也添加到客户现场的gitlab中。</p>
+<p>测试ssh访问情况</p>
+<pre><code>// 测试公司本部的gitlab访问
+$ ssh -T -p 2222 git@192.168.166.202
+
+// 这里gitlab使用docker部署，ssh端口为2222
+
+// 测试客户现场的gitlab访问
+$ ssh -T git@192.168.229.52
+</code></pre><h4 id="4-为客户现场的gitlab设置access-token（设置private-token）"><a href="#4-为客户现场的gitlab设置access-token（设置private-token）" class="headerlink" title="4. 为客户现场的gitlab设置access_token（设置private token）"></a>4. 为客户现场的gitlab设置access_token（设置private token）</h4><p>添加access_token的步骤如下：</p>
+<p><img src="%E6%B7%BB%E5%8A%A0access_token.png" alt></p>
+<p>点击绿色按钮后将会生成一个新的token，复制该token（只会出现一次）。</p>
+<p><img src="%E5%A4%8D%E5%88%B6access_token.png" alt></p>
+<p>复制完成后，填写到客户现场中转服务器中，如下：</p>
+<pre><code># su - gitmirror
+
+$ touch private_token &amp;&amp; echo &#39;你复制的密钥信息&#39; &gt; private_token
+</code></pre><h4 id="5-创建本地仓库路径"><a href="#5-创建本地仓库路径" class="headerlink" title="5. 创建本地仓库路径"></a>5. 创建本地仓库路径</h4><p>GitLab Mirrors会将GitHub上的代码clone到本地，默认是~/repositories ，因此我们得创建该目录。</p>
+<pre><code>
+# su - gitmirror
+
+$ mkdir ~/repositories
+</code></pre><h4 id="6-下载并配置gitlab-mirrors"><a href="#6-下载并配置gitlab-mirrors" class="headerlink" title="6. 下载并配置gitlab-mirrors"></a>6. 下载并配置gitlab-mirrors</h4><p>切换到centos用户执行，如下：</p>
+<pre><code># su - centos
+
+$ git clone https://github.com/samrocketman/gitlab-mirrors.git
+
+$ cd gitlab-mirrors
+
+$ chmod 755 *.sh
+
+// 添加配置文件
+$ cp config.sh.SAMPLE config.sh
+</code></pre><p>下面开始修改配置文件：</p>
+<pre><code>
+$ cd gitlab-mirrors &amp;&amp; vim config.sh
+
+#Environment file
+
+#
+# gitlab-mirrors settings
+#
+
+#The user git-mirrors will run as.
+system_user=&quot;gitmirror&quot;
+#The home directory path of the $system_user
+user_home=&quot;/home/${system_user}&quot;
+#The repository directory where gitlab-mirrors will contain copies of mirrored
+#repositories before pushing them to gitlab.
+repo_dir=&quot;${user_home}/repositories&quot;
+#colorize output of add_mirror.sh, update_mirror.sh, and git-mirrors.sh
+#commands.
+enable_colors=true
+#These are additional options which should be passed to git-svn.  On the command
+#line type &quot;git help svn&quot;
+git_svn_additional_options=&quot;-s&quot;
+#Force gitlab-mirrors to not create the gitlab remote so a remote URL must be
+#provided. (superceded by no_remote_set)
+no_create_set=false
+#Force gitlab-mirrors to only allow local remotes only.
+no_remote_set=false
+#Enable force fetching and pushing.  Will overwrite references if upstream
+#forced pushed.  Applies to git projects only.
+force_update=false
+#This option is for pruning mirrors.  If a branch is deleted upstream then that
+#change will propagate into your GitLab mirror.  Aplies to git projects only.
+prune_mirrors=false
+
+#
+# Gitlab settings
+#
+
+// 注意这下面的内容
+#This is the Gitlab group where all project mirrors will be grouped.
+// 在客户现场gitlab中创建的group名称
+gitlab_namespace=&quot;test&quot;
+#This is the base web url of your Gitlab server.
+// 在客户现场gitlab地址
+gitlab_url=&quot;http://192.168.229.52:8181&quot;
+#Special user you created in Gitlab whose only purpose is to update mirror sites
+#and admin the $gitlab_namespace group.
+// 在客户现场gitlab中使用的用户名
+gitlab_user=&quot;root&quot;
+#Generate a token for your $gitlab_user and set it here.
+// 默认的获取access_token的文件
+gitlab_user_token_secret=&quot;$(head -n1 &quot;${user_home}/private_token&quot; 2&gt; /dev/null || echo &quot;&quot;)&quot;
+#Sets the Gitlab API version, either 3 or 4
+gitlab_api_version=4
+#Verify signed SSL certificates?
+ssl_verify=false
+#Push to GitLab over http?  Otherwise will push projects via SSH.
+http_remote=false
+
+#
+# Gitlab new project default settings.  If a project needs to be created by
+# gitlab-mirrors then it will assign the following values as defaults.
+#
+
+#values must be true or false
+issues_enabled=false
+wall_enabled=false
+wiki_enabled=false
+snippets_enabled=false
+merge_requests_enabled=false
+public=false
+
+// :wq保存退出
+</code></pre><h4 id="7-添加仓库同步配置并开始同步"><a href="#7-添加仓库同步配置并开始同步" class="headerlink" title="7. 添加仓库同步配置并开始同步"></a>7. 添加仓库同步配置并开始同步</h4><p>在centos用户下执行最后的操作，添加同步的公司本部仓库信息如下：</p>
+<pre><code>
+# su - centos
+
+$ ./add_mirror.sh --git --project-name test --mirror ssh://git@192.168.166.202:2222/test-cloud/demo-business/express/studentmanage2.git
+</code></pre><p><strong>注意：</strong>这里使用的ssh格式的地址信息，而不是使用http链接的信息。</p>
+<p>添加命令执行无错误，即可进行同步，执行如下：</p>
+<pre><code>
+$ cd ~/git_repository_sync/gitlab-mirrors &amp;&amp; ./git_mirrors.sh
+</code></pre><p>执行完成后，则可以看到客户现场的gitlab中有了我们自己的项目，如下：</p>
+<p><img src="%E5%90%8C%E6%AD%A5%E9%A1%B9%E7%9B%AE%E6%88%AA%E5%9B%BE.png" alt></p>
+<p>如果需要定时同步，直接编写crontab规则即可，如下：</p>
+<pre><code>
+$ crontab -e
+
+*/5 * * * * /home/centos/git_repository_sync/gitlab-mirrors/git_mirrors.sh
+</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在上述操作下，可以实现两地间gitlab仓库的单向同步</p>
+<h2 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h2><ul>
+<li><a href="http://www.itmuch.com/work/git-repo-sync-with-gitlab-mirrors/" target="_blank" rel="noopener">http://www.itmuch.com/work/git-repo-sync-with-gitlab-mirrors/</a></li>
+</ul>
 
             </div>
             <hr />
@@ -664,9 +831,9 @@ def str_new_view = &#34;icp-cloud-">
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《jenkins批量复制job到新的view中的执行脚本》
+                    《两个gitlab之间的仓库同步问题解决》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/11/02/jenkins-pi-liang-fu-zhi-job-dao-xin-de-view-zhong-de-zhi-xing-jiao-ben/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/" property="cc:attributionName"
                rel="cc:attributionURL">
                 JamesLiAndroid
             </a> 采用
@@ -968,34 +1135,36 @@ def str_new_view = &#34;icp-cloud-">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/11/07/guan-yu-wei-fu-wu-zhong-skywalking-jian-kong-xin-xi-he-elk-tong-yi-ri-zhi-guan-li-ti-xi-de-dui-jie/">
+                <a href="/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="关于微服务中Skywalking监控信息和ELK统一日志管理体系的对接">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="两个gitlab之间的仓库同步问题解决">
                         
-                        <span class="card-title">关于微服务中Skywalking监控信息和ELK统一日志管理体系的对接</span>
+                        <span class="card-title">两个gitlab之间的仓库同步问题解决</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            当前场景以Skywalking+ELK体系构建当前针对微服务的“链路+日志监控”的整个监控手段，主要监控微服务的运行层面的问题。目前在公司的应用场景下存在的严重问题是，目前无法将二者进行联动，也就是说，在skywalking中看到了请求异常
+                            两个gitlab之间的仓库同步问题解决问题场景由于我们在用户现场进行开发，而公司本部这边存放有我们自己的基础平台代码，而两边开发的过程中，不可避免的存在代码同步的问题。中间还存在VPN的连接问题，于是在这样的环境下实现代码同步，而且是尽可能
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-16
+                            </span>
                         <span class="publish-author">
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1006,26 +1175,30 @@ def str_new_view = &#34;icp-cloud-">
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/10/14/elasticsearch-suo-yin-de-sheng-ming-zhou-qi-guan-li/">
+                <a href="/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="ElasticSearch索引的生命周期管理">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
                         
-                        <span class="card-title">ElasticSearch索引的生命周期管理</span>
+                        <span class="card-title">k8s 1.20.5 二进制安装教程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ElasticSearch索引的生命周期管理前提ElasticSearch 6.6.0版本后新增索引的生命周期管理。
-参考易企秀的实现：
-引入索引生命周期管理的一个最重要的目的就是对大量时序数据在es读写操作的性能优化，比如易企秀通过spa
+                            k8s 1.20.5 二进制安装教程资源准备以及ip地址分配准备了六台机器进行安装，全部部署kubelet以及kube-porxy，不是在特定机器上进行部署，通过标签的方式控制业务服务的部署范围。
+机器列表以及安装内容如下:
+
+
+
+机器名
+
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-10-14
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-04
                             </span>
                         <span class="publish-author">
                             
