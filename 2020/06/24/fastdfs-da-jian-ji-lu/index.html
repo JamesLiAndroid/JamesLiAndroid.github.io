@@ -291,7 +291,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -1214,7 +1214,7 @@ group1/M00/00/00/CgBC7F78uTiAegOJAAC3s0pdQHQ707.png
 <p>将以上安装包拷贝到 CentOS7 下的 /home/centos/FastDFS 目录下</p>
 <h3 id="第二步：安装libfastcommon"><a href="#第二步：安装libfastcommon" class="headerlink" title="第二步：安装libfastcommon"></a>第二步：安装libfastcommon</h3><p>libfastcommon 安装依赖于 gcc 和 perl，故要先安装这两个</p>
 <pre><code>// 在线安装 gcc（安装系统时，选择开发工具安装和安全工具安装后，gcc自动安装）
-$ sudo yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+$ sudo yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel libevent
 
 // 上传已经下载好的libfastcommon安装包
 
@@ -1375,7 +1375,8 @@ $ make &amp;&amp; sudo make install
 
 $ cd /home/centos/FastDFS/fastdfs-nginx-module-1.22
 
-$ sudo cp http.conf mime.types /etc/fdfs/
+// 这条语句错误，修改如下
+$ sudo cp /home/centos/FastDFS/fastdfs-6.06/conf/http.conf /home/centos/FastDFS/fastdfs-6.06/conf/mime.types /etc/fdfs/
 
 $ cd /home/centos/FastDFS/data/storage
 
@@ -1916,7 +1917,7 @@ $ sudo /usr/local/nginx/sbin/nginx
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="jenkins参数化构建实践--动态配置k8s部署文件">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="jenkins参数化构建实践--动态配置k8s部署文件">
                         
                         <span class="card-title">jenkins参数化构建实践--动态配置k8s部署文件</span>
                     </div>
@@ -1957,7 +1958,7 @@ $ sudo /usr/local/nginx/sbin/nginx
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="jenkins迁移记录">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="jenkins迁移记录">
                         
                         <span class="card-title">jenkins迁移记录</span>
                     </div>
@@ -2137,7 +2138,7 @@ $ docker export jenkins_official &gt; j
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">251.1k</span>
+            <span class="white-color">251.3k</span>
             
 
             <br>
