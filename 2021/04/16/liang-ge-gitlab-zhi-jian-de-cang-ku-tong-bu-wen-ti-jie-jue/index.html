@@ -290,7 +290,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -432,7 +432,7 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.2k
                 </div>
                 
 
@@ -504,7 +504,7 @@ $ mkdir git_repository_sync &amp;&amp; virtualenv venv --python=python2.7
 </code></pre><p>安装python-gitlab</p>
 <pre><code>$ yum install python-setuptools
 
-$ git clone https://github.com/alexvh/python-gitlab3.git
+$ git clone https://github.com/doctormo/python-gitlab3.git
 
 $ cd python-gitlab3
 
@@ -659,7 +659,23 @@ public=false
 
 $ ./add_mirror.sh --git --project-name test --mirror ssh://git@192.168.166.202:2222/test-cloud/demo-business/express/studentmanage2.git
 </code></pre><p><strong>注意：</strong>这里使用的ssh格式的地址信息，而不是使用http链接的信息。</p>
-<p>添加命令执行无错误，即可进行同步，执行如下：</p>
+<p><strong>注意：</strong>执行./add_mirror.sh脚本出现的问题</p>
+<pre><code># ./add_mirror.sh --git --project-name studentmanager2 --mirror http://10.0.66.202:8181/icp-cloud/demo-business/express/studentmanage2.git
+
+Resolving gitlab remote.
+
+Traceback (most recent call last):
+
+  File &quot;lib/manage_gitlab_project.py&quot;, line 12, in &lt;module&gt;
+
+    raise ImportError(&quot;python-gitlab module is not installed.  You probably didn&#39;t read the install instructions closely enough.  See docs/prerequisites.md.&quot;)
+
+ImportError: python-gitlab module is not installed.  You probably didn&#39;t read the install instructions closely enough.  See docs/prerequisites.md.
+
+There was an unknown issue with manage_gitlab_project.py
+</code></pre><p>解决方式:</p>
+<pre><code># pip install python-gitlab
+</code></pre><p>添加命令执行无错误，即可进行同步，执行如下：</p>
 <pre><code>
 $ cd ~/git_repository_sync/gitlab-mirrors &amp;&amp; ./git_mirrors.sh
 </code></pre><p>执行完成后，则可以看到客户现场的gitlab中有了我们自己的项目，如下：</p>
@@ -1135,36 +1151,35 @@ $ crontab -e
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/">
+                <a href="/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="两个gitlab之间的仓库同步问题解决">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="关于nacos的问题排查">
                         
-                        <span class="card-title">两个gitlab之间的仓库同步问题解决</span>
+                        <span class="card-title">关于nacos的问题排查</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            两个gitlab之间的仓库同步问题解决问题场景由于我们在用户现场进行开发，而公司本部这边存放有我们自己的基础平台代码，而两边开发的过程中，不可避免的存在代码同步的问题。中间还存在VPN的连接问题，于是在这样的环境下实现代码同步，而且是尽可能
+                            关于潍柴方面在nacos下的超时问题处理问题背景描述起因源于潍柴方面从防火墙开放端口后，通过vpn连接到潍柴的网络中，在本地通过intellij idea启动uaa服务，看是否能注册到潍柴的nacos中。
+通过测试，并不能注册到潍柴的nac
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-16
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
+                        </span>
                         <span class="publish-author">
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -1179,7 +1194,7 @@ $ crontab -e
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
                         
                         <span class="card-title">k8s 1.20.5 二进制安装教程</span>
                     </div>
@@ -1363,7 +1378,7 @@ $ crontab -e
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">251.3k</span>
+            <span class="white-color">254.4k</span>
             
 
             <br>

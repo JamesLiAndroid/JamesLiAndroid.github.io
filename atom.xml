@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-04-17T01:14:20.852Z</updated>
+  <updated>2021-05-24T03:17:52.424Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于nacos的问题排查</title>
+    <link href="https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/"/>
+    <id>https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/</id>
+    <published>2021-05-24T03:12:56.000Z</published>
+    <updated>2021-05-24T03:17:52.424Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于潍柴方面在nacos下的超时问题处理&quot;&gt;&lt;a href=&quot;#关于潍柴方面在nacos下的超时问题处理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>两个gitlab之间的仓库同步问题解决</title>
     <link href="https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/"/>
     <id>https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/</id>
     <published>2021-04-16T09:26:34.000Z</published>
-    <updated>2021-04-17T01:14:20.852Z</updated>
+    <updated>2021-05-19T06:01:45.068Z</updated>
     
     <summary type="html">
     
@@ -430,28 +452,6 @@
         
         
           &lt;h1 id=&quot;关于filestore服务上传文件大小限制的问题&quot;&gt;&lt;a href=&quot;#关于filestore服务上传文件大小限制的问题&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>内网迁移-: 验证记录文档</title>
-    <link href="https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/"/>
-    <id>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</id>
-    <published>2020-08-21T02:48:54.000Z</published>
-    <updated>2020-10-14T02:53:43.437Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;内网环境地址准备&quot;&gt;&lt;a href=&quot;#内网环境地址准备&quot; class=&quot;headerlink&quot;
         
       
     

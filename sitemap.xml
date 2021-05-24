@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/</loc>
+    
+    <lastmod>2021-05-24T03:17:52.424Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/</loc>
+    
+    <lastmod>2021-05-19T06:01:45.068Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
     
     <lastmod>2021-05-14T08:55:27.247Z</lastmod>
@@ -40,13 +54,6 @@
     <loc>https://JamesLiAndroid.github.io/2020/11/02/jenkins-pi-liang-fu-zhi-job-dao-xin-de-view-zhong-de-zhi-xing-jiao-ben/</loc>
     
     <lastmod>2021-04-17T01:32:49.062Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/</loc>
-    
-    <lastmod>2021-04-17T01:14:20.852Z</lastmod>
     
   </url>
   
@@ -163,13 +170,6 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.437Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
@@ -184,6 +184,20 @@
   </url>
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
+    
+    <lastmod>2020-10-14T02:53:43.437Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    
+    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
@@ -192,13 +206,6 @@
   
   <url>
     <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
