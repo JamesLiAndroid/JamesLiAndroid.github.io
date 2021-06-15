@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-05-27T01:18:38.943Z</updated>
+  <updated>2021-06-15T05:41:18.581Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于maven deploy出现连接超时的情况</title>
+    <link href="https://JamesLiAndroid.github.io/2021/06/15/guan-yu-maven-deploy-chu-xian-lian-jie-chao-shi-de-qing-kuang/"/>
+    <id>https://JamesLiAndroid.github.io/2021/06/15/guan-yu-maven-deploy-chu-xian-lian-jie-chao-shi-de-qing-kuang/</id>
+    <published>2021-06-15T03:01:35.000Z</published>
+    <updated>2021-06-15T05:41:18.581Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于maven-deploy命令出现连接超时的情况解决&quot;&gt;&lt;a href=&quot;#关于maven-deploy命令出现连接超时的情况解决&quot; class=&quot;headerlink&quot; title=&quot;关于maven
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>使用lanproxy在vpn环境下进行微服务的开发联调测试</title>
     <link href="https://JamesLiAndroid.github.io/2021/05/26/shi-yong-lanproxy-zai-vpn-huan-jing-xia-jin-xing-wei-fu-wu-de-kai-fa-lian-diao-ce-shi/"/>
     <id>https://JamesLiAndroid.github.io/2021/05/26/shi-yong-lanproxy-zai-vpn-huan-jing-xia-jin-xing-wei-fu-wu-de-kai-fa-lian-diao-ce-shi/</id>
     <published>2021-05-26T05:27:34.000Z</published>
-    <updated>2021-05-27T01:18:38.943Z</updated>
+    <updated>2021-06-03T01:40:02.641Z</updated>
     
     <summary type="html">
     
@@ -35,6 +57,8 @@
     
     </summary>
     
+    
+      <category term="DevOps" scheme="https://JamesLiAndroid.github.io/tags/DevOps/"/>
     
   </entry>
   
@@ -428,30 +452,6 @@
         
         
           &lt;h2 id=&quot;关于Docker进程错误的问题解决&quot;&gt;&lt;a href=&quot;#关于Docker进程错误的问题解决&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Harbor安装以及docker registry的迁移</title>
-    <link href="https://JamesLiAndroid.github.io/2020/09/22/harbor-an-zhuang-yi-ji-docker-registry-de-qian-yi/"/>
-    <id>https://JamesLiAndroid.github.io/2020/09/22/harbor-an-zhuang-yi-ji-docker-registry-de-qian-yi/</id>
-    <published>2020-09-22T01:34:06.000Z</published>
-    <updated>2020-10-02T01:38:34.935Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;环境信息&quot;&gt;&lt;a href=&quot;#环境信息&quot; class=&quot;headerlink&quot; title=&quot;环境信息&quot;&gt;&lt;/a&gt;环境信息&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;操作系统：CentOS 7.6 1804&lt;/li&gt;
-&lt;li&gt;Linux
         
       
     
