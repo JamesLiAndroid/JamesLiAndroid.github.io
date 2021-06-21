@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
+    
+    <lastmod>2021-06-16T08:23:38.292Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2021/06/15/guan-yu-maven-deploy-chu-xian-lian-jie-chao-shi-de-qing-kuang/</loc>
     
     <lastmod>2021-06-15T05:47:12.621Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
     
     <lastmod>2021-05-14T08:55:27.247Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
-    
-    <lastmod>2021-04-28T07:32:25.572Z</lastmod>
     
   </url>
   
@@ -191,14 +191,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
     
@@ -212,14 +212,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
