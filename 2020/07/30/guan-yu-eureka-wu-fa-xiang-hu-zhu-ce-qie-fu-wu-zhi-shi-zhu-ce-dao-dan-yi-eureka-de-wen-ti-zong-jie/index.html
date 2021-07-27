@@ -1,0 +1,1527 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结场景描述我们有三个Eureka服务，以206、207、208表征。
+在昨天的问题排查中，出现了以下的场景：
+
+Eureka不能相互注册成为集群
+有两个Eureka相互注册">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        <span class="chip bg-color">无标签</span>
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-07-30
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    31 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结"><a href="#关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结" class="headerlink" title="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结"></a>关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结</h1><h2 id="场景描述"><a href="#场景描述" class="headerlink" title="场景描述"></a>场景描述</h2><p>我们有三个Eureka服务，以206、207、208表征。</p>
+<p>在昨天的问题排查中，出现了以下的场景：</p>
+<ol>
+<li>Eureka不能相互注册成为集群</li>
+<li>有两个Eureka相互注册成功，也就是206、208相互注册成功，207游离</li>
+<li>线上环境，新启动的业务服务注册到了游离的Eureka服务上，导致网关侧以及远程Restful调用的时候找不到业务服务，报错</li>
+<li>线下启动业务服务，可以注册到三个Eureka上</li>
+</ol>
+<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><p>通过ELK日志统一收集系统，查看错误日志信息，我们目前只对206服务进行了日志采集，先来看206的日志信息：</p>
+<pre><code>2020-07-23 17:31:49.164 ERROR [test-register,,,] 12962 --- [_192.168.128.207-13] c.n.e.cluster.ReplicationTaskProcessor   : Network level connection to peer 192.168.128.207; retrying after delay
+
+com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused (Connection refused)
+        at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187) ~[jersey-apache-client4-1.19.1.jar!/:1.19.1]
+        at com.netflix.eureka.cluster.DynamicGZIPContentEncodingFilter.handle(DynamicGZIPContentEncodingFilter.java:48) ~[eureka-core-1.9.13.jar!/:1.9.13]
+        at com.netflix.discovery.EurekaIdentityHeaderFilter.handle(EurekaIdentityHeaderFilter.java:27) ~[eureka-client-1.9.13.jar!/:1.9.13]
+        at com.sun.jersey.api.client.Client.handle(Client.java:652) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.sun.jersey.api.client.WebResource$Builder.post(WebResource.java:570) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.netflix.eureka.transport.JerseyReplicationClient.submitBatchUpdates(JerseyReplicationClient.java:117) ~[eureka-core-1.9.13.jar!/:1.9.13]
+        at com.netflix.eureka.cluster.ReplicationTaskProcessor.process(ReplicationTaskProcessor.java:80) ~[eureka-core-1.9.13.jar!/:1.9.13]
+        at com.netflix.eureka.util.batcher.TaskExecutors$BatchWorkerRunnable.run(TaskExecutors.java:193) [eureka-core-1.9.13.jar!/:1.9.13]
+        at java.lang.Thread.run(Thread.java:748) [na:1.8.0_202]
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+        at java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:1.8.0_202]
+        at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350) ~[na:1.8.0_202]
+        at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206) ~[na:1.8.0_202]
+        at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188) ~[na:1.8.0_202]
+        at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:1.8.0_202]
+        at java.net.Socket.connect(Socket.java:589) ~[na:1.8.0_202]
+        at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:121) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.conn.AbstractPoolEntry.open(AbstractPoolEntry.java:144) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.conn.AbstractPooledConnAdapter.open(AbstractPooledConnAdapter.java:134) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector.execute$original$wN9FcpoY(DefaultRequestDirector.java:440) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector.execute$original$wN9FcpoY$accessor$3nRtAICB(DefaultRequestDirector.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector$auxiliary$TWCaq941.call(Unknown Source) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstMethodsInter.intercept(InstMethodsInter.java:93) ~[skywalking-agent.jar:6.4.0]
+        at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.AbstractHttpClient.doExecute$original$X5K2K7NE(AbstractHttpClient.java:835) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.AbstractHttpClient.doExecute$original$X5K2K7NE$accessor$UW83IYMZ(AbstractHttpClient.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.AbstractHttpClient$auxiliary$prYdOZrp.call(Unknown Source) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstMethodsInter.intercept(InstMethodsInter.java:93) ~[skywalking-agent.jar:6.4.0]
+        at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173) ~[jersey-apache-client4-1.19.1.jar!/:1.19.1]
+        ... 10 common frames omitted
+
+2020-07-23 17:31:58.629 ERROR [test-register,,,] 12962 --- [_192.168.128.207-19] c.n.e.cluster.ReplicationTaskProcessor   : It seems to be a socket read timeout exception, it will retry later. if it continues to happen and some eureka node occupied all the cpu time, you should set property &#39;eureka.server.peer-node-read-timeout-ms&#39; to a bigger value
+
+com.sun.jersey.api.client.ClientHandlerException: java.net.SocketTimeoutException: Read timed out
+        at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187) ~[jersey-apache-client4-1.19.1.jar!/:1.19.1]
+        at com.netflix.eureka.cluster.DynamicGZIPContentEncodingFilter.handle(DynamicGZIPContentEncodingFilter.java:48) ~[eureka-core-1.9.13.jar!/:1.9.13]
+        at com.netflix.discovery.EurekaIdentityHeaderFilter.handle(EurekaIdentityHeaderFilter.java:27) ~[eureka-client-1.9.13.jar!/:1.9.13]
+        at com.sun.jersey.api.client.Client.handle(Client.java:652) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.sun.jersey.api.client.WebResource$Builder.post(WebResource.java:570) ~[jersey-client-1.19.1.jar!/:1.19.1]
+        at com.netflix.eureka.transport.JerseyReplicationClient.submitBatchUpdates(JerseyReplicationClient.java:117) ~[eureka-core-1.9.13.jar!/:1.9.13]
+        at com.netflix.eureka.cluster.ReplicationTaskProcessor.process(ReplicationTaskProcessor.java:80) ~[eureka-core-1.9.13.jar!/:1.9.13]
+        at com.netflix.eureka.util.batcher.TaskExecutors$BatchWorkerRunnable.run(TaskExecutors.java:193) [eureka-core-1.9.13.jar!/:1.9.13]
+        at java.lang.Thread.run(Thread.java:748) [na:1.8.0_202]
+Caused by: java.net.SocketTimeoutException: Read timed out
+        at java.net.SocketInputStream.socketRead0(Native Method) ~[na:1.8.0_202]
+        at java.net.SocketInputStream.socketRead(SocketInputStream.java:116) ~[na:1.8.0_202]
+        at java.net.SocketInputStream.read(SocketInputStream.java:171) ~[na:1.8.0_202]
+        at java.net.SocketInputStream.read(SocketInputStream.java:141) ~[na:1.8.0_202]
+        at org.apache.http.impl.io.AbstractSessionInputBuffer.fillBuffer(AbstractSessionInputBuffer.java:161) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.impl.io.SocketInputBuffer.fillBuffer(SocketInputBuffer.java:82) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.impl.io.AbstractSessionInputBuffer.readLine(AbstractSessionInputBuffer.java:276) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:138) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:56) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.io.AbstractMessageParser.parse(AbstractMessageParser.java:259) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.impl.AbstractHttpClientConnection.receiveResponseHeader(AbstractHttpClientConnection.java:294) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.impl.conn.DefaultClientConnection.receiveResponseHeader(DefaultClientConnection.java:257) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.conn.AbstractClientConnAdapter.receiveResponseHeader(AbstractClientConnAdapter.java:230) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.protocol.HttpRequestExecutor.doReceiveResponse(HttpRequestExecutor.java:273) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.protocol.HttpRequestExecutor.execute(HttpRequestExecutor.java:125) ~[httpcore-4.4.13.jar!/:4.4.13]
+        at org.apache.http.impl.client.DefaultRequestDirector.tryExecute(DefaultRequestDirector.java:679) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector.execute$original$wN9FcpoY(DefaultRequestDirector.java:481) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector.execute$original$wN9FcpoY$accessor$3nRtAICB(DefaultRequestDirector.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.DefaultRequestDirector$auxiliary$TWCaq941.call(Unknown Source) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstMethodsInter.intercept(InstMethodsInter.java:93) ~[skywalking-agent.jar:6.4.0]
+        at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.AbstractHttpClient.doExecute$original$X5K2K7NE(AbstractHttpClient.java:835) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.AbstractHttpClient.doExecute$original$X5K2K7NE$accessor$UW83IYMZ(AbstractHttpClient.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.AbstractHttpClient$auxiliary$prYdOZrp.call(Unknown Source) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.skywalking.apm.agent.core.plugin.interceptor.enhance.InstMethodsInter.intercept(InstMethodsInter.java:93) ~[skywalking-agent.jar:6.4.0]
+        at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56) ~[httpclient-4.5.12.jar!/:4.5.12]
+        at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173) ~[jersey-apache-client4-1.19.1.jar!/:1.19.1]
+        ... 10 common frames omitted</code></pre><p>这里发现，访问207服务超时，说明207服务存在问题，但是查看207服务的启动日志并未发现异常信息。如下：</p>
+<pre><code>DEBUG 2020-07-23 17:31:07:093 main AgentPackagePath : The beacon class location is jar:file:/home/centos/skywalking-bin/apache-skywalking-apm-bin/agent/skywalking-agent.jar!/org/apache/skywalking/apm/agent/core/boot/AgentPackagePath.class.
+INFO 2020-07-23 17:31:07:097 main SnifferConfigInitializer : Config file found in /home/centos/skywalking-bin/apache-skywalking-apm-bin/agent/config/agent.config.
+    ______________        ________                __
+   /  _/ ____/ __ \      / ____/ /___  __  ______/ /
+   / // /   / /_/ /_____/ /   / / __ \/ / / / __  /
+ _/ // /___/ ____/_____/ /___/ / /_/ / /_/ / /_/ /
+/___/\____/_/          \____/_/\____/\__,_/\__,_/
+============ * powered by testsoft * ============
+2020-07-23 17:31:26.529  INFO [test-register,,,] 14661 --- [           main] c.a.n.c.c.impl.LocalConfigInfoProcessor  : LOCAL_SNAPSHOT_PATH:/home/centos/nacos/config
+2020-07-23 17:31:26.694  INFO [test-register,,,] 14661 --- [           main] c.a.nacos.client.config.impl.Limiter     : limitTime:5.0
+2020-07-23 17:31:27.040  WARN [test-register,,,] 14661 --- [           main] c.a.c.n.c.NacosPropertySourceBuilder     : Ignore the empty nacos configuration and get it based on dataId[test-register] &amp; group[DEFAULT_GROUP]
+2020-07-23 17:31:27.047  INFO [test-register,,,] 14661 --- [           main] c.a.nacos.client.config.utils.JVMUtil    : isMultiInstance:false
+2020-07-23 17:31:27.084  INFO [test-register,,,] 14661 --- [           main] b.c.PropertySourceBootstrapConfiguration : Located property source: [BootstrapPropertySource {name=&#39;bootstrapProperties-test-register-peer1.yml,DEFAULT_GROUP&#39;}, BootstrapPropertySource {name=&#39;bootstrapProperties-test-register.yml,DEFAULT_GROUP&#39;}, BootstrapPropertySource {name=&#39;bootstrapProperties-test-register,DEFAULT_GROUP&#39;}]
+2020-07-23 17:31:27.209  INFO [test-register,,,] 14661 --- [           main] c.h.c.s.ServerRegisterApplication        : The following profiles are active: peer1
+2020-07-23 17:31:30.192  WARN [test-register,,,] 14661 --- [           main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID &#39;nacos-config&#39; contains invalid characters, please migrate to a valid format.
+2020-07-23 17:31:31.499  WARN [test-register,,,] 14661 --- [           main] o.s.boot.actuate.endpoint.EndpointId     : Endpoint ID &#39;service-registry&#39; contains invalid characters, please migrate to a valid format.
+2020-07-23 17:31:32.833  INFO [test-register,,,] 14661 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=0a3a956c-cd1a-35c8-ae9f-743a8cc478b8
+2020-07-23 17:31:38.139  INFO [test-register,,,] 14661 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 19012 (http)
+2020-07-23 17:31:38.162  INFO [test-register,,,] 14661 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-07-23 17:31:38.162  INFO [test-register,,,] 14661 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.33]
+2020-07-23 17:31:38.611  INFO [test-register,,,] 14661 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-07-23 17:31:38.611  INFO [test-register,,,] 14661 --- [           main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 11320 ms
+2020-07-23 17:31:39.731  WARN [test-register,,,] 14661 --- [           main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-07-23 17:31:39.732  INFO [test-register,,,] 14661 --- [           main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-07-23 17:31:39.802  INFO [test-register,,,] 14661 --- [           main] c.netflix.config.DynamicPropertyFactory  : DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@31a2a9fa
+2020-07-23 17:31:42.077  INFO [test-register,,,] 14661 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2020-07-23 17:31:43.217  INFO [test-register,,,] 14661 --- [           main] c.s.j.s.i.a.WebApplicationImpl           : Initiating Jersey application, version &#39;Jersey: 1.19.1 03/11/2016 02:08 PM&#39;
+2020-07-23 17:31:43.513  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2020-07-23 17:31:43.513  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2020-07-23 17:31:44.523  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2020-07-23 17:31:44.523  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2020-07-23 17:31:47.543  INFO [test-register,,,] 14661 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37314843, org.springframework.security.web.context.SecurityContextPersistenceFilter@70f148dc, org.springframework.security.web.header.HeaderWriterFilter@4d69d288, org.springframework.security.web.authentication.logout.LogoutFilter@4dd2ef54, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@45d4421d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@77aea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3a3883c4, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@50122012, org.springframework.security.web.session.SessionManagementFilter@787178b1, org.springframework.security.web.access.ExceptionTranslationFilter@4b28a7bf, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@74e497ae]
+2020-07-23 17:31:47.589  WARN [test-register,,,] 14661 --- [           main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2020-07-23 17:31:47.590  INFO [test-register,,,] 14661 --- [           main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-07-23 17:31:50.199  INFO [test-register,,,] 14661 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService &#39;applicationTaskExecutor&#39;
+2020-07-23 17:31:52.842  INFO [test-register,,,] 14661 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2020-07-23 17:31:53.861  INFO [test-register,,,] 14661 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2020-07-23 17:31:53.995  WARN [test-register,,,] 14661 --- [           main] ockingLoadBalancerClientRibbonWarnLogger : You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2020-07-23 17:31:54.274  INFO [test-register,,,] 14661 --- [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2020-07-23 17:31:54.848  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2020-07-23 17:31:55.892  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2020-07-23 17:31:55.892  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2020-07-23 17:31:55.892  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2020-07-23 17:31:55.892  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2020-07-23 17:31:56.242  INFO [test-register,,,] 14661 --- [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2020-07-23 17:31:56.347  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2020-07-23 17:31:56.348  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2020-07-23 17:31:56.348  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2020-07-23 17:31:56.348  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2020-07-23 17:31:56.348  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2020-07-23 17:31:56.348  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2020-07-23 17:31:56.348  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2020-07-23 17:31:57.524  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2020-07-23 17:31:57.535  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2020-07-23 17:31:57.540  INFO [test-register,,,] 14661 --- [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2020-07-23 17:31:57.562  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1595496717546 with initial instances count: 17
+2020-07-23 17:31:57.671  INFO [test-register,,,] 14661 --- [           main] c.n.eureka.DefaultEurekaServerContext    : Initializing ...
+2020-07-23 17:31:57.676  INFO [test-register,,,] 14661 --- [           main] c.n.eureka.cluster.PeerEurekaNodes       : Adding new peer nodes [http://test:test2019@192.168.128.208:19013/eureka/, http://test:test2019@192.168.128.206:19011/eureka/]
+2020-07-23 17:31:57.686  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2020-07-23 17:31:57.687  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2020-07-23 17:31:57.687  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2020-07-23 17:31:57.687  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2020-07-23 17:31:57.855  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2020-07-23 17:31:57.856  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2020-07-23 17:31:57.856  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2020-07-23 17:31:57.856  INFO [test-register,,,] 14661 --- [           main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2020-07-23 17:31:57.953  INFO [test-register,,,] 14661 --- [           main] c.n.eureka.cluster.PeerEurekaNodes       : Replica node URL:  http://test:test2019@192.168.128.208:19013/eureka/
+2020-07-23 17:31:57.953  INFO [test-register,,,] 14661 --- [           main] c.n.eureka.cluster.PeerEurekaNodes       : Replica node URL:  http://test:test2019@192.168.128.206:19011/eureka/
+2020-07-23 17:31:57.975  INFO [test-register,,,] 14661 --- [           main] c.n.e.registry.AbstractInstanceRegistry  : Finished initializing remote region registries. All known remote regions: []
+2020-07-23 17:31:57.976  INFO [test-register,,,] 14661 --- [           main] c.n.eureka.DefaultEurekaServerContext    : Initialized
+2020-07-23 17:31:58.184  INFO [test-register,,,] 14661 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 18 endpoint(s) beneath base path &#39;/actuator&#39;
+2020-07-23 17:31:58.267  INFO [test-register,,,] 14661 --- [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application test-REGISTER with eureka with status UP
+2020-07-23 17:31:58.268  INFO [test-register,,,] 14661 --- [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1595496718268, current=UP, previous=STARTING]
+2020-07-23 17:31:58.303  INFO [test-register,,,] 14661 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_test-REGISTER/test-register@192.168.128.207:19012: registering service...
+2020-07-23 17:31:58.318  INFO [test-register,,,] 14661 --- [      Thread-14] o.s.c.n.e.server.EurekaServerBootstrap   : Setting the eureka configuration..
+2020-07-23 17:31:58.328  INFO [test-register,,,] 14661 --- [      Thread-14] o.s.c.n.e.server.EurekaServerBootstrap   : Eureka data center value eureka.datacenter is not set, defaulting to default
+2020-07-23 17:31:58.329  INFO [test-register,,,] 14661 --- [      Thread-14] o.s.c.n.e.server.EurekaServerBootstrap   : Eureka environment value eureka.environment is not set, defaulting to test
+2020-07-23 17:31:58.410  INFO [test-register,,,] 14661 --- [      Thread-14] o.s.c.n.e.server.EurekaServerBootstrap   : isAws returned false
+2020-07-23 17:31:58.410  INFO [test-register,,,] 14661 --- [      Thread-14] o.s.c.n.e.server.EurekaServerBootstrap   : Initialized server context
+2020-07-23 17:31:58.465  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-FILESTORE/test-filestore@192.168.128.199:20060 with status UP (replication=true)
+2020-07-23 17:31:58.466  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-GATEWAY/test-gateway@192.168.128.209:19020 with status UP (replication=true)
+2020-07-23 17:31:58.466  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-BASE-PSL/test-base-psl@192.168.128.199:24020 with status UP (replication=true)
+2020-07-23 17:31:58.467  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-APP-INF/test-app-inf@192.168.128.199:20140 with status UP (replication=true)
+2020-07-23 17:31:58.468  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-REGISTER/test-register@192.168.128.206:19011 with status UP (replication=true)
+2020-07-23 17:31:58.468  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-REGISTER/test-register@192.168.128.208:19013 with status UP (replication=true)
+2020-07-23 17:31:58.469  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-BASE-RDP/test-base-rdp@192.168.128.199:20151 with status UP (replication=true)
+2020-07-23 17:31:58.470  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-ADMIN-SERVER/test-admin-server@192.168.128.199:19760 with status UP (replication=true)
+2020-07-23 17:31:58.475  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-UAA/test-uaa@192.168.128.199:19060 with status UP (replication=true)
+2020-07-23 17:31:58.476  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-FORM/test-form@192.168.128.199:20040 with status UP (replication=true)
+2020-07-23 17:31:58.476  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-ID-GENERATOR/test-id-generator@192.168.128.199:8080 with status UP (replication=true)
+2020-07-23 17:31:58.477  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-PSL-EQUIPMENT-MANAGEMENT/test-psl-equipment-management@192.168.128.199:24010 with status UP (replication=true)
+2020-07-23 17:31:58.478  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-UMC/test-umc@192.168.128.199:19070 with status UP (replication=true)
+2020-07-23 17:31:58.478  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-DICT/test-dict@10.0.93.99:19090 with status UP (replication=true)
+2020-07-23 17:31:58.479  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-WORKFLOW/test-workflow@192.168.128.199:20050 with status UP (replication=true)
+2020-07-23 17:31:58.480  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-BASE/test-base@192.168.128.199:20130 with status UP (replication=true)
+2020-07-23 17:31:58.480  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-VISUALMODEL/test-visualmodel@10.0.93.99:20020 with status UP (replication=true)
+2020-07-23 17:31:58.480  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.r.PeerAwareInstanceRegistryImpl    : Got 17 instances from neighboring DS node
+2020-07-23 17:31:58.480  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.r.PeerAwareInstanceRegistryImpl    : Renew threshold is: 28
+2020-07-23 17:31:58.481  INFO [test-register,,,] 14661 --- [      Thread-14] c.n.e.r.PeerAwareInstanceRegistryImpl    : Changing status to UP
+2020-07-23 17:31:58.499  INFO [test-register,,,] 14661 --- [      Thread-14] e.s.EurekaServerInitializerConfiguration : Started Eureka Server
+2020-07-23 17:31:58.511  INFO [test-register,,,] 14661 --- [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_test-REGISTER/test-register@192.168.128.207:19012 - registration status: 204
+2020-07-23 17:31:58.519  INFO [test-register,,,] 14661 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 19012 (http) with context path &#39;&#39;
+2020-07-23 17:31:58.521  INFO [test-register,,,] 14661 --- [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 19012
+2020-07-23 17:31:58.699  INFO [test-register,,,] 14661 --- [io-19012-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet &#39;dispatcherServlet&#39;
+2020-07-23 17:31:58.700  INFO [test-register,,,] 14661 --- [io-19012-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet &#39;dispatcherServlet&#39;
+2020-07-23 17:31:58.731  INFO [test-register,,,] 14661 --- [io-19012-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 31 ms
+2020-07-23 17:31:59.308  INFO [test-register,9481285215d134b2,9481285215d134b2,false] 14661 --- [io-19012-exec-2] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-REGISTER/test-register@192.168.128.207:19012 with status UP (replication=true)
+2020-07-23 17:31:59.522  INFO [test-register,,,] 14661 --- [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
+2020-07-23 17:31:59.526  INFO [test-register,,,] 14661 --- [           main] c.h.c.s.ServerRegisterApplication        : Started ServerRegisterApplication in 43.119 seconds (JVM running for 54.87)
+2020-07-23 17:31:59.543  INFO [test-register,,,] 14661 --- [           main] c.a.n.client.config.impl.ClientWorker    : [fixed-192.168.128.206_18848-858b37b1-35be-4564-a24e-dc2c322d5784] [subscribe] test-register.yml+DEFAULT_GROUP+858b37b1-35be-4564-a24e-dc2c322d5784
+2020-07-23 17:31:59.547  INFO [test-register,,,] 14661 --- [           main] c.a.nacos.client.config.impl.CacheData   : [fixed-192.168.128.206_18848-858b37b1-35be-4564-a24e-dc2c322d5784] [add-listener] ok, tenant=858b37b1-35be-4564-a24e-dc2c322d5784, dataId=test-register.yml, group=DEFAULT_GROUP, cnt=1
+2020-07-23 17:31:59.547  INFO [test-register,,,] 14661 --- [           main] c.a.n.client.config.impl.ClientWorker    : [fixed-192.168.128.206_18848-858b37b1-35be-4564-a24e-dc2c322d5784] [subscribe] test-register+DEFAULT_GROUP+858b37b1-35be-4564-a24e-dc2c322d5784
+2020-07-23 17:31:59.547  INFO [test-register,,,] 14661 --- [           main] c.a.nacos.client.config.impl.CacheData   : [fixed-192.168.128.206_18848-858b37b1-35be-4564-a24e-dc2c322d5784] [add-listener] ok, tenant=858b37b1-35be-4564-a24e-dc2c322d5784, dataId=test-register, group=DEFAULT_GROUP, cnt=1
+2020-07-23 17:31:59.548  INFO [test-register,,,] 14661 --- [           main] c.a.n.client.config.impl.ClientWorker    : [fixed-192.168.128.206_18848-858b37b1-35be-4564-a24e-dc2c322d5784] [subscribe] test-register-peer1.yml+DEFAULT_GROUP+858b37b1-35be-4564-a24e-dc2c322d5784
+2020-07-23 17:31:59.548  INFO [test-register,,,] 14661 --- [           main] c.a.nacos.client.config.impl.CacheData   : [fixed-192.168.128.206_18848-858b37b1-35be-4564-a24e-dc2c322d5784] [add-listener] ok, tenant=858b37b1-35be-4564-a24e-dc2c322d5784, dataId=test-register-peer1.yml, group=DEFAULT_GROUP, cnt=1
+2020-07-23 17:31:59.563  INFO [test-register,,,] 14661 --- [4e-dc2c322d5784] c.a.n.client.config.impl.ClientWorker    : get changedGroupKeys:[]
+2020-07-23 17:31:59.903  INFO [test-register,78c19310aaaa187c,78c19310aaaa187c,false] 14661 --- [io-19012-exec-4] c.n.e.registry.AbstractInstanceRegistry  : Registered instance test-REGISTER/test-register@192.168.128.207:19012 with status UP (replication=true)
+2020-07-23 17:32:29.268  INFO [test-register,,,] 14661 --- [4e-dc2c322d5784] c.a.n.client.config.impl.ClientWorker    : get changedGroupKeys:[]
+2020-07-23 17:32:58.483  INFO [test-register,,,] 14661 --- [a-EvictionTimer] c.n.e.registry.AbstractInstanceRegistry  : Running the evict task 
+</code></pre><h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><ol>
+<li><p>eureka server之间相互成为peer node，如果有一台eureka server挂了，则eureka server之间的replication都会受影响，人工接入更改eureka server的serverUrl信息，则可以主动剔除掉挂掉的peerNode，未能剔除，则会报错。报上述错误！</p>
+</li>
+<li><p>通过重启存在错误的eureka服务，解决该问题。</p>
+</li>
+<li><p>关于Eureka配置文件中的配置信息，如下：</p>
+</li>
+</ol>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">eureka</span><span class="token punctuation">:</span>
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">register-with-eureka</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">fetch-registry</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>register-with-eureka表示：是否注册自身到eureka服务器。</li>
+<li>fetch-registry表示：是否从eureka上获取注册信息</li>
+</ul>
+<p>如果存在上述的配置项，注释掉这两个选项也是可以解决这个问题的。</p>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/08/02/jenkins-de-bei-fen-he-qian-yi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="jenkins的备份和迁移">
+                        
+                        <span class="card-title">jenkins的备份和迁移</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言jenkins导出镜像$ docker commit jenkins_official jenkins/jenkins:2.208
+
+$ docker export jenkins_official &gt; jenkins_2.208
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-08-02
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/07/25/kafka-jiao-xue/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            kafka教学———————-zookeeper———————–
+分布式协调服务，一个通用的无单点问题的分布式协调框架
+多机多进程
+网络不可靠、通信不同步、关键节点可能不可用
+客户端：curactor
+Observer（只接收请求）、Lea
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-25
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">271.5k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

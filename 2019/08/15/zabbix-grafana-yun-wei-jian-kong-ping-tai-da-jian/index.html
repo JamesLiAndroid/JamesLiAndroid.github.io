@@ -1,0 +1,2080 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Zabbix+Grafana运维监控平台搭建, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="zabbix+grafana进行服务监控和参数图形化展示运行环境LinuxCentOS7.6，内核版本3.10，承载Nginx服务和Zabbix+Grafana服务。需要注意的是，Docker 目前支持 CentOS 7 及以后的版本，内核">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Zabbix+Grafana运维监控平台搭建 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Zabbix+Grafana运维监控平台搭建
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/DevOps-Zabbix-Grafana/" target="_blank">
+                            <span class="chip bg-color">DevOps Zabbix Grafana</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/DevOps/" class="post-category" target="_blank">
+                            DevOps
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-08-15
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    27 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="zabbix-grafana进行服务监控和参数图形化展示"><a href="#zabbix-grafana进行服务监控和参数图形化展示" class="headerlink" title="zabbix+grafana进行服务监控和参数图形化展示"></a>zabbix+grafana进行服务监控和参数图形化展示</h1><h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><p>CentOS7.6，内核版本3.10，承载Nginx服务和Zabbix+Grafana服务。需要注意的是，Docker 目前支持 CentOS 7 及以后的版本，内核要求至少为 3.10。</p>
+<h3 id="WinServer"><a href="#WinServer" class="headerlink" title="WinServer"></a>WinServer</h3><ul>
+<li><p>四台IIS服务<br>WinServer2012</p>
+</li>
+<li><p>四台SQLServer服务<br>WinServer2016 + SQLServer2016</p>
+</li>
+<li><p>一台FileServer<br>WinServer2016</p>
+</li>
+</ul>
+<h3 id="监控版本说明"><a href="#监控版本说明" class="headerlink" title="监控版本说明"></a>监控版本说明</h3><ul>
+<li>zabbix 4.2</li>
+<li>grafana 6.1</li>
+</ul>
+<h2 id="监控信息–利用zabbix进行服务监控"><a href="#监控信息–利用zabbix进行服务监控" class="headerlink" title="监控信息–利用zabbix进行服务监控"></a>监控信息–利用zabbix进行服务监控</h2><ul>
+<li><p>zabbix安装和部署–利用docker进行安装部署</p>
+<ul>
+<li><p>zabbix版本：<br>zabbix server和zabbix agent版本均采用v4.2.1版本的程序进行安装部署。</p>
+</li>
+<li><p>CentOS安装docker</p>
+<p>  注意：Docker 需要用到 <code>centos-extra</code> 这个源，如果您关闭了，需要重启启用，可以参考 <a href="https://wiki.centos.org/AdditionalResources/Repositories" target="_blank" rel="noopener">Available Repositories for CentOS</a>。</p>
+<ul>
+<li><p>卸载旧版本</p>
+<pre><code>$ sudo yum remove docker \
+       docker-client \
+       docker-client-latest \
+       docker-common \
+       docker-latest \
+       docker-latest-logrotate \
+    docker-logrotate \
+        docker-engine</code></pre><p> 旧版本的内容在 /var/lib/docker 下，目录中的镜像(images), 容器(containers), 存储卷(volumes), 和 网络配置（networks）都可以保留。</p>
+<p> Docker CE 包，目前的包名为 docker-ce。Docker现在分为两个版本，Docker CE和Docker EE<br> 其中Docker CE为开源版，Docker EE为企业版</p>
+<ul>
+<li><p>安装准备<br> 为了方便添加软件源，支持 devicemapper 存储类型，安装如下软件包</p>
+<pre><code>$ sudo yum update
+$ sudo yum install -y yum-utils \
+      device-mapper-persistent-data \
+      lvm2</code></pre></li>
+<li><p>添加 yum 软件源<br>添加 Docker 稳定版本的 yum 软件源</p>
+<pre><code>$ sudo yum-config-manager \
+      --add-repo \
+      https://download.docker.com/linux/centos/docker-ce.repo</code></pre><ul>
+<li>安装 Docker<br>更新一下 yum 软件源的缓存，并安装 Docker。<pre><code>$ sudo yum update
+$ sudo yum install docker-ce</code></pre>如果弹出 GPG key 的接收提示，请确认是否为 <strong>060a 61c5 1b55 8a7f 742b 77aa c52f eb6b 621e 9f35</strong>，如果是，可以接受并继续安装。<br>至此，Docker 已经安装完成了，Docker 服务是没有启动的，操作系统里的 docker 组被创建，但是没有用户在这个组里。</li>
+</ul>
+<p><strong>注意：</strong><br>默认的 docker 组是没有用户的（也就是说需要使用 sudo 才能使用 docker 命令）。<br>您可以将用户添加到 docker 组中（此用户就可以直接使用 docker 命令了）。<br>加入 docker 用户组命令:</p>
+<pre><code>$ sudo usermod -aG docker USER_NAME</code></pre><p>用户组更新信息后，重新登录系统生效。</p>
+<ul>
+<li><p>安装指定版本<br>如果想安装指定版本的 Docker，可以查看一下版本并安装。</p>
+<pre><code>$ yum list docker-ce --showduplicates | sort -r
+
+docker-ce.x86_64  3:18.09.1-3.el7                     docker-ce-stable
+docker-ce.x86_64  3:18.09.0-3.el7                     docker-ce-stable
+docker-ce.x86_64  18.06.1.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64  18.06.0.ce-3.el7                    docker-ce-stable</code></pre><p>可以指定版本安装,版本号可以忽略 <em>:</em> 和 _el7_，如 docker-ce-18.09.1</p>
+<pre><code>$ sudo yum install docker-ce-&lt;VERSION STRING&gt;</code></pre><p>至此，指定版本的 Docker 也安装完成，同样，操作系统内 docker 服务没有启动，只创建了 docker 组，而且组里没有用户。</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>启动docker<br>如果想添加到开机启动<pre><code>$ sudo systemctl enable docker</code></pre>启动 docker 服务<pre><code>$ sudo systemctl start docker</code></pre></li>
+<li>验证安装<br>验证 Docker CE 安装是否正确，可以运行 hello-world 镜像<pre><code>$ sudo docker run hello-world</code></pre></li>
+<li>更新和卸载Docker CE<pre><code># 更新 Docker CE
+$ sudo yum update docker-ce
+# 卸载 Docker CE
+$ sudo yum remove docker-ce</code></pre></li>
+<li>删除本地文件<br>注意，docker 的本地文件，包括镜像(images), 容器(containers), 存储卷(volumes)等，都需要手工删除。默认目录存储在 /var/lib/docker。<pre><code>$ sudo rm -rf /var/lib/docker</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>通过docker安装zabbix服务<br>  首先需要把镜像下载下来，分为以下四个</p>
+<ul>
+<li><p>mysql</p>
+</li>
+<li><p>zabbix-java-gateway</p>
+</li>
+<li><p>zabbix-server-mysql</p>
+</li>
+<li><p>zabbix-web-apache-mysql</p>
+<pre><code># 下载镜像
+$sudo docker pull mysql:5.7
+$sudo docker pull zabbix/zabbix-java-gateway:centos-4.2-latest
+$sudo docker pull zabbix/zabbix-server-mysql:centos-4.2-latest
+$sudo docker pull zabbix/zabbix-web-apache-mysql:centos-4.2-latest</code></pre><p>然后挨个进行启动</p>
+<pre><code># mysql
+$ sudo docker run --name mysql-server -t \
+      -e MYSQL_DATABASE=&quot;zabbix&quot; \
+      -e MYSQL_USER=&quot;zabbix&quot; \
+      -e MYSQL_PASSWORD=&quot;zabbix&quot; \
+      -e MYSQL_ROOT_PASSWORD=&quot;zabbix&quot; \
+      -p 127.0.0.1:3306:3306 \
+      -d mysql:5.7 \
+      --character-set-server=utf8 \ --collation-server=utf8_bin 
+# zabbix-java-gateway
+$sudo docker run --name zabbix-java-gateway -t \
+      -d zabbix/zabbix-java-gateway:latest
+
+# zabbix-server-mysql
+$sudo docker run --name zabbix-server-mysql -t \
+      --link mysql-server:mysql \
+      -e DB_SERVER_HOST=&quot;mysql-server&quot; \
+      -e MYSQL_DATABASE=&quot;zabbix&quot; \
+      -e MYSQL_USER=&quot;zabbix&quot; \
+      -e MYSQL_PASSWORD=&quot;zabbix&quot; \
+      -e MYSQL_ROOT_PASSWORD=&quot;zabbix&quot; \
+      -p 10051:10051 \
+      -d \
+      zabbix/zabbix-server-mysql:centos-4.2-latest
+
+# zabbix-web-apache-mysql
+$sudo docker run --name zabbix-web-apache-mysql -t \
+  --link mysql-server:mysql \
+  --link zabbix-server-mysql:zabbix-server \
+  -e DB_SERVER_HOST=&quot;mysql-server&quot; \
+  -e MYSQL_DATABASE=&quot;zabbix&quot; \
+  -e MYSQL_USER=&quot;zabbix&quot; \
+  -e MYSQL_PASSWORD=&quot;zabbix&quot; \
+  -e MYSQL_ROOT_PASSWORD=&quot;zabbix&quot; \
+  -e PHP_TZ=&quot;Asia/Shanghai&quot; \
+  -p 80:8088 \     # 前一个端口为docker镜像端口，后一个端口为服务器本地端口,映射时
+  -d \
+  zabbix/zabbix-web-apache-mysql:centos-4.2-latest</code></pre></li>
+</ul>
+<p>  <strong>注意：</strong></p>
+<ol>
+<li>需要注意端口号占用的问题， 灵活调整</li>
+<li>按顺序进行启动</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>至此，zabbix服务端就部署完毕了，可以通过浏览器访问localhost:8088进行访问了，输入用户名Admin，密码zabbix，即可进入。</p>
+<ul>
+<li><p>补充：Docker镜像开机启动命令，在所有命令后面添加<strong>–restart=always</strong></p>
+</li>
+<li><p>补充：Docker镜像添加<em>–restart=always</em>后，对于zabbix-web-apache-mysql所在镜像，需要及时检查其启动状态。如果一直处在restart状态，需要停止运行、rm，重新启动</p>
+</li>
+<li><p>补充：关于时钟问题，当服务器时钟不准确时，需要去掉”-e PHP_TZ=”Asia/Shanghai” “的配置选项！</p>
+</li>
+<li><p>补充：Docker常用命令</p>
+</li>
+</ul>
+<pre><code># 查看当前系统 Docker 信息 
+docker info
+
+# 拉取 docker 镜像 
+docker pull image_name
+# 从 Docker hub 上下载某个镜像 
+docker pull centos:latest
+
+# 查看宿主机上的镜像，Docker 镜像保存在 / var/lib/docker 目录下:
+docker images
+
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+mysql                           5.7                 1b30b36ae96a        8 days ago          372MB
+zabbix/zabbix-web-nginx-mysql   centos-4.0-latest   8be5f91b2fa1        3 weeks ago         415MB
+zabbix/zabbix-server-mysql      centos-4.0-latest   8e5becf45c4e        3 weeks ago         326MB
+
+# 删除镜像 
+docker rmi image_name/image_id
+docker rmi zabbix/zabbix-web-nginx-mysql:centos-4.0-latest 或者 docker rmi 8be5f91b2fa1
+
+# 查看当前有哪些容器正在运行 
+docker ps
+# 查看所有容器 
+docker ps -a
+
+CONTAINER ID        IMAGE                                             COMMAND                  CREATED             STATUS                       PORTS                           NAMES
+b30307ad65be        zabbix/zabbix-web-nginx-mysql:centos-4.0-latest   &quot;docker-entrypoint.sh&quot;   7 days ago          Exited (255) 8 minutes ago   443/tcp, 0.0.0.0:8080-&gt;80/tcp   zabbix-web-nginx-mysql
+0ad822cd52b7        zabbix/zabbix-server-mysql:centos-4.0-latest      &quot;docker-entrypoint.sh&quot;   7 days ago          Exited (255) 8 minutes ago   0.0.0.0:10051-&gt;10051/tcp        zabbix-server-mysql
+d01c89a112f7        mysql:5.7                                         &quot;docker-entrypoint.s…&quot;   7 days ago          Exited (255) 8 minutes ago   3306/tcp, 33060/tcp             mysql-server
+
+# 启动、停止、重启容器命令：
+docker start container_name/container_id
+docker stop container_name/container_id
+docker restart container_name/container_id
+
+# 后台启动一个容器后，如果想进入到这个容器，可以使用 attach
+docker attach container_name/container_id
+
+# 删除容器 
+docker rm container_name/container_id
+
+# 查看容器日志 
+docker logs -f container_name/container_id
+
+# 查看容器 IP 地址 
+docker inspect container_name/container_id
+
+# 进入容器 
+docker exec -it container_name/container_id bash
+
+# 从 Docker 容器与宿主机相互传输文件 
+[root@localhost tmp]# docker cp --help
+
+Usage:    docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+    docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
+
+Copy files/folders between a container and the local filesystem
+
+docker cp zabbix_config.sql mysql-server:/tmp
+docker cp mysql-server:/tmp/zabbix_config.sql /tmp
+
+
+# 批量删除所有已经退出的容器 
+docker rm -v $(docker ps -aq -f status=exited)
+
+
+# docker help
+[root@centos7lined1 wangao]# docker help
+
+Usage:    docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default &quot;/root/.docker&quot;)
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level (&quot;debug&quot;|&quot;info&quot;|&quot;warn&quot;|&quot;error&quot;|&quot;fatal&quot;) (default &quot;info&quot;)
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default &quot;/root/.docker/ca.pem&quot;)
+      --tlscert string     Path to TLS certificate file (default &quot;/root/.docker/cert.pem&quot;)
+      --tlskey string      Path to TLS key file (default &quot;/root/.docker/key.pem&quot;)
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  config      Manage Docker configs
+  container   Manage containers
+  image       Manage images
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container&#39;s changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container&#39;s filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container&#39;s filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+</code></pre><ul>
+<li><p>zabbix agent安装</p>
+<ul>
+<li><p>LVS</p>
+<ol>
+<li><p>直接安装，从软件源安装二进制包：</p>
+<pre><code># 安装客户端
+$ sudo yum install zabbix-agent</code></pre><p>当客户端找不到的时候，需要先进行添加安装的rpm</p>
+<pre><code>rpm -ivh http://repo.zabbix.com/zabbix/4.2/rhel/7/x86_64/zabbix-agent-4.2.0-1.el7.x86_64.rpm</code></pre><p>安装完成之后，进行启动：</p>
+<pre><code>$ sudo service zabbix-agent start
+
+#或者执行以下命令：
+$ sudo systemctl start zabbix-agent
+
+# 停止、重启、查看状态，则需要执行以下命令：
+
+$ sudo service zabbix-agent stop
+$ sudo service zabbix-agent restart
+$ sudo service zabbix-agent status</code></pre><p>如果你的zabbix-agent和zabbix-server安装在同一台机器上，就不需要做额外配置，否则就需要进行服务器日志等的配置，配置参考win端的zabbix agent配置。</p>
+<p>但是注意，如果不做配置的话，需要将你zabbix所在的linux服务端名称配置为默认的Zabbix Server。</p>
+</li>
+<li><p>编译安装(暂时不写)</p>
+</li>
+</ol>
+</li>
+<li><p>WinServer</p>
+<ol>
+<li><p>解压包安装</p>
+<p>先从<a href="https://www.zabbix.com/download_agents#tab:42" target="_blank" rel="noopener">下载地址</a>下载windows的解压包，我们这里设定解压路径为<em>C:\ZabbixAgent</em>。下载图片中标记的客户端。</p>
+<p>然后我们需要将其配置为系统服务并进行启动：</p>
+<p>```shell</p>
+<p>// cmd需要以管理员身份运行<br>// 安装<br>C:\ZabbixAgent\bin\zabbix_agentd.exe -c c:\ZabbixAgent\conf\zabbix_agentd.win.conf -i<br>// 启动<br>C:\ZabbixAgent\bin\zabbix_agentd.exe -c C:\ZabbixAgent\conf\zabbix_agentd.win.conf -s</p>
+<p>// 停止<br>C:\ZabbixAgent\bin\zabbix_agentd.exe -c C:\ZabbixAgent\conf\zabbix_agentd.win.conf -x<br>// 卸载<br>C:\ZabbixAgent\bin\zabbix_agentd.exe -c C:\ZabbixAgent\conf\zabbix_agentd.win.conf -d   </p>
+<p>// 命令解析</p>
+</li>
+</ol>
+<p>  -c ：指定配置文件所有位置<br>  -i ：安装客户端<br>  -s ：启动客户端<br>  -x ：停止客户端<br>  -d ：卸载客户端</p>
+<pre><code>
+  2. 安装包安装(暂时不写)
+
+操作完成之后需要从任务管理器里面查看是否存在ZabbixAgent服务，如果存在说明启动成功。</code></pre></li>
+</ul>
+</li>
+<li><p>数据监控</p>
+<ul>
+<li><p>针对win server</p>
+<p>如果只是针对WinServer进行监控，不需要对Zabbix agent进行脚本的配置更改。</p>
+<ol>
+<li><p>Zabbix agent端进行配置</p>
+<p>首先找到我们解压的ZabbixAgent所在路径，为<strong>C:\ZabbixAgent\</strong>，然后找到conf文件夹下的zabbix_agentd.win.conf文件，进行修改：</p>
+<pre><code>#日志文件存储位置
+LogFile=c:\ZabbixAgent\zabbix_agentd.log
+#zabbix主控端ip地址，也就是Server的地址
+Server=192.168.1.132
+#本机名，也可以在cmd下使用hostname命令获得，可以进行自定义
+Hostname=WinServer
+#zabbix主控端ip地址
+ServerActive=192.168.1.132</code></pre><p>然后安装再重启即可。</p>
+</li>
+<li><p>导入WinServer监控模板</p>
+<p>由于Zabbix中自带WinServer监控模板，因此无需导入。</p>
+</li>
+<li><p>创建WinServer主机</p>
+<p>步骤如下：</p>
+<p><img src="zabbix-%E5%88%9B%E5%BB%BA%E4%B8%BB%E6%9C%BA.PNG" alt="zabbix-创建主机.PNG"></p>
+<p><img src="zabbix-winServer%E9%85%8D%E7%BD%AE%E5%90%8D%E7%A7%B0.PNG" alt="zabbix-创建主机.PNG"></p>
+<p><img src="zabbix-winserver-%E9%80%89%E6%8B%A9%E6%A8%A1%E6%9D%BF.PNG" alt="zabbix-创建主机.PNG"></p>
+<p><img src="zabbix-WinServer-%E6%B7%BB%E5%8A%A0%E6%A8%A1%E6%9D%BF.PNG" alt="zabbix-创建主机.PNG"></p>
+</li>
+<li><p>查看上报数据<br>这样通过监测-&gt;图形，选择自己要监控的主机和监控数据类型，即可看到监控数据上报。如下图所示：</p>
+<p><img src="zabbix-winserver%E7%9B%91%E6%8E%A7%E6%95%B0%E6%8D%AE.PNG" alt="zabbix-创建主机.PNG"></p>
+</li>
+<li><p>参数指标详解</p>
+</li>
+</ol>
+</li>
+<li><p>针对linux server</p>
+<p>如果只是针对WinServer进行监控，不需要对Zabbix agent进行脚本的配置更改。</p>
+<ol>
+<li><p>Zabbix agent端进行配置</p>
+<ul>
+<li><p>安装Zabbix Agent</p>
+<p>注意：需要在VPS管理页面开放10051端口的访问。</p>
+</li>
+</ul>
+</li>
+<li><p>导入Linux监控模板</p>
+</li>
+<li><p>创建Linux主机</p>
+</li>
+<li><p>查看上报的数据</p>
+</li>
+<li><p>参数指标详解</p>
+</li>
+</ol>
+<ul>
+<li><p>补充：针对linux server遇到：failed to accept an incoming connection: connection from “one-ip” rejected, allowed hosts:“two-ip”的问题，需要：</p>
+<p>  针对配置文件中的Server字段，多配置几个ip，示例如下：Server=127.0.0.1,192.168.100.10,172.73.1.3</p>
+</li>
+</ul>
+</li>
+<li><p>针对nginx监控</p>
+<p>针对Nginx的监控，需要开启Nginx监控功能，然后对Zabbix agent端添加脚本并修改配置文件，然后进行导入模板的操作。Nginx部分接<br><a href="https://www.zybuluo.com/lsyAndroid/note/1466869" target="_blank" rel="noopener">上一篇文章</a></p>
+<ol>
+<li><p>配置文件开启监控功能</p>
+<p>切换到nginx安装路径的conf文件夹下，例如/usr/local/nginx/conf目录，然后进行操作：</p>
+<pre><code># 创建配置文件
+$ sudo touch nginx-status.conf
+$ vim nginx-status.conf
+server {
+ listen 8090; # 内网访问端口
+ server_name abc.test.com;
+ location /nginx_stat {
+     # 开启状态可访问
+     stub_status on;
+     access_log off;
+ }
+}
+
+# 在nginx.conf文件中引用该文件
+$ sudo vim nginx.conf
+......
+
+include nginx-status.conf;
+
+# 检查配置文件没有问题
+$ sudo nginx -t
+nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
+nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
+
+# 重启nignx
+$ sudo nginx -s reload
+
+# 检查之后，可以通过curl来访问测试
+$  curl http://127.0.0.1:8090/nginx_stat
+Active connections: 2
+server accepts handled requests
+ 55342 55342 74613
+Reading: 0 Writing: 1 Waiting: 1
+</code></pre><p>参数指标解释：</p>
+<p>Active connections –当前活跃的连接数量  </p>
+<p>server accepts handled requests — 总共处理了756072922个连接 , 成功创建 756072922次握手, 总共处理了1136799890个请求</p>
+<p>reading — 读取客户端的连接数.</p>
+<p>writing — 响应数据到客户端的数量</p>
+<p>waiting — 开启 keep-alive 的情况下,这个值等于 active – (reading+writing), 意思就是 Nginx 已经处理完正在等候下一次请求指令的驻留连接.</p>
+<p>这样就配置完成了Nginx的监控状态。</p>
+</li>
+<li><p>配置Nginx监控执行脚本</p>
+<p>在Nginx安装目录下，添加scripts文件夹，存放我们的监控脚本。</p>
+<pre><code>$ sudo vim scripts/nginx-performance.sh
+#!/bin/bash
+HOST=&quot;139.159.199.40&quot;     #这里的地址要写自己的
+PORT=&quot;8090&quot;               #端口号和配置文件中的nginx_stat
+
+function ping {
+ num=$(/sbin/pidof nginx |wc -l)
+}
+function active {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |grep &#39;Active&#39; |awk &#39;{print $NF}&#39;)
+}
+function reading {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |grep &#39;Reading&#39; |awk &#39;{print $2}&#39;)
+}
+function writing {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |grep &#39;Writing&#39; |awk &#39;{print $4}&#39;)
+}
+function waiting {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |grep &#39;Waiting&#39; |awk &#39;{print $6}&#39;)
+}
+function accepts {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |awk NR==3 |awk &#39;{print $1}&#39;)
+}
+function handled {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |awk NR==3 |awk &#39;{print $2}&#39;)
+}
+function requests {
+ num=$(/usr/bin/curl -s &quot;http://$HOST:$PORT/nginx_stat&quot; |awk NR==3 |awk &#39;{print $3}&#39;)
+}
+
+$1
+echo ${num:-0}
+</code></pre><p>脚本很简单，分表对应上节讲的各项指标。</p>
+</li>
+<li><p>Zabbix agent进行配置</p>
+<p>配置文件配置如下：</p>
+<pre><code>$ sudo vim /etc/zabbix/zabbix_agentd.conf
+# 守护进程文件
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+# 日志文件
+LogFile=/var/log/zabbix/zabbix_agentd.log
+# 日志文件初始大小
+LogFileSize=0
+# zabbix server所在ip地址
+Server=127.0.0.1 # 更换为你自己的地址
+# 同上配置即可
+ServerActive=127.0.0.1
+# 主机名称，和你在zabbix中配置的主机名称一致，否则无法进行监控数据的采集
+Hostname=HT-LVS-Nginx-0001
+# 配置文件
+Include=/etc/zabbix/zabbix_agentd.d/*.conf
+# 用户自定义参数，传入脚本用
+UnsafeUserParameters=1
+# 脚本配置，*,*以前是你在zabbix服务端进行配置的参数名称，*， *后是你要执行的脚本以及传入的参数
+UserParameter=nginx.status[*],/usr/local/nginx/scripts/nginx-performance.sh $1
+</code></pre><p>配置完成后，需要重启zabbix-agent进程</p>
+<pre><code>$ sudo systemctl restart zabbix_agentd
+
+# 或者执行下面的代码
+$ sudo /usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf
+</code></pre><p>这样就可以进行对Nginx的监控数据采集了。</p>
+<p>此时可以在Server端执行:</p>
+<pre><code># 在zabbix服务端（server）进行测试。
+$ zabbix_get -s 10.253.17.20 -p 10050 -k &quot;nginx[reading]&quot;
+0</code></pre></li>
+<li><p>导入Nginx监控模板</p>
+<p><a href="zabbix_monitor_nginx_template_ttlsa_com">下载模板</a>，然后进行导入。</p>
+<p>首先，登录zabbix界面，依次点击：配置（configuration）—模板（template）—导入（import）</p>
+<p><img src="zabbix_nginx%E6%A8%A1%E6%9D%BF%E5%AF%BC%E5%85%A5.png" alt></p>
+<p>其次配置主机，注意这里配置的主机名称为：<strong>HT-LVS-Nginx-0001</strong>，然后是添加模板</p>
+<p><img src="zabbix_nginx%E9%85%8D%E7%BD%AE%E4%B8%BB%E6%9C%BA.png" alt></p>
+<p>最后，查看nginx监控的最新数据：监控中—图形—选择相应的监控类型。</p>
+<p><img src="zabbix_nginx_%E7%9B%91%E6%8E%A71.png" alt></p>
+<p><img src="zabbix_nginx-%E5%8F%82%E6%95%B0.png" alt></p>
+</li>
+<li><p>参数指标详解</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>指标类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accepts（接受）</td>
+<td>NGINX 所接受的客户端连接数</td>
+<td>资源: 功能</td>
+</tr>
+<tr>
+<td>Handled（已处理）</td>
+<td>成功的客户端连接数</td>
+<td>资源: 功能</td>
+</tr>
+<tr>
+<td>Active（活跃）</td>
+<td>当前活跃的客户端连接数</td>
+<td>资源: 功能</td>
+</tr>
+<tr>
+<td>Dropped（已丢弃，计算得出）</td>
+<td>丢弃的连接数（接受 - 已处理）</td>
+<td>工作：错误*</td>
+</tr>
+<tr>
+<td>Requests（请求数）</td>
+<td>客户端请求数</td>
+<td>工作：吞吐量</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+</li>
+<li><p>针对SQL Server监控</p>
+<ol>
+<li><p>导入SQLServer配置模板</p>
+<p>SQLServer模板很多，推荐使用<a href="https://share.zabbix.com/template-windows-sql-server" target="_blank" rel="noopener">这个模板</a>，下载后解压先把Template文件夹下面的<strong>Template - Windows LLD MSSQL - 32.xml</strong>的模板导入到zabbix中即可。<br>注意模板是葡萄牙语的，如果有能力请更换为英语或者简体中文。</p>
+<p>汉化文章在此：<a href="https://blog.51cto.com/ygqygq2/2073139" target="_blank" rel="noopener">https://blog.51cto.com/ygqygq2/2073139</a></p>
+</li>
+<li><p>配置SQLServer监控执行脚本</p>
+<p>在SQLServer所在机器安装zabbix agent，这点操作同WinServer，安装完成并配置服务进行启动。<br>然后再WinServer中配置监控执行脚本。在ZabbixAgent安装路径下，创建<strong>scripts</strong>文件夹，将上面下载的<strong>discovery.mssql.server.ps1</strong>拷贝到该文件夹下面。最后需要把<strong>discovery.mssql.server.conf</strong>这个配置文件拷贝到ZabbixAgent安装目录下的conf文件夹中，并且修改同级目录下的</p>
+</li>
+</ol>
+<p>  <strong>zabbix_agentd.win.conf</strong>文件，如下:</p>
+<pre><code>  LogFile=c:\ZabbixAgent\zabbix_agentd.log
+
+  Server=127.0.0.1  # 配置你自己的ZabbixServer所在地址
+
+  ServerActive=127.0.0.1 # 配置你自己的ZabbixServer所在地址
+
+  Hostname=HT-WinServer2016-db-0002-SQLServer-25
+
+  Timeout=30
+
+  Include=C:\ZabbixAgent\conf\discovery.mssql.server.conf # 引用这个配置文件
+
+  UnsafeUserParameters=1</code></pre><p>  discovery.mssql.server.conf文件内容如下：</p>
+<pre><code>  # 要注意修改discovery.mssql.server.ps1脚本所在路径
+  UserParameter=discovery.mssql.databases,powershell.exe -noprofile -executionpolicy bypass -File C:\ZabbixAgent\scripts\discovery.mssql.server.ps1 JSONDB
+  UserParameter=discovery.mssql.jobs,powershell.exe -noprofile -executionpolicy bypass -File C:\ZabbixAgent\scripts\discovery.mssql.server.ps1 JSONJOB
+  UserParameter=discovery.mssql.data[*],powershell.exe -noprofile -executionpolicy bypass -File C:\ZabbixAgent\scripts\discovery.mssql.server.ps1 $1 &quot;$2&quot;
+</code></pre><ol start="3">
+<li><p>创建SQLServer主机</p>
+<p>创建SQLServer所在主机，并且配置我们刚刚导入的监控模板。</p>
+</li>
+<li><p>查看上报的数据</p>
+<p>上报数据示例如下图：</p>
+<p><img src="SQLServer%E7%9B%91%E6%8E%A7%E6%95%B0%E6%8D%AE.png" alt></p>
+</li>
+<li><p>参数指标详解</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意：</strong></p>
+<ol>
+<li>agent部分所在服务器要开放10050和10051端口</li>
+<li>agent部分所在服务器的配置文件内的<strong>Hostname</strong>，同创建主机时<strong>主机名称</strong>一致，如果不一致，无法看到主机的监控数据</li>
+</ol>
+<ul>
+<li><p>配置报警</p>
+<ul>
+<li><p>邮件</p>
+<p>实现邮件报警有两种思路，一个是通过平台的报警媒介配置实现，另一个是通过通过配置可执行脚本来发送邮件，这里演示前一种，因为后一种在Linux端配置的时候，<strong>遇到了邮件发送超时的问题</strong>，无法配置成功。</p>
+<ul>
+<li><p>配置报警媒介类型</p>
+<p>首先通过下面路径前往：管理-&gt;报警媒介类型-&gt;创建媒体类型，到以下页面:</p>
+<p><img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A61.PNG" alt="zabbix配置邮件报警1"></p>
+<p><img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A62.PNG" alt="zabbix配置邮件报警2"></p>
+</li>
+</ul>
+<p>  <strong>注意：</strong></p>
+<ol>
+<li><p>在创建报警媒介类型时，建议使用企业邮箱进行创建，不建议使用普通的QQ邮箱或者163邮箱进行，个人原因在配置的时候这两个邮箱均不可用，浪费了大量时间，特此订正。我自己用的是腾讯企业邮。</p>
+</li>
+<li><p>配置邮件报警后，回到前一个页面，可以点击测试，测试邮件是否能够发送成功。</p>
+<p>然后再切换到选项页面，如下图设置：</p>
+<p><img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A63.PNG" alt="zabbix配置邮件报警3"></p>
+<p>设置完成后点击添加/更新即可。这样配置完成了媒介类型。</p>
+</li>
+</ol>
+</li>
+<li><p>将媒介类型绑定用户</p>
+<p>  切换到用户页面，可以先创建用户，也可以在原有用户上进行添加。根据下图操作，切换到Admin用户所在页面：</p>
+<p>  <img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A64.PNG" alt="zabbix配置邮件报警4"></p>
+<p>  <img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A65.PNG" alt="zabbix配置邮件报警5"></p>
+<p>  切换到报警媒介页面，点击添加。这里可以添加多个收件人。<strong>添加完成后需要返回点击更新，以免添加无效！</strong>下面为添加页面：</p>
+<p>  <img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A66.PNG" alt="zabbix配置邮件报警6"></p>
+</li>
+<li><p>添加报警动作</p>
+<p>  切换到配置-&gt;动作-&gt;创建动作页面</p>
+<p>  <img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A67.PNG" alt="zabbix配置邮件报警7"></p>
+<p>  <img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A68.PNG" alt="zabbix配置邮件报警8"></p>
+<p>  添加名称，然后添加触发器：</p>
+<p>  <img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A69.PNG" alt="zabbix配置邮件报警9"></p>
+<p>  通过选择群组和模板，选择要报警的类别，在这里选择<strong>Zabbix agent on Template OS Linux is unreachable for 5 minutes</strong>这一项，不要忘了点击“新的出发条件”一栏，下面的<strong>添加</strong>按钮。将监控项添加到里面。</p>
+<ul>
+<li><p>配置邮件内容-操作、恢复操作、更新操作<br>以操作为例，进行添加，如下图点击<strong>新的</strong>超链接：</p>
+<p><img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A610.PNG" alt="zabbix配置邮件报警10"></p>
+<p>到达：</p>
+<p><img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A611.PNG" alt="zabbix配置邮件报警11"></p>
+<p>在上面页面中，添加<strong>发送到用户群组</strong>和<strong>发送到用户</strong>，这里发送到Admin用户下配置的邮箱。恢复操作和更新操作与上面雷同，不再说明。这里可以编辑默认标题和消息内容，更改邮件发送的内容格式。</p>
+</li>
+<li><p>测试<br>前提是你要测试的VPS已经在系统中添加并且配置了和前面页面选择模板时选择的相同的模板。这样在你的VPS中关闭ZabbixAgent系统服务，5分钟左右就会收到邮件，类似如下：</p>
+<p><img src="zabbix%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A612.PNG" alt="zabbix配置邮件报警12"></p>
+<p>至此，配置完成。</p>
+</li>
+</ul>
+</li>
+<li><p>企业微信</p>
+</li>
+<li><p>钉钉</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="grafana抓取zabbix数据"><a href="#grafana抓取zabbix数据" class="headerlink" title="grafana抓取zabbix数据"></a>grafana抓取zabbix数据</h2><p>注意：这里操作均在root用户下操作。</p>
+<ul>
+<li><p>安装 </p>
+<ul>
+<li><p>安装Grafana</p>
+<pre><code>yum install -y initscripts fontconfig    
+rpm -ivh ./package/grafana-4.0.2-1481203731.x86_64.rpm   
+yum install -y fontconfig    
+yum install -y freetype*    
+yum install -y urw-fonts    
+#显示安装的文件    
+rpm -qc grafana    
+#二进制文件 /usr/sbin/grafana-server    
+#服务管理脚本 /etc/init.d/grafana-server    
+#安装默认文件 /etc/sysconfig/grafana-server    
+#配置文件 /etc/grafana/grafana.ini</code></pre><p>这样安装完成后就可以启动了，启动的命令如下：</p>
+<pre><code>systemctl enable grafana-server
+
+systemctl start grafana-server   
+
+这样grafana在开机时会自动启动</code></pre></li>
+<li><p>安装插件</p>
+<ul>
+<li><p>zabbix插件</p>
+<pre><code>#下载模板等信息    
+cd ~    
+git clone https://github.com/hqh546020152/grafana.git    
+cd grafana
+#获取可用插件列表    
+grafana-cli plugins list-remote
+#安装Zabbix插件    
+grafana-cli plugins install alexanderzobnin-zabbix-app
+#安装硬盘监控插件,用于danyi.json模板   
+# grafana-cli plugins install grafana-piechart-panel    
+# 重启服务生效
+systemctl restart grafana-server</code></pre></li>
+</ul>
+</li>
+<li><p>安装图库（饼图、折线图、仪表盘等）</p>
+</li>
+</ul>
+</li>
+<li><p>Grafana和Zabbix联通</p>
+</li>
+</ul>
+<ul>
+<li>在浏览器地址栏输入 <a href="http://IP:3000就可以看到Grafana的登陆页面了。输入默认的用户名admin" target="_blank" rel="noopener">http://IP:3000就可以看到Grafana的登陆页面了。输入默认的用户名admin</a> 密码admin登陆<br>点击左侧的齿轮按钮，弹出选项框中，选择Data Sourses进入Data Source子页面，点击add data source进行添加。</li>
+</ul>
+<p><img src="Grafana%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E6%BA%90.PNG" alt="Grafana添加数据源"></p>
+<ul>
+<li>Type下拉框中选择Zabbix</li>
+</ul>
+<p><img src="Grafana%E6%B7%BB%E5%8A%A0zabbix%E6%95%B0%E6%8D%AE%E6%BA%90.PNG" alt="Grafana添加zabbix数据源"></p>
+<ul>
+<li>Name 可以自由发挥~~</li>
+<li>HTTP–&gt;Url 填入<a href="http://zabbix-server-ip/zabbix/api_jsonrpc.php" target="_blank" rel="noopener">http://zabbix-server-ip/zabbix/api_jsonrpc.php</a> 这里填入的是Zabbix API接口 （例如：<a href="http://10.0.93.126:8181/api_jsonrpc.php）" target="_blank" rel="noopener">http://10.0.93.126:8181/api_jsonrpc.php）</a></li>
+<li>Http–&gt;Access 选择 Server(default) 使用直接访问的方式</li>
+<li>Zabbix API details–&gt;User 填入Admin</li>
+<li>Zabbix API details–&gt;Password 填入 zabbix</li>
+<li>点Save&amp;Test按钮保存并且测试API配置是否正确。出现：Zabbix API version: 4.2.1 信息，说明配置成功</li>
+</ul>
+<p><img src="Grafana%E9%85%8D%E7%BD%AEZabbix%E6%95%B0%E6%8D%AE%E6%BA%90.PNG" alt="Grafana配置Zabbix数据源"></p>
+<ul>
+<li>导入模板</li>
+</ul>
+<p>以LVS监控为例子来进行讲解，首先我们先导入Linux监控的模板，从<a href="https://grafana.com/dashboards" target="_blank" rel="noopener">这里</a>挑选模板进行下载。由于我们使用zabbix做数据监控，这样我们可以使用<a href="https://grafana.com/dashboards/8677" target="_blank" rel="noopener">Dashboard Servers Linux</a>模板进行，如图所示：</p>
+<p><img src="grafana%E4%B8%8B%E8%BD%BD%E6%A8%A1%E6%9D%BF.PNG" alt="grafana下载模板"></p>
+<p>然后复制ID，转到我们添加模板的页面，如图所示：<br><img src="grafana%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.PNG" alt="grafana导入模板"></p>
+<p>将ID粘贴到Grafana.com Dashboard这个下的输入框中，点击下边的load按钮，即可进入模板数据源绑定页面，如下所示：<br><img src="grafana%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%BA%90.PNG" alt="grafana导入模板配置数据源"></p>
+<p>在数据源绑定部分，我们选择zabbix数据源，然后稍加修改，就可以导入到grafana中了。如下图所示：<br><img src="grafana%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF-%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%8C%E6%88%90.PNG" alt="grafana导入模板-配置数据源完成"></p>
+<p>这样我们需要修改一些地方，才能使模板工作。因为我目前只有一台Linux服务器，所以我们在这个模板中固定下服务器的参数即可。首先去掉预设的参数，操作如下：</p>
+<p><img src="grafana%E6%A8%A1%E6%9D%BF%E4%BF%AE%E6%94%B9.PNG" alt="grafana模板修改"></p>
+<p><img src="grafana%E5%88%A0%E9%99%A4%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8F%82%E6%95%B0.PNG" alt="grafana删除自定义的参数"></p>
+<p>修改完成之后点击Save进行保存。然后我们回到dashboard页面，随便点开一个图表，进入图标的设计页面，如图：</p>
+<p><img src="grafana%E5%9B%BE%E8%A1%A8%E9%85%8D%E7%BD%AE%E8%BF%9B%E5%85%A5%E4%B9%8B%E5%89%8D.PNG" alt="grafana图表配置进入之前"></p>
+<p>最后，我们对这个图表进行调整，第一步，修改Group和Host数据为下面的内容：</p>
+<p><img src="grafana-%E4%BF%AE%E6%94%B9Group-Host.PNG" alt="grafana-修改Group-Host"></p>
+<p>第二步，数据出现后，我们修改图表名称，切换到下一个页面中，在如下图所示</p>
+<p><img src="grafana%E4%BF%AE%E6%94%B9%E5%9B%BE%E8%A1%A8%E5%90%8D%E5%AD%97.PNG" alt="grafana修改图表名字"></p>
+<p>这样这个图表就修复完成了。</p>
+<p>最后的最后，经过调整，我们会得到这样的图表：</p>
+<p><img src="grafana%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C.PNG" alt="grafana最终效果"></p>
+<ul>
+<li><p>自定义创建图表</p>
+</li>
+<li><p>添加分组信息</p>
+</li>
+</ul>
+<p>针对多台相同类型的服务器进行统一管理</p>
+<ul>
+<li><p>数据绑定和处理</p>
+</li>
+<li><p>自带报警（对zabbix无效）</p>
+</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><p><a href="https://qizhanming.com/blog/2019/01/25/how-to-install-docker-ce-on-centos-7" target="_blank" rel="noopener">CentOS 7 下 yum 安装 Docker CE</a></p>
+</li>
+<li><p><a href="https://wsgzao.github.io/post/zabbix-docker/" target="_blank" rel="noopener">使用 Docker 安装 Zabbix 实践</a></p>
+</li>
+<li><p><a href="https://wsgzao.github.io/post/docker/" target="_blank" rel="noopener">Docker 从入门到实践</a></p>
+</li>
+<li><p><a href="http://www.ttlsa.com/zabbix/zabbix-monitor-nginx-performance/" target="_blank" rel="noopener">Zabbix监控nginx性能</a></p>
+</li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Zabbix+Grafana运维监控平台搭建》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/08/15/zabbix-grafana-yun-wei-jian-kong-ping-tai-da-jian/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/09/01/kai-fa-huan-jing-yi-ji-ban-ben-yue-ding/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="开发环境以及版本约定">
+                        
+                        <span class="card-title">开发环境以及版本约定</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            开发环境以及版本约定1. 日常开发1.1 环境：java8还是更高版本？jdk1.8的商用限制？
+1.2 IDE：Intellij Idea还是Eclipse，版本用最新吗？
+1.3 构建工具：maven还是gradle？用maven3以上
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java/" class="post-category" target="_blank">
+                                    Java
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java-SpringCloud-微服务/" target="_blank">
+                        <span class="chip bg-color">Java SpringCloud 微服务</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/08/10/objective-c-bian-ma-gui-fan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Objective-C编码规范">
+                        
+                        <span class="card-title">Objective-C编码规范</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Objective-C编码规范Objective-C编码规范，内容来自苹果、谷歌的文档翻译，『博爱』的编码经验和对其它资料的总结。
+##概要Objective-C是一门面向对象的动态编程语言，主要用于编写iOS和Mac应用程序。关于Obje
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-10
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Objective-C/" target="_blank">
+                        <span class="chip bg-color">Objective-C</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">271.5k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

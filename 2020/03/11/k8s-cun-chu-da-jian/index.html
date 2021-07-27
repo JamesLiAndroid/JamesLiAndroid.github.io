@@ -1,0 +1,1875 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="k8s存储搭建, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="为k8s提供常见存储——单机nfs以及Rook+Ceph存储集群的安装和配置环境介绍
+操作系统:centos7.6
+服务器列表
+
+
+
+
+主机名称
+ip地址
+作用
+
+
+
+k8s-nfs-provider
+192.168.238.236
+nfs">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>k8s存储搭建 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/27.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        k8s存储搭建
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        <span class="chip bg-color">无标签</span>
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-03-11
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    26 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="为k8s提供常见存储——单机nfs以及Rook-Ceph存储集群的安装和配置"><a href="#为k8s提供常见存储——单机nfs以及Rook-Ceph存储集群的安装和配置" class="headerlink" title="为k8s提供常见存储——单机nfs以及Rook+Ceph存储集群的安装和配置"></a>为k8s提供常见存储——单机nfs以及Rook+Ceph存储集群的安装和配置</h1><h2 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h2><ul>
+<li>操作系统:centos7.6</li>
+<li>服务器列表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>主机名称</th>
+<th>ip地址</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-nfs-provider</td>
+<td>192.168.238.236</td>
+<td>nfs单机安装</td>
+</tr>
+<tr>
+<td>k8s-rke-node-start</td>
+<td>192.168.238.240</td>
+<td>rke管理机，管理k8s</td>
+</tr>
+<tr>
+<td>k8s-node-01</td>
+<td>192.168.238.232</td>
+<td>k8s集群机器1</td>
+</tr>
+<tr>
+<td>k8s-node-00</td>
+<td>192.168.238.239</td>
+<td>k8s集群机器2</td>
+</tr>
+<tr>
+<td>k8s-node-02</td>
+<td>192.168.238.241</td>
+<td>k8s集群机器3</td>
+</tr>
+</tbody></table>
+<ul>
+<li><p>工具及其版本列表</p>
+<ol>
+<li><p>nfs版本，遵循yum版本信息</p>
+</li>
+<li><p>Rook：1.2.5</p>
+</li>
+<li><p>Ceph: 14.2.7</p>
+</li>
+</ol>
+</li>
+<li><p>前提：请参考**[Rancher集群化部署–在线安装.md]*文档，进行安装配置k8s和rancher。已经设置了240机器可以访问232、239、241三台机器，配置了ssh互通。</p>
+</li>
+<li><p>注意尽量给每台机器较大的硬盘信息，尽量不低于30GB。</p>
+</li>
+</ul>
+<h2 id="nfs的安装配置"><a href="#nfs的安装配置" class="headerlink" title="nfs的安装配置"></a>nfs的安装配置</h2><h3 id="1-nfs服务端的安装"><a href="#1-nfs服务端的安装" class="headerlink" title="1. nfs服务端的安装"></a>1. nfs服务端的安装</h3><p>登录192.168.238.236的机器，如下：</p>
+<pre><code>$ ssh -p 15555 centos@192.168.238.236</code></pre><p>首先检查并安装NFS，</p>
+<pre><code>// 查看之前是否安装
+$ sudo rpm -aq nfs-utils rpcbind
+
+// 更新源信息
+$ sudo yum update
+
+// 安装
+$ sudo yum install  nfs-utils rpcbind -y</code></pre><p>其次启动RPC服务和NFS服务并检查，</p>
+<pre><code>// 启动rpc服务并设置开机启动
+$ sudo systemctl start rpcbind.service
+$ sudo systemctl enable rpcbind.service
+
+// 启动NFS服务并设置开机启动
+$ sudo systemctl start nfs.service
+$ sudo systemctl enable nfs.service
+
+// 检查已经设置开机启动的是否生效
+$ sudo systemctl list-unit-files|grep enabled
+
+// 查看rpc是否启动成功
+$ sudo netstat   -lntup|grep rpc
+// 输出以下信息
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      808/rpcbind
+tcp        0      0 0.0.0.0:20048           0.0.0.0:*               LISTEN      2281/rpc.mountd
+tcp        0      0 0.0.0.0:58642           0.0.0.0:*               LISTEN      2214/rpc.statd
+tcp6       0      0 :::37967                :::*                    LISTEN      2214/rpc.statd
+tcp6       0      0 :::111                  :::*                    LISTEN      808/rpcbind
+tcp6       0      0 :::20048                :::*                    LISTEN      2281/rpc.mountd
+udp        0      0 127.0.0.1:703           0.0.0.0:*                           2214/rpc.statd
+udp        0      0 0.0.0.0:970             0.0.0.0:*                           808/rpcbind
+udp        0      0 0.0.0.0:59572           0.0.0.0:*                           2214/rpc.statd
+udp        0      0 0.0.0.0:20048           0.0.0.0:*                           2281/rpc.mountd
+udp        0      0 0.0.0.0:111             0.0.0.0:*                           808/rpcbind
+udp6       0      0 :::970                  :::*                                808/rpcbind
+udp6       0      0 :::44176                :::*                                2214/rpc.statd
+udp6       0      0 :::20048                :::*                                2281/rpc.mountd
+udp6       0      0 :::111                  :::*                                808/rpcbind
+
+// 查看rpc监控信息
+$ sudo rpcinfo -p localhost
+// 输出以下信息
+program vers proto   port  service
+100000    4   tcp    111  portmapper
+100000    3   tcp    111  portmapper
+100000    2   tcp    111  portmapper
+100000    4   udp    111  portmapper
+100000    3   udp    111  portmapper
+100000    2   udp    111  portmapper
+100024    1   udp  59572  status
+100024    1   tcp  58642  status
+100005    1   udp  20048  mountd
+100005    1   tcp  20048  mountd
+100005    2   udp  20048  mountd
+100005    2   tcp  20048  mountd
+100005    3   udp  20048  mountd
+100005    3   tcp  20048  mountd
+100003    3   tcp   2049  nfs
+100003    4   tcp   2049  nfs
+100227    3   tcp   2049  nfs_acl
+100003    3   udp   2049  nfs
+100003    4   udp   2049  nfs
+100227    3   udp   2049  nfs_acl
+100021    1   udp  43983  nlockmgr
+100021    3   udp  43983  nlockmgr
+100021    4   udp  43983  nlockmgr
+100021    1   tcp  45822  nlockmgr
+100021    3   tcp  45822  nlockmgr
+100021    4   tcp  45822  nlockmgr</code></pre><p>必须先启动rpcbind服务，后启动nfs服务，因为rpcbind服务启动之后，监控nfs服务</p>
+<p>最后，设置共享文件夹，使nfs生效。操作如下：</p>
+<pre><code>// 创建nfs-share文件夹
+$ sudo mkdir /nfs-share
+// 设置其可读写
+$ sudo chmod -R 777 /nfs-share
+
+// 配置/etc/exports
+$ sudo su
+# cat  &gt;&gt;/etc/exports&lt;&lt;EOF
+/data 192.168.238.0/24(rw,sync,all_squash)  
+EOF
+// 配置信息说明
+//  /data这是需要共享的目录，192.168.238.0/24允许访问的客户端，这里表示整个网段的都可以访问，也可以指定单个地址，也可以用星号表示所有用户都可以访问。
+// rw可读可行，sync实时写的的磁盘，all_squash不管访问NFS Server共享目录的用户身份如何，它的权限都被压缩成匿名用户，同时它的UID和GID都会变成nfsnobody账号身份。在早期多个NFS客户端同时读写NFS Server数据时，这个参数很有用。
+
+// 重启nfs服务
+$ sudo systemctl reload nfs.service
+
+// 查看
+showmount -e localhost 
+//  输出 结果:
+Export list for localhost:
+/data 172.16.1.0/24</code></pre><p>这样nfs服务端就已经安装完成了。这样该服务器的可用硬盘容量就是该nfs服务的可用容量了。</p>
+<h3 id="2-nfs客户端的安装配置"><a href="#2-nfs客户端的安装配置" class="headerlink" title="2. nfs客户端的安装配置"></a>2. nfs客户端的安装配置</h3><p>在所有目标机器（192.168.238.232，192.168.238.239，192.168.238.241）中进行操作。</p>
+<p>首先检查并安装NFS，如下：</p>
+<pre><code>// 查看之前是否安装
+$ sudo rpm -aq nfs-utils rpcbind
+
+// 更新源信息
+$ sudo yum update
+
+// 安装
+$ sudo yum install  nfs-utils rpcbind -y
+
+// 额外需要安装的包
+$ sudo yum install -y cifs-utils</code></pre><p>其次启动RPC服务和NFS服务并检查，</p>
+<pre><code>// 启动rpc服务并设置开机启动
+$ sudo systemctl start rpcbind.service
+$ sudo systemctl enable rpcbind.service</code></pre><p>然后开始检查服务端的NFS，</p>
+<pre><code>$ showmount -e 192.168.238.236
+// 出现下面结果，则成功：
+Export list for 192.168.238.236:
+/nfs-share 192.168.238.0/24</code></pre><p>倒数第二步，对该磁盘进行挂载</p>
+<pre><code>// 挂载
+// -t 挂载的类型，表示以nfs模式运行
+$ sudo mount -t nfs 192.168.238.236:/nfs-share /mnt   
+// 查看
+$ df -h
+// 在列表中能找到下面的信息
+192.168.238.236:/nfs-share   146G  1.7G  145G   2% /mnt</code></pre><p>最后，把挂载点写入到开机自启动</p>
+<pre><code># echo &quot;mount -t nfs 192.168.238.236:/nfs-share /mnt&quot; &gt;&gt; /etc/rc.local</code></pre><p>这样完成后，添加nfs存储已经成功。</p>
+<h3 id="3-测试文件写入"><a href="#3-测试文件写入" class="headerlink" title="3. 测试文件写入"></a>3. 测试文件写入</h3><p>例如我们在192.168.238.232机器上创建一个文件并写入信息，例如：</p>
+<pre><code>[centos@k8s-cluster-node-02 /]$ cd /mnt
+[centos@k8s-cluster-node-02 mnt]$ touch nfs-test.txt
+[centos@k8s-cluster-node-02 mnt]$ echo &quot;test nfs hello world&quot; &gt; nfs-test.txt
+[centos@k8s-cluster-node-02 mnt]$ ls
+nfs-test.txt</code></pre><p>然后我们回到192.168.238.236机器上，打开文件夹查看：</p>
+<pre><code>[centos@k8s-nfs-provider ~]$ cd /nfs-share/
+[centos@k8s-nfs-provider nfs-share]$ ls
+nfs-test.txt
+[centos@k8s-nfs-provider nfs-share]$ cat nfs-test.txt
+// 输出信息
+test nfs hello world</code></pre><p>这样说明我们可以成功写入文件信息。</p>
+<h3 id="4-添加nfs到rancher"><a href="#4-添加nfs到rancher" class="headerlink" title="4. 添加nfs到rancher"></a>4. 添加nfs到rancher</h3><p>rancher会在存储中，自动发现nfs存储，直接显示主机名称<strong>k8s-nfs-1</strong>。</p>
+<p>后续添加存储，添加卷信息，都可以基于该nfs存储进行。</p>
+<h2 id="Rook-Ceph进行集群存储调度管理"><a href="#Rook-Ceph进行集群存储调度管理" class="headerlink" title="Rook+Ceph进行集群存储调度管理"></a>Rook+Ceph进行集群存储调度管理</h2><p>我们需要先登录到192.168.238.240机器上进行操作。如下：</p>
+<pre><code>$ ssh -p 15555 centos@192.168.238.240</code></pre><h3 id="1-第一种方式：使用helm安装rook-ceph"><a href="#1-第一种方式：使用helm安装rook-ceph" class="headerlink" title="1. 第一种方式：使用helm安装rook-ceph"></a>1. 第一种方式：使用helm安装rook-ceph</h3><p>这里可以使用helm快速安装rook-ceph。操作如下</p>
+<pre><code>// 创建rook-ceph-system命名空间
+$ kubectl create namespace rook-ceph-system
+
+// 添加rook安装仓库信息
+$ helm repo add rook-stable https://charts.rook.io/release
+
+// 更新仓库信息
+$ helm update
+
+// 安装rook-ceph管理工具
+$ helm install rook --namespace rook-ceph-system rook-stable/rook-ceph
+
+// check
+$  kubectl --namespace rook-ceph-system get pods -l &quot;app=rook-ceph-operator&quot;</code></pre><p>请注意, rook-ceph-system 中的所有 Pod 都应该是 Running 或者Completed 状态,不应存在 restarts 或error 的情况。</p>
+<h3 id="2-第二种方式：使用官方推荐的配置文件安装ceph存储"><a href="#2-第二种方式：使用官方推荐的配置文件安装ceph存储" class="headerlink" title="2. 第二种方式：使用官方推荐的配置文件安装ceph存储"></a>2. 第二种方式：使用官方推荐的配置文件安装ceph存储</h3><p>下载官方压缩包，解压后操作。如下：</p>
+<pre><code>// 下载压缩包并解压
+$ wget https://github.com/rook/rook/archive/v1.2.5.tar.gz
+
+$ tar -zxvf v1.2.5.tar.gz
+
+$ cd cluster/examples/kubernetes/ceph/
+
+// 执行三联
+$ kubectl create -f common.yaml
+$ kubectl create -f operator.yaml
+$ kubectl create -f cluster.yaml
+
+// 查看安装效果
+$ kubectl get pods -n rook-ceph
+NAME                                                    READY   STATUS      RESTARTS   AGE
+csi-cephfsplugin-7sjpz                                  3/3     Running     0          5m54s
+csi-cephfsplugin-jjzpn                                  3/3     Running     0          5m42s
+csi-cephfsplugin-lvshq                                  3/3     Running     0          5m51s
+csi-cephfsplugin-provisioner-66c94d9784-mgn95           4/4     Running     0          5m38s
+csi-cephfsplugin-provisioner-66c94d9784-rxljk           4/4     Running     0          6m5s
+csi-rbdplugin-4zfl2                                     3/3     Running     0          6m
+csi-rbdplugin-n2tmw                                     3/3     Running     0          5m59s
+csi-rbdplugin-provisioner-b4cfc4fd5-7pvw5               5/5     Running     0          4m49s
+csi-rbdplugin-provisioner-b4cfc4fd5-q6jmn               5/5     Running     0          6m10s
+csi-rbdplugin-x696n                                     3/3     Running     0          6m3s
+rook-ceph-crashcollector-192.168.238.232-6b4b667d48-c8ltm   1/1     Running     0          61m
+rook-ceph-crashcollector-192.168.238.239-64db57cb89-kckzb   1/1     Running     0          62m
+rook-ceph-crashcollector-192.168.238.241-6d6697b8d8-hzxb7   1/1     Running     0          61m
+rook-ceph-mgr-a-75997f59cd-pk6rx                        1/1     Running     0          61m
+rook-ceph-mon-a-6f6b5c6cb8-zj2cd                        1/1     Running     0          62m
+rook-ceph-mon-b-8cb89bd84-6xzzp                         1/1     Running     0          62m
+rook-ceph-mon-c-d95686f54-vcttv                         1/1     Running     0          61m
+rook-ceph-operator-784cfd5c7d-msggb                     1/1     Running     1          6m17s
+rook-ceph-osd-prepare-192.168.238.232-kcz6x                 0/1     Completed   0          3m32s
+rook-ceph-osd-prepare-192.168.238.239-fxn5t                 0/1     Completed   0          3m26s
+rook-ceph-osd-prepare-192.168.238.241-2qqsg                 0/1     Completed   0          3m21s
+rook-discover-55rlx                                     1/1     Running     0          65m
+rook-discover-8cnnx                                     1/1     Running     0          65m
+rook-discover-s7thp                                     1/1     Running     0          65m</code></pre><p>请注意, rook-ceph-system 中的所有 Pod 都应该是 Running 或者Completed 状态,不应存在 restarts 或error 的情况。</p>
+<p><strong>问题：</strong></p>
+<pre><code>
+[centos@k8s-rke-node-start ceph]$ kubectl get pods -n rook-ceph
+NAME                                                    READY   STATUS             RESTARTS   AGE
+csi-cephfsplugin-mk622                                  1/3     CrashLoopBackOff   26         45m
+csi-cephfsplugin-nhvrr                                  1/3     CrashLoopBackOff   26         45m
+csi-cephfsplugin-provisioner-7b8fbf88b4-4wlpq           4/4     Running            0          45m
+csi-cephfsplugin-provisioner-7b8fbf88b4-824jv           4/4     Running            0          45m
+csi-cephfsplugin-z7nc4                                  1/3     CrashLoopBackOff   26         45m
+csi-rbdplugin-8qt6t                                     1/3     CrashLoopBackOff   26         45m
+csi-rbdplugin-hbgvt                                     1/3     CrashLoopBackOff   26         45m
+csi-rbdplugin-provisioner-6b8b4d558c-p6kq8              5/5     Running            0          45m
+csi-rbdplugin-provisioner-6b8b4d558c-tc954              5/5     Running            0          45m
+csi-rbdplugin-s8c7h                                     1/3     CrashLoopBackOff   26         45m
+rook-ceph-crashcollector-192.168.238.232-6b4b667d48-c8ltm   1/1     Running            0          42m
+rook-ceph-crashcollector-192.168.238.239-64db57cb89-kckzb   1/1     Running            0          43m
+rook-ceph-crashcollector-192.168.238.241-6d6697b8d8-hzxb7   1/1     Running            0          42m
+rook-ceph-mgr-a-75997f59cd-pk6rx                        1/1     Running            0          42m
+rook-ceph-mon-a-6f6b5c6cb8-zj2cd                        1/1     Running            0          43m
+rook-ceph-mon-b-8cb89bd84-6xzzp                         1/1     Running            0          43m
+rook-ceph-mon-c-d95686f54-vcttv                         1/1     Running            0          42m
+rook-ceph-operator-7dcd87699d-cwdk8                     1/1     Running            0          45m
+rook-ceph-osd-prepare-192.168.238.232-vc8lm                 0/1     Completed          0          41m
+rook-ceph-osd-prepare-192.168.238.239-6tc99                 0/1     Completed          0          41m
+rook-ceph-osd-prepare-192.168.238.241-88fhz                 0/1     Completed          0          41m
+rook-discover-55rlx                                     1/1     Running            0          45m
+rook-discover-8cnnx                                     1/1     Running            0          45m
+rook-discover-s7thp                                     1/1     Running            0          45m
+
+$ kubectl -n rook-ceph logs csi-cephfsplugin-mk622
+Error from server (BadRequest): a container name must be specified for pod csi-cephfsplugin-mk622, choose one of: [driver-registrar csi-cephfsplugin liveness-prometheus]
+
+$ kubectl -n rook-ceph logs csi-cephfsplugin-mk622 -c csi-cephfsplugin
+I0305 03:41:37.740687       1 cephcsi.go:104] Driver version: v1.2.2 and Git version: f8c854dc7d6ffff02cb2eed6002534dc0473f111
+I0305 03:41:37.740869       1 cachepersister.go:45] cache-perister: using kubernetes configmap as metadata cache persister
+I0305 03:41:37.743887       1 cephcsi.go:131] Initial PID limit is set to -1
+I0305 03:41:37.743983       1 cephcsi.go:140] Reconfigured PID limit to -1 (max)
+I0305 03:41:37.743996       1 cephcsi.go:159] Starting driver type: cephfs with name: rook-ceph.cephfs.csi.ceph.com
+I0305 03:41:37.747336       1 volumemounter.go:159] loaded mounter: kernel
+I0305 03:41:37.763570       1 volumemounter.go:167] loaded mounter: fuse
+I0305 03:41:37.763847       1 mountcache.go:59] mount-cache: name: rook-ceph.cephfs.csi.ceph.com, version: v1.2.2, mountCacheDir: /mount-cache-dir
+I0305 03:41:37.763937       1 mountcache.go:99] mount-cache: successfully remounted 0 volumes
+F0305 03:41:37.764345       1 httpserver.go:25] listen tcp 192.168.238.232:9091: bind: address already in use
+I0305 03:41:37.764687       1 server.go:118] Listening for connections on address: &amp;net.UnixAddr{Name:&quot;//csi/csi.sock&quot;, Net:&quot;unix&quot;}
+</code></pre><p>端口被占用的问题。查找三个文件，cluster.yaml、operator.yaml、common.yaml。然后找到operator.yaml中，存在的端口号9091、9081、9090、9080重新进行设置，一定保证设置为未使用的端口信息：</p>
+<pre><code>$ vim operator.yaml
+// 修改下面的信息
+    # Configure CSI cephfs grpc and liveness metrics port
+    - name: CSI_CEPHFS_GRPC_METRICS_PORT
+      value: &quot;10091&quot;
+    - name: CSI_CEPHFS_LIVENESS_METRICS_PORT
+      value: &quot;10081&quot;
+    # Configure CSI rbd grpc and liveness metrics port
+    - name: CSI_RBD_GRPC_METRICS_PORT
+      value: &quot;10090&quot;
+    - name: CSI_RBD_LIVENESS_METRICS_PORT
+      value: &quot;10080&quot;</code></pre><p>设置完成后，重新执行operator.yaml。</p>
+<pre><code>$ kubectl apply -f operator.yaml</code></pre><p>查看效果：</p>
+<pre><code>$ kubectl get pods -n rook-ceph
+NAME                                                    READY   STATUS      RESTARTS   AGE
+csi-cephfsplugin-7sjpz                                  3/3     Running     0          5m54s
+csi-cephfsplugin-jjzpn                                  3/3     Running     0          5m42s
+csi-cephfsplugin-lvshq                                  3/3     Running     0          5m51s
+csi-cephfsplugin-provisioner-66c94d9784-mgn95           4/4     Running     0          5m38s
+csi-cephfsplugin-provisioner-66c94d9784-rxljk           4/4     Running     0          6m5s
+csi-rbdplugin-4zfl2                                     3/3     Running     0          6m
+csi-rbdplugin-n2tmw                                     3/3     Running     0          5m59s
+csi-rbdplugin-provisioner-b4cfc4fd5-7pvw5               5/5     Running     0          4m49s
+csi-rbdplugin-provisioner-b4cfc4fd5-q6jmn               5/5     Running     0          6m10s
+csi-rbdplugin-x696n                                     3/3     Running     0          6m3s
+rook-ceph-crashcollector-192.168.238.232-6b4b667d48-c8ltm   1/1     Running     0          61m
+rook-ceph-crashcollector-192.168.238.239-64db57cb89-kckzb   1/1     Running     0          62m
+rook-ceph-crashcollector-192.168.238.241-6d6697b8d8-hzxb7   1/1     Running     0          61m
+rook-ceph-mgr-a-75997f59cd-pk6rx                        1/1     Running     0          61m
+rook-ceph-mon-a-6f6b5c6cb8-zj2cd                        1/1     Running     0          62m
+rook-ceph-mon-b-8cb89bd84-6xzzp                         1/1     Running     0          62m
+rook-ceph-mon-c-d95686f54-vcttv                         1/1     Running     0          61m
+rook-ceph-operator-784cfd5c7d-msggb                     1/1     Running     1          6m17s
+rook-ceph-osd-prepare-192.168.238.232-kcz6x                 0/1     Completed   0          3m32s
+rook-ceph-osd-prepare-192.168.238.239-fxn5t                 0/1     Completed   0          3m26s
+rook-ceph-osd-prepare-192.168.238.241-2qqsg                 0/1     Completed   0          3m21s
+rook-discover-55rlx                                     1/1     Running     0          65m
+rook-discover-8cnnx                                     1/1     Running     0          65m
+rook-discover-s7thp                                     1/1     Running     0          65m</code></pre><h3 id="3-安装toolbox和dashboard"><a href="#3-安装toolbox和dashboard" class="headerlink" title="3. 安装toolbox和dashboard"></a>3. 安装toolbox和dashboard</h3><h4 id="安装toolbox"><a href="#安装toolbox" class="headerlink" title="安装toolbox"></a>安装toolbox</h4><p>直接依据这个rook-ceph-tools.yaml进行安装：</p>
+<pre><code>$ kubectl apply -f toolbox.yaml</code></pre><p>一旦 toolbox 的 Pod 运行成功后，我们就可以使用下面的命令进入到工具箱内部进行操作：</p>
+<pre><code>$ kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l &quot;app=rook-ceph-tools&quot; -o jsonpath=&#39;{.items[0].metadata.name}&#39;) bash
+
+// 查看安装后状态
+$ kubectl get pods -n rook-ceph
+rook-ceph-tools-7d764c8647-vdz5r                        1/1     Running     0          3d20h
+
+// 进入下面的窗口，执行ceph status
+[root@rook-ceph-tools-7d764c8647-vdz5r /]# ceph status
+cluster:
+    id:     18c1fa7d-944b-4a2e-8ef0-e6699c49ac67
+    health: HEALTH_OK
+
+services:
+    mon: 3 daemons, quorum a,b,c (age 2d)
+    mgr: a(active, since 13h)
+    mds: myfs:1 {0=myfs-a=up:active} 1 up:standby-replay
+    osd: 3 osds: 3 up (since 2d), 3 in (since 2d)
+    rgw: 1 daemon active (my.store.a)
+
+data:
+    pools:   10 pools, 80 pgs
+    objects: 264 objects, 13 KiB
+    usage:   16 GiB used, 177 GiB / 192 GiB avail
+    pgs:     80 active+clean
+
+io:
+    client:   853 B/s rd, 1 op/s rd, 0 op/s wr
+
+// 执行ceph osd status
+[root@rook-ceph-tools-7d764c8647-vdz5r /]# ceph osd status
++----+-------------+-------+-------+--------+---------+--------+---------+-----------+
+| id |     host    |  used | avail | wr ops | wr data | rd ops | rd data |   state   |
++----+-------------+-------+-------+--------+---------+--------+---------+-----------+
+| 0  | 192.168.238.239 | 5405M | 44.8G |    0   |     0   |    2   |   106   | exists,up |
+| 1  | 192.168.238.232 | 5235M | 35.9G |    0   |     0   |    0   |     0   | exists,up |
+| 2  | 192.168.238.241 | 5368M | 95.8G |    0   |     0   |    1   |     0   | exists,up |
++----+-------------+-------+-------+--------+---------+--------+---------+-----------+
+
+// 执行ceph df
+[root@rook-ceph-tools-7d764c8647-vdz5r /]# ceph df
+RAW STORAGE:
+  CLASS     SIZE        AVAIL       USED       RAW USED     %RAW USED
+    hdd       192 GiB     177 GiB     16 GiB       16 GiB          8.13
+    TOTAL     192 GiB     177 GiB     16 GiB       16 GiB          8.13
+
+POOLS:
+  POOL                            ID     STORED      OBJECTS     USED        %USED     MAX AVAIL
+    my-store.rgw.control             1         0 B           8         0 B         0        53 GiB
+    my-store.rgw.meta                2       373 B           2       373 B         0        53 GiB
+    my-store.rgw.log                 3        50 B         210        50 B         0        53 GiB
+    my-store.rgw.buckets.index       4         0 B           0         0 B         0        53 GiB
+    my-store.rgw.buckets.non-ec      5         0 B           0         0 B         0        53 GiB
+    .rgw.root                        6     3.7 KiB          16     3.7 KiB         0        53 GiB
+    my-store.rgw.buckets.data        7         0 B           0         0 B         0        53 GiB
+    myfs-metadata                    9     9.2 KiB          22     9.2 KiB         0        53 GiB
+    myfs-data0                      10         0 B           0         0 B         0        53 GiB
+    replicapool                     11        36 B           6        36 B         0        53 GiB</code></pre><p>工具箱中的所有可用工具命令均已准备就绪，可满足您的故障排除需求。</p>
+<h4 id="安装dashboard"><a href="#安装dashboard" class="headerlink" title="安装dashboard"></a>安装dashboard</h4><p>查看已有的服务信息，再确定dashboard的安装方式，如下：</p>
+<pre><code>    $ kubectl get service -n rook-ceph
+NAME                                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+csi-cephfsplugin-metrics                 ClusterIP   10.43.49.186    &lt;none&gt;        8080/TCP,8081/TCP   3d22h
+csi-rbdplugin-metrics                    ClusterIP   10.43.156.212   &lt;none&gt;        8080/TCP,8081/TCP   3d22h
+rook-ceph-mgr                            ClusterIP   10.43.112.170   &lt;none&gt;        9283/TCP            3d22h
+rook-ceph-mgr-dashboard                  ClusterIP   10.43.99.56     &lt;none&gt;        8443/TCP            3d22h
+rook-ceph-mon-a                          ClusterIP   10.43.132.112   &lt;none&gt;        6789/TCP,3300/TCP   3d22h
+rook-ceph-mon-b                          ClusterIP   10.43.86.9      &lt;none&gt;        6789/TCP,3300/TCP   3d22h
+rook-ceph-mon-c                          ClusterIP   10.43.188.99    &lt;none&gt;        6789/TCP,3300/TCP   3d22h
+rook-ceph-rgw-my-store                   ClusterIP   10.43.53.12     &lt;none&gt;        80/TCP              2d23h</code></pre><p>默认dashboard使用https安装，如下：</p>
+<pre><code>$ kubectl apply -f dashboard-external-https.yaml
+
+$ kubectl -n rook-ceph get service -o wide
+NAME                                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE     SELECTOR
+
+rook-ceph-mgr-dashboard                  ClusterIP   10.43.99.56     &lt;none&gt;        8443/TCP            3h48m   app=rook-ceph-mgr,rook_cluster=rook-ceph
+rook-ceph-mgr-dashboard-external-https   NodePort    10.43.209.164   &lt;none&gt;        8443:32166/TCP      42s     app=rook-ceph-mgr,rook_cluster=rook-ceph
+</code></pre><p>获取dashboard访问密码：<br>$ kubectl -n rook-ceph get secret rook-ceph-dashboard-password -o jsonpath=”{[‘data’][‘password’]}” | base64 –decode &amp;&amp; echo<br>stU6jhkSVK</p>
+<p>用任意一个集群节点的ip地址均可以访问，例如:<a href="https://192.168.238.232:32166，输入用户名：admin，密码：stU6jhkSVK。" target="_blank" rel="noopener">https://192.168.238.232:32166，输入用户名：admin，密码：stU6jhkSVK。</a></p>
+<h3 id="4-创建存储"><a href="#4-创建存储" class="headerlink" title="4. 创建存储"></a>4. 创建存储</h3><pre><code>//  创建对象存储
+$ kubectl apply -f object.yaml
+
+// 以及用户
+$ kubectl apply -f object-user.yaml
+
+// 创建Ceph pool（块存储池）
+// 使用的kind是CephBlockPool
+$ kubectl apply -f pool.yaml
+
+// 创建文件存储
+$ kubectl apply -f filesystem.yaml
+
+// 创建rbd存储信息
+$ cd csi/rbd/
+
+$ kubectl apply -f storageclass.yaml
+// 出现以下提示
+cephblockpool.ceph.rook.io/replicapool configured
+storageclass.storage.k8s.io/rook-ceph-block created
+
+// 创建pvc
+$ kubectl apply -f pvc.yaml
+
+$ kubectl get pvc
+NAME      STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS      AGE
+rbd-pvc   Bound    pvc-22e52bf9-429a-4ff9-8978-9f647d8354ca   2Gi        RWO            rook-ceph-block   11s</code></pre><p>这样存储就创建完毕了。我们来查看下创建的osd存储，如下：</p>
+<pre><code>// 登录节点主机
+$ ssh -p 15555 centos@192.168.238.232
+
+// 查看osd存储
+$ sudo ls /home/centos/rook-storage/osd1/ -lh
+// 输出以下信息
+total 5.1G
+-rw-------   1 root root   37 Mar  6 15:50 ceph_fsid
+drwxr-xr-x 164 root root 4.0K Mar  6 16:52 current
+-rw-r--r--   1 root root   37 Mar  6 15:50 fsid
+-rw-r--r--   1 root root 5.0G Mar  9 09:37 journal
+-rw-r--r--   1 root root   56 Mar  6 15:50 keyring
+-rw-------   1 root root   21 Mar  6 15:50 magic
+-rw-------   1 root root    6 Mar  6 15:50 ready
+-rw-------   1 root root    3 Mar  6 15:51 require_osd_release
+-rw-r--r--   1 root root 1.2K Mar  8 19:49 rook-ceph.config
+-rw-------   1 root root    4 Mar  6 15:50 store_version
+-rw-------   1 root root   53 Mar  6 15:50 superblock
+drwxr--r--   2 root root   29 Mar  6 15:50 tmp
+-rw-------   1 root root   10 Mar  6 15:50 type
+-rw-------   1 root root    2 Mar  6 15:50 whoami</code></pre><p>查看其它节点的存储信息类似操作即可。</p>
+<p><strong>问题：</strong></p>
+<pre><code>$ kubectl get pvc
+NAME      STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS              AGE
+myclaim   Pending                                      rook-ceph-retain-bucket   11m
+
+$ kubectl describe pvc myclaim
+Name:          myclaim
+Namespace:     default
+StorageClass:  rook-ceph-retain-bucket
+Status:        Pending
+Volume:
+Labels:        &lt;none&gt;
+Annotations:   volume.beta.kubernetes.io/storage-provisioner: ceph.rook.io/bucket
+Finalizers:    [kubernetes.io/pvc-protection]
+Capacity:
+Access Modes:
+VolumeMode:    Filesystem
+Mounted By:    &lt;none&gt;
+Events:
+  Type    Reason                Age                   From                         Message
+  ----    ------                ----                  ----                         -------
+  Normal  ExternalProvisioning  2m29s (x43 over 12m)  persistentvolume-controller  waiting for a volume to be created, either by external provisioner &quot;ceph.rook.io/bucket&quot; or manually created by system administrator
+</code></pre><pre><code>// 首先需要删除
+$ cd /home/centos/rook/rook-1.2.5/cluster/examples/kubernetes/ceph
+$ kubectl delete -f pvc-example.yaml
+$ kubectl delete -f storageclass-bucket-retain.yaml
+
+// 可以不进行删除
+$ kubectl delete -f pools.yaml
+
+// 对cluster.yml文件配置进行修改
+$ vim cluster.yaml 
+
+// 修改服务配置的文件目录，要有操作权限
+directories:
+- path: /home/centos/rook-storage
+
+// 然后修改默认的位置，由于ceph v14.2.7不支持useAllDevices: true
+useAllDevices: false
+
+// 重新执行cluster的配置
+$ kubectl apply -f cluster.yaml
+
+// 然后回到ceph镜像中，查看
+$ kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l &quot;app=rook-ceph-tools&quot; -o jsonpath=&#39;{.items[0].metadata.name}&#39;) bash</code></pre><pre><code># ceph status
+  cluster:
+    id:     18c1fa7d-944b-4a2e-8ef0-e6699c49ac67
+    health: HEALTH_OK
+
+  services:
+    mon: 3 daemons, quorum a,b,c (age 64m)
+    mgr: a(active, since 13m)
+    mds: myfs:1 {0=myfs-a=up:active} 1 up:standby-replay
+    osd: 3 osds: 3 up (since 56m), 3 in (since 56m)
+    rgw: 1 daemon active (my.store.a)
+
+  data:
+    pools:   10 pools, 80 pgs
+    objects: 226 objects, 7.9 KiB
+    usage:   16 GiB used, 177 GiB / 192 GiB avail
+    pgs:     80 active+clean
+
+  io:
+    client:   853 B/s rd, 1 op/s rd, 0 op/s wr</code></pre><p>此时，修改完成。</p>
+<p>同时解决下面的问题：</p>
+<pre><code>$ kubectl -n rook-ceph exec -it $(kubectl -n rook-ceph get pod -l &quot;app=rook-ceph-tools&quot; -o jsonpath=&#39;{.items[0].metadata.name}&#39;)  bash
+bash: warning: setlocale: LC_CTYPE: cannot change locale (en_US.UTF-8): No such file or directory
+bash: warning: setlocale: LC_COLLATE: cannot change locale (en_US.UTF-8): No such file or directory
+bash: warning: setlocale: LC_MESSAGES: cannot change locale (en_US.UTF-8): No such file or directory
+bash: warning: setlocale: LC_NUMERIC: cannot change locale (en_US.UTF-8): No such file or directory
+bash: warning: setlocale: LC_TIME: cannot change locale (en_US.UTF-8): No such file or directory
+[root@rook-ceph-tools-7d764c8647-vdz5r /]# ceph -w
+  cluster:
+    id:     18c1fa7d-944b-4a2e-8ef0-e6699c49ac67
+    health: HEALTH_WARN
+            OSD count 0 &lt; osd_pool_default_size 3
+
+  services:
+    mon: 3 daemons, quorum a,b,c (age 2h)
+    mgr: a(active, since 86m)
+    osd: 0 osds: 0 up, 0 in
+
+  data:
+    pools:   0 pools, 0 pgs
+    objects: 0 objects, 0 B
+    usage:   0 B used, 0 B / 0 B avail
+    pgs:
+</code></pre><p>HEALTH_WARN OSD count 0 &lt; osd_pool_default_size 3 尚未有大的影响，后续注意</p>
+<p>问题位置：<a href="https://github.com/rook/rook/issues/3348" target="_blank" rel="noopener">https://github.com/rook/rook/issues/3348</a></p>
+<p><a href="https://github.com/rook/rook/issues/4963" target="_blank" rel="noopener">https://github.com/rook/rook/issues/4963</a></p>
+<p>原因是：ceph镜像版本为14.2.7版本的，不允许开启useAllDevices</p>
+<p>见官网<a href="https://rook.io/docs/rook/v1.2/ceph-quickstart.html" target="_blank" rel="noopener">https://rook.io/docs/rook/v1.2/ceph-quickstart.html</a></p>
+<p>对于Dashboard上enable一些功能后，通常需要重启Dashboard服务才能使用。使用下面的命令来重启Dashboard：</p>
+<pre><code>// 在toolbox容器里执行
+[root@AI03 /]# ceph mgr module disable dashboard
+[root@AI03 /]# ceph mgr module enable dashboard</code></pre><!-- op-mgr: failed modules: "orchestrator modules". failed to set rook orchestrator backend: failed to set rook as the orchestrator backend: failed to complete command: context deadline exceeded -->
+
+<h2 id="番外：清理rook-ceph命名空间以及删除"><a href="#番外：清理rook-ceph命名空间以及删除" class="headerlink" title="番外：清理rook-ceph命名空间以及删除"></a>番外：清理rook-ceph命名空间以及删除</h2><p>helm安装时，需要比较暴力的进行删除，直接删除命名空间rook-ceph-system中，所有的pods，最后删除改命名空间。<strong>切记，线上环境慎用该操作！</strong></p>
+<p>如果是通过源码配置安装的，参考下面的方式删除。</p>
+<pre><code>$ kubectl delete -f cluster.yaml
+$ kubectl delete -f operator.yaml
+$ kubectl delete -f common.yaml
+
+// 需要到集群的每个节点机器上执行下面的操作
+$ cd /var/lib/rook/
+$ sudo rm -rf ./*
+</code></pre><p>参考链接：<a href="https://github.com/rook/rook/blob/master/Documentation/ceph-teardown.md#troubleshooting" target="_blank" rel="noopener">https://github.com/rook/rook/blob/master/Documentation/ceph-teardown.md#troubleshooting</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>搭建rook+ceph时，一定要耐心看官网教程！</p>
+<h2 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h2><ul>
+<li><a href="https://time.geekbang.org/column/article/39724" target="_blank" rel="noopener">https://time.geekbang.org/column/article/39724</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/81417869" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/81417869</a></li>
+<li><a href="https://www.cnblogs.com/passzhang/p/12191332.html" target="_blank" rel="noopener">https://www.cnblogs.com/passzhang/p/12191332.html</a></li>
+<li><a href="http://www.yangguanjun.com/2018/12/28/rook-ceph-practice-part2/" target="_blank" rel="noopener">http://www.yangguanjun.com/2018/12/28/rook-ceph-practice-part2/</a></li>
+<li><a href="https://www.cnblogs.com/kevincaptain/p/10655721.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevincaptain/p/10655721.html</a></li>
+<li><a href="http://www.yangguanjun.com/2018/12/22/rook-ceph-practice-part1/" target="_blank" rel="noopener">http://www.yangguanjun.com/2018/12/22/rook-ceph-practice-part1/</a></li>
+<li><a href="https://rook.github.io/docs/rook/v1.2/" target="_blank" rel="noopener">https://rook.github.io/docs/rook/v1.2/</a></li>
+<li><a href="https://www.qikqiak.com/post/deploy-ceph-cluster-with-rook/" target="_blank" rel="noopener">https://www.qikqiak.com/post/deploy-ceph-cluster-with-rook/</a></li>
+<li><a href="https://blog.fleeto.us/post/the-ultimate-rook-and-ceph-survival-guide/" target="_blank" rel="noopener">https://blog.fleeto.us/post/the-ultimate-rook-and-ceph-survival-guide/</a></li>
+<li><a href="https://fkpwolf.net/cloud/db/2018/09/14/rook.html" target="_blank" rel="noopener">https://fkpwolf.net/cloud/db/2018/09/14/rook.html</a></li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《k8s存储搭建》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/03/11/k8s-cun-chu-da-jian/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="微服务从docker到k8s的改造历程">
+                        
+                        <span class="card-title">微服务从docker到k8s的改造历程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            微服务从docker到k8s的改造历程现状目前，我们所有的微服务已经全部用容器进行部署，接入了以jenkins+gitlab+sonar为主的自动构建部署体系，能够实现自动打包，推送到对应服务器上进行部署。整个体系能正常走通，比较符合我们目
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-04
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/02/19/guan-yu-docker-nei-jvm-nei-cun-hao-jin-dao-zhi-fu-wu-ting-ji-de-wen-ti-jie-jue/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="关于docker内jvm内存耗尽导致服务停机的问题解决">
+                        
+                        <span class="card-title">关于docker内jvm内存耗尽导致服务停机的问题解决</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            关于docker内jvm内存耗尽导致服务停机的问题解决最开始的设置情况jvm设置参数如下：
+-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxR
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-19
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">271.5k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

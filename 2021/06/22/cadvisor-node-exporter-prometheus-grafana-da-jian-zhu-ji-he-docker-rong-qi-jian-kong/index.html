@@ -1,0 +1,2150 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控前言目前缺乏针对主机和各个docker容器的监控，且缺乏全面的覆盖，需要构建全面覆盖从主机到docker容器的监控，甚至针对单个">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        <span class="chip bg-color">无标签</span>
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-06-22
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    22 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="cadvisor-node-exporter-prometheus-grafana搭建主机和docker容器监控"><a href="#cadvisor-node-exporter-prometheus-grafana搭建主机和docker容器监控" class="headerlink" title="cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控"></a>cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>目前缺乏针对主机和各个docker容器的监控，且缺乏全面的覆盖，需要构建全面覆盖从主机到docker容器的监控，甚至针对单个进程以及jvm的监控。</p>
+<p>这样在选择监控平台的时候需要较广的覆盖面，监控指标到位，且得有良好的展示方式。基于以上需求，选择以prometheus为核心的监控体系，各个部分功能如下图：</p>
+<p><img src="%E5%8A%9F%E8%83%BD%E7%BB%93%E6%9E%84%E4%BD%93%E7%B3%BB%E7%A4%BA%E6%84%8F.png" alt></p>
+<p>利用各种exporter，收集对应的监控数据信息，全面覆盖从数据库到服务到主机层面的监控能力，甚至可以对单个特殊进程进行监控！</p>
+<h2 id="版本以及端口号信息"><a href="#版本以及端口号信息" class="headerlink" title="版本以及端口号信息"></a>版本以及端口号信息</h2><table>
+<thead>
+<tr>
+<th>程序信息</th>
+<th>版本号</th>
+<th>占用端口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>pormetheus</td>
+<td>2.20.1</td>
+<td>9090</td>
+</tr>
+<tr>
+<td>grafana</td>
+<td>7.1.5</td>
+<td>8888</td>
+</tr>
+<tr>
+<td>node-export</td>
+<td>1.0.1</td>
+<td>9100</td>
+</tr>
+<tr>
+<td>cadivisor</td>
+<td>0.32.0</td>
+<td>9999</td>
+</tr>
+</tbody></table>
+<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><ol start="0">
+<li>主机信息</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>ip地址</th>
+<th>部署程序信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192.168.166.203</td>
+<td>prometheus+grafana部署</td>
+</tr>
+<tr>
+<td>192.168.166.204</td>
+<td>redis-exporter、mongodb-exporter</td>
+</tr>
+<tr>
+<td>192.168.166.205</td>
+<td>mysqld-exporter</td>
+</tr>
+<tr>
+<td>192.168.166.202</td>
+<td>cadvisor</td>
+</tr>
+<tr>
+<td>192.168.166.199</td>
+<td>cadvisor</td>
+</tr>
+<tr>
+<td>192.168.166.206</td>
+<td>process-exporter</td>
+</tr>
+<tr>
+<td>192.168.166.242</td>
+<td>process-exporter</td>
+</tr>
+<tr>
+<td>其它开发环境机器，包括上述提到的机器</td>
+<td>node-exporter</td>
+</tr>
+</tbody></table>
+<ol>
+<li>prometheus</li>
+</ol>
+<p>通过ssh连接到192.168.166.203机器上，以docker方式安装prometheus，如下：</p>
+<pre><code>$ docker pull prom/prometheus:v2.20.1
+
+$ mkdir -p docker/prometheus
+
+$ cd ~/docker/prometheus
+
+// 这里先创建配置文件，临时不进行修改，等最后配置完成后完善该文件
+$ touch prometheus.yml
+
+$ docker run -d --restart=always -p 9090:9090 -v /home/centos/docker/prometheus/:/etc/prometheus/ --name=prometheus prom/prometheus:v2.20.1
+
+$ docker ps -a | grep prometheus
+63d5766795a9        prom/prometheus                                 &quot;/bin/prometheus --c…&quot;   27 hours ago        Up 5 hours          0.0.0.0:9090-&gt;9090/tcp           prometheus
+
+// 部署完成后，在防火墙侧开启对应端口信息
+$ sudo firewall-cmd --add-port=9090/tcp --zone=public --permanent
+$ sudo firewall-cmd --reload
+</code></pre><ol start="2">
+<li>grafana</li>
+</ol>
+<pre><code>$ docker pull grafana/grafana:7.1.5
+
+$ mkdir -p ~/docker/grafana
+
+$ docker run -d -p 8888:3000 --name=grafana -v /home/centos/docker/grafana:/var/lib/grafana --restart=always grafana/grafana
+
+$ docker ps -a | grep grafana
+deabcb596a4f        grafana/grafana                                 &quot;/run.sh&quot;                26 hours ago        Up 26 hours         0.0.0.0:8888-&gt;3000/tcp           grafana
+
+
+// 部署完成后，在防火墙侧开启对应端口信息
+$ sudo firewall-cmd --add-port=8888/tcp --zone=public --permanent
+$ sudo firewall-cmd --reload
+</code></pre><ol start="3">
+<li>node-exporter</li>
+</ol>
+<p>在所有主机上进行部署，如下：</p>
+<pre><code>$ docker pull prom/node-exporter:v1.0.1 
+
+$ docker run -d -p 9100:9100 -v &quot;/proc:/host/proc:ro&quot; -v &quot;/sys:/host/sys:ro&quot; -v &quot;/:/rootfs:ro&quot; --net=&quot;host&quot; --restart=always --name=node-exporter prom/node-exporter:v1.0.1
+
+$ sudo firewall-cmd --add-port=9100/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><ol start="4">
+<li>cadvisor</li>
+</ol>
+<p>在docker镜像集中的主机上进行部署，目前主要是放在192.168.166.202和192.168.166.199这两台机器上，如下：</p>
+<pre><code>$ docker pull google/cadvisor:0.32.0  
+
+$ docker run --restart=always --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw --volume=/sys:/sys:ro --volume=/var/lib/docker:/var/lib/docker:ro --publish=9999:8080 --detach=true --name=cadvisor google/cadvisor:0.32.0
+
+$ sudo firewall-cmd --add-port=9999/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><ol start="5">
+<li>mysqld-exporter</li>
+</ol>
+<p>对于MySQL的监控，首先需要设定合适的用户，创建exporter上报的用户信息，如下：</p>
+<pre><code>$ mysql -u root -p
+Enter password:
+
+&gt; GRANT REPLICATION CLIENT, PROCESS ON  *.*  to &#39;exporter&#39;@&#39;%&#39; identified by &#39;123456&#39;;
+&gt; GRANT SELECT ON performance_schema.* TO &#39;exporter&#39;@&#39;%&#39;;
+&gt; flush privileges;</code></pre><p>如果执行MySQL命令时提示密码过于简单，可以使用以下的命令执行：</p>
+<pre><code>&gt; GRANT REPLICATION CLIENT, PROCESS ON  *.*  to &#39;exporter&#39;@&#39;%&#39; identified by &#39;ht@MySQL111&#39;;
+
+&gt; GRANT SELECT ON performance_schema.* TO &#39;exporter&#39;@&#39;%&#39;;
+
+&gt; flush privileges;
+</code></pre><p>然后在MySQL所在的机器上安装exporter，如下：</p>
+<pre><code>$ docker pull prom/mysqld-exporter:v0.12.1
+
+// 注意指定MySQL的连接信息
+$ docker run -d  --restart=always  --name mysqld-exporter -p 9104:9104   -e DATA_SOURCE_NAME=&quot;exporter:ht@MySQL111@(10.0.93.100:3306)/&quot;   prom/mysqld-exporter:v0.12.1
+
+$ sudo firewall-cmd --add-port=9104/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><ol start="6">
+<li>redis-exporter</li>
+</ol>
+<p>在Redis所在的机器上安装exporter，如下：</p>
+<pre><code>$ docker pull oliver006/redis_exporter:v1.11.0-amd64
+
+// 注意：后面指定redis连接参数时，如果无密码，最后面--redis.password可以不添加
+$ docker run -d --restart=always --name=redis_exporter -p 9121:9121 oliver006/redis_exporter:v1.11.0-amd64 --redis.addr redis://192.168.166.204:6379 --redis.password &#39;ht@redis160&#39;
+
+$ sudo firewall-cmd --add-port=9121/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><ol start="7">
+<li>mongod-exporter</li>
+</ol>
+<p>首先在mongodb所在的机器，登录mongodb，创建监控用户信息，操作如下：</p>
+<pre><code>$ mongo -u mongo-admin -p --authenticationDatabase admin
+MongoDB shell version v4.2.2
+Enter password:
+
+// 使用admin
+&gt; use admin
+switched to db admin
+
+// 创建监控用户
+&gt; db.getSiblingDB(&quot;admin&quot;).createUser({ user: &quot;mongodb_exporter&quot;, pwd: &quot;123456&quot;, roles:[{ role: &quot;clusterMonitor&quot;, &quot;db&quot;: &quot;admin&quot;}, { role: &quot;read&quot;, db: &quot;local&quot;}]})
+Successfully added user: {
+        &quot;user&quot; : &quot;mongodb_exporter&quot;,
+        &quot;roles&quot; : [
+                {
+                        &quot;role&quot; : &quot;clusterMonitor&quot;,
+                        &quot;db&quot; : &quot;admin&quot;
+                },
+                {
+                        &quot;role&quot; : &quot;read&quot;,
+                        &quot;db&quot; : &quot;local&quot;
+                }
+        ]
+}
+
+// 退出
+&gt; exit
+</code></pre><p>然后启动监控的docker镜像，如下：</p>
+<pre><code>
+$ docker pull noenv/mongo-exporter:0.11.1
+
+// 部署前注意ip地址的变更
+$ docker run -d --restart=always --name mongo_exporter -p 9123:9123 noenv/mongo-exporter:0.11.1 --web.listen-address=:9123 --mongodb.uri=mongodb://mongodb_exporter:123456@192.168.166.204:27017
+
+$ sudo firewall-cmd --add-port=9123/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><ol start="8">
+<li>process-exporter :9256  - 0.7.2，目前需要重新进行设置，尚未启用</li>
+</ol>
+<pre><code>docker pull ncabatoff/process-exporter:0.7.2
+
+mkdir -p ./process-exporter/config
+
+vim process-exporter.yml
+// 监控nacos
+process_names:
+  - name: &quot;{{.Matches}}&quot;
+    cmdline:
+    - &#39;.nacos*&#39;
+
+:wq
+
+docker run -d -p 9256:9256 --restart=always --name process-exporter --privileged -v /proc:/host/proc -v /home/centos/process-exporter/config:/config ncabatoff/process-exporter:0.7.2 --procfs /host/proc --config.path /config/process-exporter.yml
+
+$ sudo firewall-cmd --add-port=9256/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><p>以监控nacos进程为例子，进行配置，通过匹配nacos的进程信息，实现对nacos进程的监控。这里一共有四种进程监控方式：</p>
+<ul>
+<li>“&#123;&#123; .Comm &#125;&#125;” 包含原始可执行文件的basename，/proc/<pid>/stat 中的换句话说，2nd 字段</pid></li>
+<li>“&#123;&#123; .ExeBase &#125;&#125;” 包含可执行文件的basename</li>
+<li>“&#123;&#123; .ExeFull &#125;&#125;” 包含可执行文件的完全限定路径</li>
+<li>“&#123;&#123; .Username &#125;&#125;” 根据用户信息进行匹配</li>
+<li>“&#123;&#123; .Matches &#125;&#125;” 映射包含应用命令行所产生的所有匹配项</li>
+</ul>
+<ol start="9">
+<li>jmx-exporter的部署</li>
+</ol>
+<ol start="10">
+<li>kafka-exporter的部署</li>
+</ol>
+<pre><code>
+$ docker pull danielqsj/kafka-exporter:latest
+
+$ docker run -d --rm -p 9308:9308 danielqsj/kafka-exporter:latest --kafka.server=192.168.166.206:9092
+
+$ sudo firewall-cmd --add-port=9308/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><ol start="11">
+<li>fastdfs-exporter部署</li>
+</ol>
+<ol start="12">
+<li>RocketMQ-exporter部署</li>
+</ol>
+<h2 id="prometheus的配置"><a href="#prometheus的配置" class="headerlink" title="prometheus的配置"></a>prometheus的配置</h2><p>最后，编辑前面指定的prometheus的配置文件，并重启prometheus的docker镜像：</p>
+<pre><code>$ vim ~/docker/prometheus/prometheus.yml
+// 输入以下信息
+global:
+  scrape_interval: 60s
+  evaluation_interval: 60s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: [&#39;localhost:9090&#39;]
+        labels:
+          instance: prometheus
+
+  - job_name: server199-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.199:9100&#39;]
+        labels:
+          instance: server199-node-exporter
+
+  - job_name: server199-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.199:9999&#39;]
+        labels:
+          instance: server199-cadivisor
+
+  - job_name: server203-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.203:9100&#39;]
+        labels:
+          instance: server203-node-exporter
+
+  - job_name: server201-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.201:9100&#39;]
+        labels:
+          instance: server201-node-exporter
+
+  - job_name: server202-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.202:9100&#39;]
+        labels:
+          instance: server202-node-exporter
+
+  - job_name: server202-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.203:9999&#39;]
+        labels:
+          instance: server202-cadivisor
+
+  - job_name: server236-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.236:9100&#39;]
+        labels:
+          instance: server236-node-exporter
+
+  - job_name: server200-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.200:9100&#39;]
+        labels:
+          instance: server200-node-exporter
+
+  - job_name: server204-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.204:9100&#39;]
+        labels:
+          instance: server204-node-exporter
+
+  - job_name: server204-redis-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.204:9121&#39;]
+        labels:
+          instance: server204-redis-exporter
+
+  - job_name: server204-mongo-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.204:9123&#39;]
+        labels:
+          instance: server204-mongo-exporter
+
+  - job_name: server205-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.205:9100&#39;]
+        labels:
+          instance: server205-node-exporter
+
+  - job_name: server205-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.205:9999&#39;]
+        labels:
+          instance: server205-cadivisor
+
+  - job_name: server205-mysql-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.205:9104&#39;]
+        labels:
+          instance: server205-mysql-exporter
+
+  - job_name: server206-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.206:9100&#39;]
+        labels:
+          instance: server206-node-exporter
+
+  - job_name: server206-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.206:9999&#39;]
+        labels:
+          instance: server206-cadivisor
+
+  - job_name: server206-process-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.206:9256&#39;]
+        labels:
+          instance: server206-process-exporter
+
+  - job_name: server207-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.207:9100&#39;]
+        labels:
+          instance: server207-node-exporter
+
+  - job_name: server208-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.208:9100&#39;]
+        labels:
+          instance: server208-node-exporter
+
+// :wq保存退出
+</code></pre><p>需要重新启动prometheus的docker容器</p>
+<pre><code>$ docker restart prometheus
+</code></pre><h2 id="数据展示设置"><a href="#数据展示设置" class="headerlink" title="数据展示设置"></a>数据展示设置</h2><p>配置数据源信息</p>
+<p>针对grafana的图表配置，添加三个模板</p>
+<ul>
+<li>Node Exporter for Prometheus Dashboard CN v20200628</li>
+<li>Docker and OS metrics ( cadvisor, node_exporter )</li>
+<li>Docker monitoring</li>
+</ul>
+<p>导入dashboard之后，就可以查看结果了</p>
+<p><strong>注意：</strong>需要添加模板列表。</p>
+<h2 id="告警操作设置"><a href="#告警操作设置" class="headerlink" title="告警操作设置"></a>告警操作设置</h2><p>使用Prometheus+Alertmanager进行告警的操作，分为两个部分：</p>
+<ul>
+<li>Prometheus负责中配置警报规则，将警报发送到Alertmanager。</li>
+<li>Alertmanager 负责管理这些警报，包括沉默，抑制，合并和发送通知。</li>
+</ul>
+<p>Alertmanager 发送通知有多种方式，支持邮件和Webhook等报警方式，这里采用webhook的方式，通过对接企业微信机器人的形式，达到报警的目的！</p>
+<p>主要分为以下四个方面：</p>
+<ul>
+<li>prometheus报警规则配置</li>
+<li>alertmanager部署及配置</li>
+<li>关联prometheus和alertmanager</li>
+<li>配置报警通知方式</li>
+</ul>
+<h3 id="prometheus报警规则配置"><a href="#prometheus报警规则配置" class="headerlink" title="prometheus报警规则配置"></a>prometheus报警规则配置</h3><p>对prometheus配置文件进行调整，添加报警部分的配置，如下：</p>
+<pre><code>global:
+  scrape_interval: 60s
+  evaluation_interval: 30s
+
+# 告警功能配置
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets:
+        # - 192.168.166.203:9093
+
+# 告警规则文件设置
+rule_files:
+  - &quot;rules/*_rules.yml&quot;
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: [&#39;localhost:9090&#39;]
+        labels:
+          instance: prometheus
+......
+</code></pre><p>这里临时注释了alertmanager的连接信息，待安装配置alertmanager时，放开即可。</p>
+<p>添加prometheus报警规则，如下：</p>
+<pre><code>
+$ mkdir /home/centos/docker/prometheus/rules
+
+$ vim host_rules.yml
+groups:
+- name: host-lost-connection-rule
+  rules:
+  - alert: ServerStatus
+    expr: up == 0
+    for: 2m
+    labels:
+      severity: page
+      status: warning
+    annotations:
+      summary: &quot;{{$labels.instance}}:服务器关闭&quot;
+      description: &quot;{{$labels.instance}}:服务器关闭&quot;
+# 报警组组名称
+- name: hostStatsAlert
+  #报警组规则
+  rules:
+   #告警名称，需唯一
+  - alert: hostCpuUsageAlert
+    #promQL表达式
+    expr: sum(avg without (cpu)(irate(node_cpu_seconds_total{mode!=&#39;idle&#39;}[5m]))) by (instance) &gt; 0.85
+    #满足此表达式持续时间超过for规定的时间才会触发此报警
+    for: 1m
+    labels:
+      #严重级别
+      severity: page
+    annotations:
+      #发出的告警标题
+      summary: &quot;实例 {{ $labels.instance }} CPU 使用率过高&quot;
+      #发出的告警内容
+      description: &quot;实例{{ $labels.instance }} CPU 使用率超过 85% (当前值为: {{ $value }})&quot;
+  - alert: hostMemUsageAlert
+    expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes &gt; 0.85
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: &quot;实例 {{ $labels.instance }} 内存使用率过高&quot;
+      description: &quot;实例 {{ $labels.instance }} 内存使用率 85% (当前值为: {{ $value }})&quot;
+</code></pre><p>配置添加完成后，重启prometheus服务，如下：</p>
+<pre><code>$ docker restart prometheus
+</code></pre><h3 id="alertmanager部署及配置"><a href="#alertmanager部署及配置" class="headerlink" title="alertmanager部署及配置"></a>alertmanager部署及配置</h3><p>使用docker安装alertmanager，如下：</p>
+<pre><code>$ docker pull prom/alertmanager:v0.21.0
+
+$ mkdir -p ~/docker/alertmanager
+
+$ docker run -d -p 9093:9093 --restart=always --name alertmanager  -v /home/centos/docker/alertmanager/:/etc/alertmanager/ prom/alertmanager:v0.21.0
+
+$ sudo firewall-cmd --add-port=9093/tcp --zone=public --permanent
+
+$ sudo firewall-cmd --reload
+</code></pre><p>启动完毕后，配置两种告警方式，一种是邮件告警，另一种是Webhook方式告警。</p>
+<h4 id="1-邮件告警配置"><a href="#1-邮件告警配置" class="headerlink" title="1. 邮件告警配置"></a>1. 邮件告警配置</h4><p>首先确定邮件发送信息的配置，然后编写邮件发送模板，最后测试邮件是否正常发送。</p>
+<p>编辑alertmanager.yml，添加邮件报警配置信息：</p>
+<pre><code>$ vim alertmanager.yml
+// 输入以下信息
+global:
+  resolve_timeout: 2m
+  smtp_smarthost: &#39;smtp.qq.com:465&#39;
+  smtp_from: &#39;hoteam-develop@qq.com&#39;
+  smtp_auth_username: &#39;hoteam-develop@qq.com&#39;
+  smtp_auth_password: &#39;bysvpwwkrdpvddaj&#39;
+  smtp_require_tls: false
+  smtp_hello: &#39;Alert&#39;
+templates:     ##消息模板
+  - &#39;/etc/alertmanager/template/*.tmpl&#39;
+route:
+  group_by: [&#39;alertname&#39;]
+  group_wait: 30s
+  group_interval: 60s
+  receiver: &#39;email&#39;    # 优先使用wechat发送
+  repeat_interval: 1h
+receivers:
+  - name: &#39;email&#39;
+    email_configs:
+      - to: &#39;lisongyang@hoteamsoft.com&#39;
+        html: &#39;{{ template "emai.html" . }}&#39; # 模板
+        headers: { Subject: &quot; {{ .CommonLabels.instance }} {{ .CommonAnnotations.summary }}&quot; } #标题
+        send_resolved: true
+
+// :wq保存退出
+</code></pre><p>主要是配置smtp信息，添加消息模板的路径，配置receiver中的中邮件发送信息。这些完成后，开始编写邮件模板。</p>
+<pre><code>$ vim template/email.tmpl
+// 输入以下信息
+{{ define "emai.html" }}
+{{ range .Alerts }}
+ &lt;pre&gt;
+实例: {{ .Labels.instance }}
+信息: {{ .Annotations.summary }}
+详情: {{ .Annotations.description }}
+时间: {{ .StartsAt.Format "2020-08-28 15:04:05" }}
+ &lt;/pre&gt;
+{{ end }}
+{{ end }}
+
+// :wq保存退出
+</code></pre><p>完成后注意要重启alertmanager。</p>
+<pre><code>$ docker restart alertmanager
+</code></pre><p>记得在上述操作完成后，修改prometheus.yml中对告警功能的配置，最终形成的配置文件如下：</p>
+<pre><code>global:
+  scrape_interval: 60s
+  evaluation_interval: 30s
+
+# 告警功能配置
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - 192.168.166.203:9093
+
+# 告警规则文件设置
+rule_files:
+  - &quot;rules/*_rules.yml&quot;
+
+# 采集job列表，各个exporter的集合
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: [&#39;localhost:9090&#39;]
+        labels:
+          instance: prometheus
+
+  - job_name: server199-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.199:9100&#39;]
+        labels:
+          instance: server199-node-exporter
+
+  - job_name: server199-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.199:9999&#39;]
+        labels:
+          instance: server199-cadivisor
+
+  - job_name: server203-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.203:9100&#39;]
+        labels:
+          instance: server203-node-exporter
+
+  - job_name: server201-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.201:9100&#39;]
+        labels:
+          instance: server201-node-exporter
+
+  - job_name: server202-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.202:9100&#39;]
+        labels:
+          instance: server202-node-exporter
+
+  - job_name: server202-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.203:9999&#39;]
+        labels:
+          instance: server202-cadivisor
+
+  - job_name: server236-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.236:9100&#39;]
+        labels:
+          instance: server236-node-exporter
+
+  - job_name: server200-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.200:9100&#39;]
+        labels:
+          instance: server200-node-exporter
+
+  - job_name: server204-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.204:9100&#39;]
+        labels:
+          instance: server204-node-exporter
+
+  - job_name: server204-redis-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.204:9121&#39;]
+        labels:
+          instance: server204-redis-exporter
+
+  - job_name: server204-mongo-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.204:9123&#39;]
+        labels:
+          instance: server204-mongo-exporter
+
+  - job_name: server205-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.205:9100&#39;]
+        labels:
+          instance: server205-node-exporter
+
+  - job_name: server205-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.205:9999&#39;]
+        labels:
+          instance: server205-cadivisor
+
+  - job_name: server205-mysql-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.205:9104&#39;]
+        labels:
+          instance: server205-mysql-exporter
+
+  - job_name: server206-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.206:9100&#39;]
+        labels:
+          instance: server206-node-exporter
+
+  - job_name: server206-cadivisor
+    static_configs:
+      - targets: [&#39;192.168.166.206:9999&#39;]
+        labels:
+          instance: server206-cadivisor
+
+  - job_name: server206-process-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.206:9256&#39;]
+        labels:
+          instance: server206-process-exporter
+
+  - job_name: server207-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.207:9100&#39;]
+        labels:
+          instance: server207-node-exporter
+
+  - job_name: server208-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.208:9100&#39;]
+        labels:
+          instance: server208-node-exporter
+
+  - job_name: server242-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.242:9100&#39;]
+        labels:
+          instance: server242-node-exporter
+
+  - job_name: server242-process-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.242:9256&#39;]
+        labels:
+          instance: server242-process-exporter
+
+  - job_name: server237-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.237:9100&#39;]
+        labels:
+          instance: server237-node-exporter
+
+  - job_name: server244-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.244:9100&#39;]
+        labels:
+          instance: server244-node-exporter
+
+  - job_name: server244-mysql-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.244:9104&#39;]
+        labels:
+          instance: server244-mysql-exporter
+
+  - job_name: server238-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.238:9100&#39;]
+        labels:
+          instance: server238-node-exporter
+
+  - job_name: server232-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.232:9100&#39;]
+        labels:
+          instance: server232-node-exporter
+
+  - job_name: server233-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.233:9100&#39;]
+        labels:
+          instance: server233-node-exporter
+
+  - job_name: server234-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.234:9100&#39;]
+        labels:
+          instance: server234-node-exporter
+
+  - job_name: server235-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.235:9100&#39;]
+        labels:
+          instance: server235-node-exporter
+
+  - job_name: server239-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.239:9100&#39;]
+        labels:
+          instance: server239-node-exporter
+
+  - job_name: server241-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.241:9100&#39;]
+        labels:
+          instance: server241-node-exporter
+
+  - job_name: server245-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.245:9100&#39;]
+        labels:
+          instance: server245-node-exporter
+
+  - job_name: server246-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.246:9100&#39;]
+        labels:
+          instance: server246-node-exporter
+
+#  - job_name: server246-mongo-exporter
+#    static_configs:
+#      - targets: [&#39;192.168.166.246:9123&#39;]
+#        labels:
+#          instance: server246-mongo-exporter
+
+#  - job_name: server245-redis-exporter
+#    static_configs:
+#      - targets: [&#39;192.168.166.245:9121&#39;]
+#        labels:
+#          instance: server245-redis-exporter --&gt;
+
+  - job_name: server240-node-exporter
+    static_configs:
+      - targets: [&#39;192.168.166.240:9100&#39;]
+        labels:
+          instance: server240-node-exporter
+
+</code></pre><p>最后测试一下邮件是否能够发送，随便找一台部署了node-exporter的主机，停止node-exporter的运行来模拟故障（参考前面配置的<em>host-lost-connection-rule</em>名称的报警规则）。这里登录240服务器进行操作，如下：</p>
+<pre><code>$ docker stop node-exporter
+</code></pre><p>查看prometheus的状态如下，间隔一分钟刷新一次，可以看到一个刷新周期走完后，即可获得停机的状态：</p>
+<p><img src="Prometheus%E5%81%9C%E6%9C%BA%E7%8A%B6%E6%80%81%E6%9F%A5%E7%9C%8B.png" alt></p>
+<p>停机后，根据配置信息，会在Prometheus页面中看到我们之前定义的报警规则，如下图：</p>
+<p><img src="Prometheus%E6%8A%A5%E8%AD%A6%E8%A7%84%E5%88%99.png" alt></p>
+<p>图中有三种状态的标识，即Inactive（未激活）、Pending（正在等待处理）、Firing（已处理），可以看到刚刚触发的报警信息变为Pending状态，当其状态转换为Firing后，意味着在Prometheus中处理完毕，这时候可以在alertmanager中看到报警信息，如下图：</p>
+<p><img src="alertmanager%E6%8A%A5%E8%AD%A6%E4%BF%A1%E6%81%AF.png" alt></p>
+<p>最后会在目标邮箱中看到邮件信息，如下：</p>
+<p><img src="%E9%82%AE%E4%BB%B6%E6%8A%A5%E8%AD%A6%E4%BF%A1%E6%81%AF.png" alt></p>
+<h4 id="2-Webhook告警配置"><a href="#2-Webhook告警配置" class="headerlink" title="2. Webhook告警配置"></a>2. Webhook告警配置</h4><p>Webhook处理时，还需要加一层代理信息，需要将alertmanager中webhook的URL进行一次转发，再由转发程序配置企业微信的Webhook连接，转发到企业微信报警！</p>
+<p>实际上，alertmanager不能直接调用企业微信的Webhook链接！</p>
+<p>直接<a href="http://192.168.166.202:8181/test/common-utils/qywechat-webhook.git" target="_blank" rel="noopener">参考项目</a>中develop分支的实现方式。按照上述思路，接收到alertmanager的webhook信息，然后用线程池的方式对外调用企业微信的Webhook链接。</p>
+<h2 id="监控告警指标的确定"><a href="#监控告警指标的确定" class="headerlink" title="监控告警指标的确定"></a>监控告警指标的确定</h2><h3 id="1-主机层面的监控"><a href="#1-主机层面的监控" class="headerlink" title="1. 主机层面的监控"></a>1. 主机层面的监控</h3><p>满足以下条件进行告警：</p>
+<ul>
+<li>CPU使用率，超过85%</li>
+<li>内存使用率，超过85%</li>
+<li>网络吞吐量，超过80MB/s</li>
+<li>网络传输错误，出现一次</li>
+<li>硬盘空间剩余，不足10%</li>
+<li>硬盘读写量不正常，超过50MB/s</li>
+<li>交换空间使用率，超过80%（限部分机器）</li>
+</ul>
+<h3 id="2-docker容器的告警"><a href="#2-docker容器的告警" class="headerlink" title="2. docker容器的告警"></a>2. docker容器的告警</h3><p>满足以下条件进行告警：</p>
+<ul>
+<li>容器被killed</li>
+<li>CPU使用率，超过80%</li>
+<li>内存使用率，超过80%</li>
+<li>容器挂载的存储使用量，超过80%</li>
+<li>容器磁盘读写使用率，超过80%</li>
+</ul>
+<h3 id="3-MySQL的告警"><a href="#3-MySQL的告警" class="headerlink" title="3. MySQL的告警"></a>3. MySQL的告警</h3><p>满足以下条件进行告警：</p>
+<ul>
+<li>MySQL宕机</li>
+<li>连接数占用过多，超过80%</li>
+<li>线程利用过高，超过60%</li>
+<li>慢查询，出现1次</li>
+</ul>
+<p><em>*注意：</em> 目前MySQL按照单机模式进行监控，并未以集群方式监控。</p>
+<h3 id="4-Redis的告警"><a href="#4-Redis的告警" class="headerlink" title="4. Redis的告警"></a>4. Redis的告警</h3><p>满足以下条件进行告警：</p>
+<ul>
+<li>Redis宕机</li>
+<li>OOM，内存使用大于90%</li>
+<li>连接数过多，超过100</li>
+<li>连接数不足，小于5</li>
+<li>存在拒绝连接的情况</li>
+</ul>
+<p><em>*注意：</em> 目前Redis按照单机模式进行监控，并未以集群方式监控。</p>
+<h3 id="5-MongoDB的告警"><a href="#5-MongoDB的告警" class="headerlink" title="5. MongoDB的告警"></a>5. MongoDB的告警</h3><p>满足以下条件进行告警：</p>
+<ul>
+<li>游标（cursor）开启数，大于10k</li>
+<li>游标访问超时的数量，大于100</li>
+<li>连接数过多，大于500</li>
+<li>虚拟内存使用量过高，超过1/3</li>
+</ul>
+<h3 id="6-进程告警（临时未添加）"><a href="#6-进程告警（临时未添加）" class="headerlink" title="6. 进程告警（临时未添加）"></a>6. 进程告警（临时未添加）</h3><h3 id="7-kafka告警"><a href="#7-kafka告警" class="headerlink" title="7. kafka告警"></a>7. kafka告警</h3><p>满足下面条件进行告警：</p>
+<ul>
+<li>处于同步状态中的topic数量，超过3个</li>
+<li>消费者组超过50个实例</li>
+</ul>
+<h3 id="8-jmx告警配置"><a href="#8-jmx告警配置" class="headerlink" title="8. jmx告警配置"></a>8. jmx告警配置</h3><p>注意：</p>
+<ul>
+<li>参考的指标设定：awesome-prometheus-alerts.grep.to/rules.html</li>
+<li>具体的配置信息，参考<a href="./doc/all_config.tar.gz">已上传的zip文件</a></li>
+</ul>
+<h3 id="9-fastdfs的监控告警"><a href="#9-fastdfs的监控告警" class="headerlink" title="9. fastdfs的监控告警"></a>9. fastdfs的监控告警</h3><h3 id="10-rocketMQ的监控告警"><a href="#10-rocketMQ的监控告警" class="headerlink" title="10. rocketMQ的监控告警"></a>10. rocketMQ的监控告警</h3><h3 id="11-ELK方面的监控告警"><a href="#11-ELK方面的监控告警" class="headerlink" title="11. ELK方面的监控告警"></a>11. ELK方面的监控告警</h3><p>### </p>
+<h2 id="监控面板信息总结"><a href="#监控面板信息总结" class="headerlink" title="监控面板信息总结"></a>监控面板信息总结</h2><p>node-exporter相关：</p>
+<p>MySQL相关：</p>
+<p>Redis相关：</p>
+<p>RocketMQ相关：</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>选择prometheus做监控，第一是容易建设，开箱即用，第二是生态组合优秀，监控面广。</p>
+<p>经过建设后，在对主机管理层面，提升整体的管理水平，减少因硬件资源水平不足，例如硬盘空间不够，这样的问题带来对整个服务器集群的不良影响。</p>
+<h2 id="剩余内容"><a href="#剩余内容" class="headerlink" title="剩余内容"></a>剩余内容</h2><p>目前已经完成了所有主机、docker容器的监控搭建，剩余以下内容未完成：</p>
+<ul>
+<li><del>process-exporter的使用</del></li>
+<li><del>alertmanager中Webhook的使用，对比<a href="https://github.com/prometheus/alertmanager" target="_blank" rel="noopener">钉钉</a>Webhook调用进行改造</del></li>
+<li><del>各项报警监控指标的确定</del></li>
+<li><del>redis、mongodb、mysql监控面板搭建，redis、mongodb监控信息上报</del></li>
+<li><del>Grafana监控面板的调整与合并</del></li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li>官方网站：<a href="https://prometheus.io/" target="_blank" rel="noopener">https://prometheus.io/</a></li>
+<li><a href="https://blog.csdn.net/aixiaoyang168/article/details/98474494" target="_blank" rel="noopener">https://blog.csdn.net/aixiaoyang168/article/details/98474494</a></li>
+<li><a href="https://blog.csdn.net/skh2015java/article/details/102572874" target="_blank" rel="noopener">https://blog.csdn.net/skh2015java/article/details/102572874</a></li>
+<li><a href="https://www.jianshu.com/p/e3c9fc929d8a" target="_blank" rel="noopener">https://www.jianshu.com/p/e3c9fc929d8a</a></li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/06/22/cadvisor-node-exporter-prometheus-grafana-da-jian-zhu-ji-he-docker-rong-qi-jian-kong/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="某甲方项目的微服务构建实施总结与心得">
+                        
+                        <span class="card-title">某甲方项目的微服务构建实施总结与心得</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            某甲方项目的微服务构建实施总结与心得今年时运不济，我经历了一个极其垃圾的甲方项目，忙来忙去三四个月，终于要上线了，有时间来写一写这个人生中遇到的最大的坑爹项目，历数该项目中个人、团队、公司犯下的罪行，暂且定为十宗罪，从项目开始到项目结束，先
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-07-24
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/06/15/guan-yu-maven-deploy-chu-xian-lian-jie-chao-shi-de-qing-kuang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="关于maven deploy出现连接超时的情况">
+                        
+                        <span class="card-title">关于maven deploy出现连接超时的情况</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            关于maven deploy命令出现连接超时的情况解决问题描述在执行maven的编译构建操作后，将项目的公共依赖推送到甲方远端的maven仓库地址中。我首先在idea中进行操作，错误信息如下：
+Failed to execute goal 
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-06-15
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">271.5k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

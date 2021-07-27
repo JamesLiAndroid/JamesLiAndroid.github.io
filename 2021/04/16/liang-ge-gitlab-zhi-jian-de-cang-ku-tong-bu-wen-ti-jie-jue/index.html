@@ -1,0 +1,1530 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="两个gitlab之间的仓库同步问题解决, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="两个gitlab之间的仓库同步问题解决问题场景由于我们在用户现场进行开发，而公司本部这边存放有我们自己的基础平台代码，而两边开发的过程中，不可避免的存在代码同步的问题。中间还存在VPN的连接问题，于是在这样的环境下实现代码同步，而且是尽可能">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>两个gitlab之间的仓库同步问题解决 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        两个gitlab之间的仓库同步问题解决
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        <span class="chip bg-color">无标签</span>
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-04-16
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="两个gitlab之间的仓库同步问题解决"><a href="#两个gitlab之间的仓库同步问题解决" class="headerlink" title="两个gitlab之间的仓库同步问题解决"></a>两个gitlab之间的仓库同步问题解决</h1><h2 id="问题场景"><a href="#问题场景" class="headerlink" title="问题场景"></a>问题场景</h2><p>由于我们在用户现场进行开发，而公司本部这边存放有我们自己的基础平台代码，而两边开发的过程中，不可避免的存在代码同步的问题。中间还存在VPN的连接问题，于是在这样的环境下实现代码同步，而且是尽可能的自动同步。</p>
+<p>经过了解，查找了各项资料，发现一个问题，就是绝大部分都是自有或者本地gitlab和github之间进行的同步，不好找gitlab和gitlab之间的同步方式。虽然理论上应该是一致的，但实际操作上还有不同。</p>
+<p>根据我英明领导的要求，要实现全双工通信，也就是说，在两个gitlab上创建互为镜像的项目，这两个项目可以定期的互相同步各自的代码。现在我只能实现单向通信，就是只有一侧进行同步，实现的是一种主从模式，如果有朋友能实现互相同步的，请联系我。但是我想了下，两个项目间互为镜像，是不是会造成先有鸡后有蛋的问题？就是必须先有一个项目，才能将另一个项目作为该项目的镜像？</p>
+<h2 id="实现方案介绍"><a href="#实现方案介绍" class="headerlink" title="实现方案介绍"></a>实现方案介绍</h2><h3 id="环境以及必备工具介绍"><a href="#环境以及必备工具介绍" class="headerlink" title="环境以及必备工具介绍"></a>环境以及必备工具介绍</h3><ul>
+<li><p>两个gitlab</p>
+<ul>
+<li>公司本部gitlab版本：12.2.5，ip地址（内网）：192.168.166.202:8181。</li>
+<li>客户现场gitlab版本：12.4.2，ip地址（内网）：192.168.229.52:8181。</li>
+</ul>
+</li>
+</ul>
+<p>操作时均使用root账号操作，这一步比较危险，最好控制下权限，尽可能使用该项目的developer角色或者reporter角色的用户来进行操作。</p>
+<p>在公司本部创建项目，studentmanagement2，以该项目进行测试。</p>
+<ul>
+<li>两个开源项目</li>
+</ul>
+<p>借助两个开源项目实现，分别是：</p>
+<ul>
+<li><a href="https://github.com/samrocketman/gitlab-mirrors.git" target="_blank" rel="noopener">git-mirrors</a>  </li>
+<li><a href="https://github.com/doctormo/python-gitlab3.git" target="_blank" rel="noopener">python-gitlab3</a></li>
+</ul>
+<p>在python 2.7环境下运行，api兼容测试的gitlab版本。将这个中转程序放到客户现场的gitlab所在的机器上。</p>
+<h3 id="基本概念介绍"><a href="#基本概念介绍" class="headerlink" title="基本概念介绍"></a>基本概念介绍</h3><h4 id="1-git-mirrors"><a href="#1-git-mirrors" class="headerlink" title="1. git mirrors"></a>1. git mirrors</h4><p>引用开源中国的解释如下：</p>
+<pre><code>$ git clone --mirror $URL
+
+$ git clone --bare $URL
+
+等同于
+
+$ (cd $(basename $URL) &amp;&amp; git remote add --mirror=fetch origin $URL)
+
+当前的man-page如何表达：
+
+相比之下--bare，--mirror不仅将源的本地分支映射到目标的本地分支，它还映射所有引用（包括远程分支，注释等）并设置refspec配置，以便所有这些引用都被git remote update目标存储库中的a覆盖。
+</code></pre><p>简单来说，–bare就是裸克隆，只克隆该分支的信息。而–mirror是完整的镜像克隆，克隆所有相关的提交信息，包含不同的分支！</p>
+<h4 id="2-整个实现流程介绍"><a href="#2-整个实现流程介绍" class="headerlink" title="2. 整个实现流程介绍"></a>2. 整个实现流程介绍</h4><p>核心是依靠git-mirrors项目进行中转，利用python-gitlab3依赖进行gitlab接口的调用。通过脚本利用git clone –mirror选项从公司本部的gitlab库，同步到客户现场的gitlab库中，并在中转机器上设置定时任务，进行定时同步。</p>
+<p>示意图如下：</p>
+<p><img src="%E5%90%8C%E6%AD%A5%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt></p>
+<h3 id="实际操作流程"><a href="#实际操作流程" class="headerlink" title="实际操作流程"></a>实际操作流程</h3><h4 id="0-为客户现场中转主机进行环境配置"><a href="#0-为客户现场中转主机进行环境配置" class="headerlink" title="0. 为客户现场中转主机进行环境配置"></a>0. 为客户现场中转主机进行环境配置</h4><p>默认都在centos用户下安装，生成证书信息等操作。</p>
+<p>安装git</p>
+<pre><code>$ sudo yum install -y git
+</code></pre><p>已有python2.7的情况下，配置虚拟环境：</p>
+<pre><code>// 安装pip
+$ curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
+$ sudo python get-pip.py
+
+// 安装virtualenv
+$ pip install virtualenv
+
+// 生成虚拟环境
+$ mkdir git_repository_sync &amp;&amp; virtualenv venv --python=python2.7
+</code></pre><p>安装python-gitlab</p>
+<pre><code>$ yum install python-setuptools
+
+$ git clone https://github.com/doctormo/python-gitlab3.git
+
+$ cd python-gitlab3
+
+$ git checkout v0.5.8
+
+$ python setup.py install
+</code></pre><h4 id="1-在客户现场的gitlab中配置账号"><a href="#1-在客户现场的gitlab中配置账号" class="headerlink" title="1. 在客户现场的gitlab中配置账号"></a>1. 在客户现场的gitlab中配置账号</h4><ul>
+<li><p>登录GitLab</p>
+</li>
+<li><p>创建一个用户</p>
+</li>
+<li><p>为该用户赋予管理员权限。简单起见，笔者使用root 这个GitLab的内置账户。</p>
+</li>
+<li><p>在GitLab创建一个Group，名字为test，该名称在下面的配置文件中会用到。</p>
+</li>
+</ul>
+<h4 id="2-在虚拟机中配置用户并生成ssh-key"><a href="#2-在虚拟机中配置用户并生成ssh-key" class="headerlink" title="2. 在虚拟机中配置用户并生成ssh key"></a>2. 在虚拟机中配置用户并生成ssh key</h4><p>这一步需要在root用户下执行</p>
+<pre><code>// 创建新用户
+# adduser gitmirror
+
+// 切换用户
+# su - gitmirror
+
+// 生成ssh密钥
+$ ssh-keygen -t rsa -C
+
+// 或者加入公司本部的gitlab所在的用户邮箱信息
+$ ssh-keygen -t rsa -C &quot;admin@example.com&quot;
+
+// 查看生成的密钥信息
+$ more /home/gitmirror/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDUdvDGqmvboURWy1YV1rexD+vRhkt4eEDoQuUBbQ6ceH6Ta/NRDPK6o/BnBC9n0AoSrXtHem5PYPnYKkLkv0yQo3JwtN/p07lH4SoN8/v+aHzCP87A5j1wSHA
+/6NB8CKefeZcR87llP/3P0v2gQukCcr3G1CaJeAhQ2lvLdimftgh83vvMv+28IJlt5UsJK0MqeQHw7uOA8//mgbEvZVHzzOGNpX/xkcj4lbCXhnLCyCr1/Q7LIKneJuxqZG1oyongIDU+yq3WFtNDGn8ORwIGVz
+XvA7sfTQF0npSsgKIJJKRkmn5+6pQtSB8WAYfrHc10qBzieFRlV5mZ7KYtySql admin@example.com
+</code></pre><p><strong>注意：</strong>如果切换gitmirror用户后生成了密钥信息，而python的虚拟环境建在centos用户下，那么需要将生成的证书信息导入到centos用户下，否则在执行git clone操作时，会出现找不到证书的情况。拷贝证书的操作如下：</p>
+<pre><code>// 记得备份原有证书
+
+// 拷贝证书操作
+# cp /home/gitmirror/.ssh/id_rsa* /home/centos/.ssh/ 
+</code></pre><h4 id="3-为公司本部的gitlab设置免密码登录"><a href="#3-为公司本部的gitlab设置免密码登录" class="headerlink" title="3. 为公司本部的gitlab设置免密码登录"></a>3. 为公司本部的gitlab设置免密码登录</h4><p>将上面生成的密钥信息拷贝的公司本部的gitlab用户中，操作如下：</p>
+<p><img src="gitlab%E6%B7%BB%E5%8A%A0ssh-key%E4%BF%A1%E6%81%AF.png" alt></p>
+<p>同样将该密钥信息也添加到客户现场的gitlab中。</p>
+<p>测试ssh访问情况</p>
+<pre><code>// 测试公司本部的gitlab访问
+$ ssh -T -p 2222 git@192.168.166.202
+
+// 这里gitlab使用docker部署，ssh端口为2222
+
+// 测试客户现场的gitlab访问
+$ ssh -T git@192.168.229.52
+</code></pre><h4 id="4-为客户现场的gitlab设置access-token（设置private-token）"><a href="#4-为客户现场的gitlab设置access-token（设置private-token）" class="headerlink" title="4. 为客户现场的gitlab设置access_token（设置private token）"></a>4. 为客户现场的gitlab设置access_token（设置private token）</h4><p>添加access_token的步骤如下：</p>
+<p><img src="%E6%B7%BB%E5%8A%A0access_token.png" alt></p>
+<p>点击绿色按钮后将会生成一个新的token，复制该token（只会出现一次）。</p>
+<p><img src="%E5%A4%8D%E5%88%B6access_token.png" alt></p>
+<p>复制完成后，填写到客户现场中转服务器中，如下：</p>
+<pre><code># su - gitmirror
+
+$ touch private_token &amp;&amp; echo &#39;你复制的密钥信息&#39; &gt; private_token
+</code></pre><h4 id="5-创建本地仓库路径"><a href="#5-创建本地仓库路径" class="headerlink" title="5. 创建本地仓库路径"></a>5. 创建本地仓库路径</h4><p>GitLab Mirrors会将GitHub上的代码clone到本地，默认是~/repositories ，因此我们得创建该目录。</p>
+<pre><code>
+# su - gitmirror
+
+$ mkdir ~/repositories
+</code></pre><h4 id="6-下载并配置gitlab-mirrors"><a href="#6-下载并配置gitlab-mirrors" class="headerlink" title="6. 下载并配置gitlab-mirrors"></a>6. 下载并配置gitlab-mirrors</h4><p>切换到centos用户执行，如下：</p>
+<pre><code># su - centos
+
+$ git clone https://github.com/samrocketman/gitlab-mirrors.git
+
+$ cd gitlab-mirrors
+
+$ chmod 755 *.sh
+
+// 添加配置文件
+$ cp config.sh.SAMPLE config.sh
+</code></pre><p>下面开始修改配置文件：</p>
+<pre><code>
+$ cd gitlab-mirrors &amp;&amp; vim config.sh
+
+#Environment file
+
+#
+# gitlab-mirrors settings
+#
+
+#The user git-mirrors will run as.
+system_user=&quot;gitmirror&quot;
+#The home directory path of the $system_user
+user_home=&quot;/home/${system_user}&quot;
+#The repository directory where gitlab-mirrors will contain copies of mirrored
+#repositories before pushing them to gitlab.
+repo_dir=&quot;${user_home}/repositories&quot;
+#colorize output of add_mirror.sh, update_mirror.sh, and git-mirrors.sh
+#commands.
+enable_colors=true
+#These are additional options which should be passed to git-svn.  On the command
+#line type &quot;git help svn&quot;
+git_svn_additional_options=&quot;-s&quot;
+#Force gitlab-mirrors to not create the gitlab remote so a remote URL must be
+#provided. (superceded by no_remote_set)
+no_create_set=false
+#Force gitlab-mirrors to only allow local remotes only.
+no_remote_set=false
+#Enable force fetching and pushing.  Will overwrite references if upstream
+#forced pushed.  Applies to git projects only.
+force_update=false
+#This option is for pruning mirrors.  If a branch is deleted upstream then that
+#change will propagate into your GitLab mirror.  Aplies to git projects only.
+prune_mirrors=false
+
+#
+# Gitlab settings
+#
+
+// 注意这下面的内容
+#This is the Gitlab group where all project mirrors will be grouped.
+// 在客户现场gitlab中创建的group名称
+gitlab_namespace=&quot;test&quot;
+#This is the base web url of your Gitlab server.
+// 在客户现场gitlab地址
+gitlab_url=&quot;http://192.168.229.52:8181&quot;
+#Special user you created in Gitlab whose only purpose is to update mirror sites
+#and admin the $gitlab_namespace group.
+// 在客户现场gitlab中使用的用户名
+gitlab_user=&quot;root&quot;
+#Generate a token for your $gitlab_user and set it here.
+// 默认的获取access_token的文件
+gitlab_user_token_secret=&quot;$(head -n1 &quot;${user_home}/private_token&quot; 2&gt; /dev/null || echo &quot;&quot;)&quot;
+#Sets the Gitlab API version, either 3 or 4
+gitlab_api_version=4
+#Verify signed SSL certificates?
+ssl_verify=false
+#Push to GitLab over http?  Otherwise will push projects via SSH.
+http_remote=false
+
+#
+# Gitlab new project default settings.  If a project needs to be created by
+# gitlab-mirrors then it will assign the following values as defaults.
+#
+
+#values must be true or false
+issues_enabled=false
+wall_enabled=false
+wiki_enabled=false
+snippets_enabled=false
+merge_requests_enabled=false
+public=false
+
+// :wq保存退出
+</code></pre><h4 id="7-添加仓库同步配置并开始同步"><a href="#7-添加仓库同步配置并开始同步" class="headerlink" title="7. 添加仓库同步配置并开始同步"></a>7. 添加仓库同步配置并开始同步</h4><p>在centos用户下执行最后的操作，添加同步的公司本部仓库信息如下：</p>
+<pre><code>
+# su - centos
+
+$ ./add_mirror.sh --git --project-name test --mirror ssh://git@192.168.166.202:2222/test-cloud/demo-business/express/studentmanage2.git
+</code></pre><p><strong>注意：</strong>这里使用的ssh格式的地址信息，而不是使用http链接的信息。</p>
+<p><strong>注意：</strong>执行./add_mirror.sh脚本出现的问题</p>
+<pre><code># ./add_mirror.sh --git --project-name studentmanager2 --mirror http://10.0.66.202:8181/icp-cloud/demo-business/express/studentmanage2.git
+
+Resolving gitlab remote.
+
+Traceback (most recent call last):
+
+  File &quot;lib/manage_gitlab_project.py&quot;, line 12, in &lt;module&gt;
+
+    raise ImportError(&quot;python-gitlab module is not installed.  You probably didn&#39;t read the install instructions closely enough.  See docs/prerequisites.md.&quot;)
+
+ImportError: python-gitlab module is not installed.  You probably didn&#39;t read the install instructions closely enough.  See docs/prerequisites.md.
+
+There was an unknown issue with manage_gitlab_project.py
+</code></pre><p>解决方式:</p>
+<pre><code># pip install python-gitlab
+</code></pre><p>添加命令执行无错误，即可进行同步，执行如下：</p>
+<pre><code>
+$ cd ~/git_repository_sync/gitlab-mirrors &amp;&amp; ./git_mirrors.sh
+</code></pre><p>执行完成后，则可以看到客户现场的gitlab中有了我们自己的项目，如下：</p>
+<p><img src="%E5%90%8C%E6%AD%A5%E9%A1%B9%E7%9B%AE%E6%88%AA%E5%9B%BE.png" alt></p>
+<p>如果需要定时同步，直接编写crontab规则即可，如下：</p>
+<pre><code>
+$ crontab -e
+
+*/5 * * * * /home/centos/git_repository_sync/gitlab-mirrors/git_mirrors.sh
+</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在上述操作下，可以实现两地间gitlab仓库的单向同步</p>
+<h2 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h2><ul>
+<li><a href="http://www.itmuch.com/work/git-repo-sync-with-gitlab-mirrors/" target="_blank" rel="noopener">http://www.itmuch.com/work/git-repo-sync-with-gitlab-mirrors/</a></li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《两个gitlab之间的仓库同步问题解决》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="关于nacos的问题排查">
+                        
+                        <span class="card-title">关于nacos的问题排查</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            关于甲方方面在nacos下的超时问题处理问题背景描述起因源于甲方方面从防火墙开放端口后，通过vpn连接到甲方的网络中，在本地通过intellij idea启动uaa服务，看是否能注册到甲方的nacos中。
+通过测试，并不能注册到甲方的nac
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-05-24
+                        </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
+                        
+                        <span class="card-title">k8s 1.20.5 二进制安装教程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            k8s 1.20.5 二进制安装教程资源准备以及ip地址分配准备了六台机器进行安装，全部部署kubelet以及kube-porxy，不是在特定机器上进行部署，通过标签的方式控制业务服务的部署范围。
+机器列表以及安装内容如下:
+
+
+
+机器名
+
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-04-04
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">271.5k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

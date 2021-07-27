@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>时代与猫的脚步</title>
+  
+  <subtitle>JamesLiAndroid</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://JamesLiAndroid.github.io/"/>
+  <updated>2021-07-26T09:56:18.696Z</updated>
+  <id>https://JamesLiAndroid.github.io/</id>
+  
+  <author>
+    <name>JamesLiAndroid</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>某甲方项目的微服务构建实施总结与心得</title>
+    <link href="https://JamesLiAndroid.github.io/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/"/>
+    <id>https://JamesLiAndroid.github.io/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/</id>
+    <published>2021-07-24T07:08:25.000Z</published>
+    <updated>2021-07-26T09:56:18.696Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;某甲方项目的微服务构建实施总结与心得&quot;&gt;&lt;a href=&quot;#某甲方项目的微服务构建实施总结与心得&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控</title>
+    <link href="https://JamesLiAndroid.github.io/2021/06/22/cadvisor-node-exporter-prometheus-grafana-da-jian-zhu-ji-he-docker-rong-qi-jian-kong/"/>
+    <id>https://JamesLiAndroid.github.io/2021/06/22/cadvisor-node-exporter-prometheus-grafana-da-jian-zhu-ji-he-docker-rong-qi-jian-kong/</id>
+    <published>2021-06-22T09:09:56.000Z</published>
+    <updated>2021-07-27T02:17:55.517Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;cadvisor-node-exporter-prometheus-grafana搭建主机和docker容器监控&quot;&gt;&lt;a href=&quot;#cadvisor-node-exporter-prometheus-grafana搭建主机和docker容器监控&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于maven deploy出现连接超时的情况</title>
+    <link href="https://JamesLiAndroid.github.io/2021/06/15/guan-yu-maven-deploy-chu-xian-lian-jie-chao-shi-de-qing-kuang/"/>
+    <id>https://JamesLiAndroid.github.io/2021/06/15/guan-yu-maven-deploy-chu-xian-lian-jie-chao-shi-de-qing-kuang/</id>
+    <published>2021-06-15T03:01:35.000Z</published>
+    <updated>2021-06-15T05:47:12.621Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于maven-deploy命令出现连接超时的情况解决&quot;&gt;&lt;a href=&quot;#关于maven-deploy命令出现连接超时的情况解决&quot; class=&quot;headerlink&quot; title=&quot;关于maven
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用lanproxy在vpn环境下进行微服务的开发联调测试</title>
+    <link href="https://JamesLiAndroid.github.io/2021/05/26/shi-yong-lanproxy-zai-vpn-huan-jing-xia-jin-xing-wei-fu-wu-de-kai-fa-lian-diao-ce-shi/"/>
+    <id>https://JamesLiAndroid.github.io/2021/05/26/shi-yong-lanproxy-zai-vpn-huan-jing-xia-jin-xing-wei-fu-wu-de-kai-fa-lian-diao-ce-shi/</id>
+    <published>2021-05-26T05:27:34.000Z</published>
+    <updated>2021-06-03T01:40:02.641Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;使用lanproxy在vpn环境下进行微服务的开发联调测试&quot;&gt;&lt;a href=&quot;#使用lanproxy在vpn环境下进行微服务的开发联调测试&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="DevOps" scheme="https://JamesLiAndroid.github.io/tags/DevOps/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于nacos的问题排查</title>
+    <link href="https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/"/>
+    <id>https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/</id>
+    <published>2021-05-24T03:12:56.000Z</published>
+    <updated>2021-05-24T13:13:54.840Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于甲方方面在nacos下的超时问题处理&quot;&gt;&lt;a href=&quot;#关于甲方方面在nacos下的超时问题处理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>两个gitlab之间的仓库同步问题解决</title>
+    <link href="https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/"/>
+    <id>https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/</id>
+    <published>2021-04-16T09:26:34.000Z</published>
+    <updated>2021-05-19T06:01:45.068Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;a href=&quot;#两个gitlab之间的仓库同步问题解决&quot; class=&quot;headerlink&quot; title=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;/a&gt;两个gitlab之间的仓库同步问题解决&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>k8s 1.20.5 二进制安装教程</title>
+    <link href="https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/"/>
+    <id>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</id>
+    <published>2021-04-04T01:58:57.000Z</published>
+    <updated>2021-04-20T07:08:21.456Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;k8s-1-20-5-二进制安装教程&quot;&gt;&lt;a href=&quot;#k8s-1-20-5-二进制安装教程&quot; class=&quot;headerlink&quot; title=&quot;k8s 1.20.5 二进制安装教程&quot;&gt;&lt;/a&gt;k8s 1.20.5 二进制安装教程&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>k8s一阶段学习记录</title>
+    <link href="https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/"/>
+    <id>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</id>
+    <published>2021-03-19T07:42:08.000Z</published>
+    <updated>2021-05-14T08:55:27.247Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;k8s学习&lt;/p&gt;
+&lt;h2 id=&quot;第一章-kubeadm方式安装k8s集群&quot;&gt;&lt;a href=&quot;#第一章-kubeadm方式安装k8s集群&quot; class=&quot;headerlink&quot; title=&quot;第一章 kubeadm方式安装k8s集群&quot;&gt;&lt;/a&gt;第一章
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>全链路灰度发布实践</title>
+    <link href="https://JamesLiAndroid.github.io/2021/03/06/quan-lian-lu-hui-du-fa-bu-shi-jian/"/>
+    <id>https://JamesLiAndroid.github.io/2021/03/06/quan-lian-lu-hui-du-fa-bu-shi-jian/</id>
+    <published>2021-03-06T05:24:53.000Z</published>
+    <updated>2021-03-06T05:29:40.468Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;全链路灰度发布方案&quot;&gt;&lt;a href=&quot;#全链路灰度发布方案&quot; class=&quot;headerlink&quot; title=&quot;全链路灰度发布方案&quot;&gt;&lt;/a&gt;全链路灰度发布方案&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>灰度部署预研和实践(一)</title>
+    <link href="https://JamesLiAndroid.github.io/2021/02/20/hui-du-bu-shu-yu-yan-he-shi-jian-yi/"/>
+    <id>https://JamesLiAndroid.github.io/2021/02/20/hui-du-bu-shu-yu-yan-he-shi-jian-yi/</id>
+    <published>2021-02-20T09:23:25.000Z</published>
+    <updated>2021-02-20T09:35:19.598Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;灰度部署预研和实践&quot;&gt;&lt;a href=&quot;#灰度部署预研和实践&quot; class=&quot;headerlink&quot; title=&quot;灰度部署预研和实践&quot;&gt;&lt;/a&gt;灰度部署预研和实践&lt;/h1&gt;&lt;p&gt;后端服务主要依赖于Nepxion
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS 7 备份与恢复</title>
+    <link href="https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/"/>
+    <id>https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/</id>
+    <published>2021-02-04T06:48:10.000Z</published>
+    <updated>2021-02-04T07:09:35.732Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;CentOS-7-备份与恢复&quot;&gt;&lt;a href=&quot;#CentOS-7-备份与恢复&quot; class=&quot;headerlink&quot; title=&quot;CentOS 7 备份与恢复&quot;&gt;&lt;/a&gt;CentOS 7 备份与恢复&lt;/h1&gt;&lt;h2 id=&quot;迁移环境介绍&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于多module下代码结构的gitlab构建问题解决</title>
+    <link href="https://JamesLiAndroid.github.io/2021/01/14/guan-yu-duo-module-xia-dai-ma-jie-gou-de-gitlab-gou-jian-wen-ti-jie-jue/"/>
+    <id>https://JamesLiAndroid.github.io/2021/01/14/guan-yu-duo-module-xia-dai-ma-jie-gou-de-gitlab-gou-jian-wen-ti-jie-jue/</id>
+    <published>2021-01-14T12:21:23.000Z</published>
+    <updated>2021-01-16T02:25:44.133Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于多module代码结构的gitlab构建问题解决&quot;&gt;&lt;a href=&quot;#关于多module代码结构的gitlab构建问题解决&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>python文件路径问题</title>
+    <link href="https://JamesLiAndroid.github.io/2020/12/31/python-wen-jian-lu-jing-wen-ti/"/>
+    <id>https://JamesLiAndroid.github.io/2020/12/31/python-wen-jian-lu-jing-wen-ti/</id>
+    <published>2020-12-31T01:46:31.000Z</published>
+    <updated>2020-12-31T01:57:12.876Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;python路径问题&quot;&gt;&lt;a href=&quot;#python路径问题&quot; class=&quot;headerlink&quot; title=&quot;python路径问题&quot;&gt;&lt;/a&gt;python路径问题&lt;/h1&gt;&lt;h2 id=&quot;路径描述和解决方案&quot;&gt;&lt;a href=&quot;#路径描述和解决方案&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Springboot拆分依赖构建微服务方案</title>
+    <link href="https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/"/>
+    <id>https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/</id>
+    <published>2020-12-28T07:39:31.000Z</published>
+    <updated>2021-01-14T12:29:16.847Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Springboot拆分打包并进行构建的调整（调整图片）&quot;&gt;&lt;a href=&quot;#Springboot拆分打包并进行构建的调整（调整图片）&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>前端私服搭建及验证</title>
+    <link href="https://JamesLiAndroid.github.io/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/"/>
+    <id>https://JamesLiAndroid.github.io/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/</id>
+    <published>2020-12-28T05:58:03.000Z</published>
+    <updated>2020-12-28T06:03:35.580Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前端私服搭建&quot;&gt;&lt;a href=&quot;#前端私服搭建&quot; class=&quot;headerlink&quot; title=&quot;前端私服搭建&quot;&gt;&lt;/a&gt;前端私服搭建&lt;/h1&gt;&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>12月份济南买车指南</title>
+    <link href="https://JamesLiAndroid.github.io/2020/12/27/12-yue-fen-ji-nan-mai-che-zhi-nan/"/>
+    <id>https://JamesLiAndroid.github.io/2020/12/27/12-yue-fen-ji-nan-mai-che-zhi-nan/</id>
+    <published>2020-12-27T06:39:13.000Z</published>
+    <updated>2020-12-28T06:12:22.148Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;12月份济南买车指南&quot;&gt;&lt;a href=&quot;#12月份济南买车指南&quot; class=&quot;headerlink&quot; title=&quot;12月份济南买车指南&quot;&gt;&lt;/a&gt;12月份济南买车指南&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>从《演进式架构》思考我司云平台发展问题</title>
+    <link href="https://JamesLiAndroid.github.io/2020/11/20/cong-yan-jin-shi-jia-gou-si-kao-wo-si-yun-ping-tai-fa-zhan-wen-ti/"/>
+    <id>https://JamesLiAndroid.github.io/2020/11/20/cong-yan-jin-shi-jia-gou-si-kao-wo-si-yun-ping-tai-fa-zhan-wen-ti/</id>
+    <published>2020-11-20T06:41:51.000Z</published>
+    <updated>2020-11-25T14:08:36.394Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;从《演进式架构》思考我司云平台发展问题&quot;&gt;&lt;a href=&quot;#从《演进式架构》思考我司云平台发展问题&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于微服务中Skywalking监控信息和ELK统一日志管理体系的对接</title>
+    <link href="https://JamesLiAndroid.github.io/2020/11/07/guan-yu-wei-fu-wu-zhong-skywalking-jian-kong-xin-xi-he-elk-tong-yi-ri-zhi-guan-li-ti-xi-de-dui-jie/"/>
+    <id>https://JamesLiAndroid.github.io/2020/11/07/guan-yu-wei-fu-wu-zhong-skywalking-jian-kong-xin-xi-he-elk-tong-yi-ri-zhi-guan-li-ti-xi-de-dui-jie/</id>
+    <published>2020-11-07T02:25:09.000Z</published>
+    <updated>2020-11-25T02:08:09.271Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;当前场景&quot;&gt;&lt;a href=&quot;#当前场景&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>jenkins批量复制job到新的view中的执行脚本</title>
+    <link href="https://JamesLiAndroid.github.io/2020/11/02/jenkins-pi-liang-fu-zhi-job-dao-xin-de-view-zhong-de-zhi-xing-jiao-ben/"/>
+    <id>https://JamesLiAndroid.github.io/2020/11/02/jenkins-pi-liang-fu-zhi-job-dao-xin-de-view-zhong-de-zhi-xing-jiao-ben/</id>
+    <published>2020-11-02T09:54:56.000Z</published>
+    <updated>2021-04-17T01:32:49.062Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;jenkins批量复制job到新的view中的groovy脚本&quot;&gt;&lt;a href=&quot;#jenkins批量复制job到新的view中的groovy脚本&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ElasticSearch索引的生命周期管理</title>
+    <link href="https://JamesLiAndroid.github.io/2020/10/14/elasticsearch-suo-yin-de-sheng-ming-zhou-qi-guan-li/"/>
+    <id>https://JamesLiAndroid.github.io/2020/10/14/elasticsearch-suo-yin-de-sheng-ming-zhou-qi-guan-li/</id>
+    <published>2020-10-14T06:39:45.000Z</published>
+    <updated>2020-10-14T06:53:26.265Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;ElasticSearch索引的生命周期管理&quot;&gt;&lt;a href=&quot;#ElasticSearch索引的生命周期管理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
