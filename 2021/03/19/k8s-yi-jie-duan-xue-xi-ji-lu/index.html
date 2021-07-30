@@ -300,7 +300,7 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -442,14 +442,14 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    32.4k
+                    32.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    156 分
+                    157 分
                 </div>
                 
                 
@@ -2185,6 +2185,13 @@ kubectl replace -f nginx-deployment.yaml  # 通过配置文件替代当前namesp
 
 kubectl edit deployment nginx        # 在线编辑名称为nginx的deployment
 
+# 重启deploy
+kubectl patch deployment &lt;deployment-name&gt; \
+  -p &#39;{&quot;spec&quot;:{&quot;template&quot;:{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;&lt;container-name&gt;&quot;,&quot;env&quot;:[{&quot;name&quot;:&quot;RESTART_&quot;,&quot;value&quot;:&quot;&#39;$(date +%s)&#39;&quot;}]}]}}}}&#39;
+
+# 示例
+kubectl patch deployment weichai-les-app \
+  -p &#39;{&quot;spec&quot;:{&quot;template&quot;:{&quot;spec&quot;:{&quot;containers&quot;:[{&quot;name&quot;:&quot;&lt;container-name&gt;&quot;,&quot;env&quot;:[{&quot;name&quot;:&quot;RESTART_&quot;,&quot;value&quot;:&quot;&#39;$(date +%s)&#39;&quot;}]}]}}}}&#39;
 </code></pre><p>配置文件：</p>
 <pre class="line-numbers language-yaml"><code class="language-yaml">
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
@@ -5650,7 +5657,7 @@ spec:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
                         
                         <span class="card-title">k8s 1.20.5 二进制安装教程</span>
                     </div>
@@ -5690,7 +5697,7 @@ spec:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="全链路灰度发布实践">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="全链路灰度发布实践">
                         
                         <span class="card-title">全链路灰度发布实践</span>
                     </div>
@@ -5869,7 +5876,7 @@ spec:
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">271.6k</span>
+            <span class="white-color">271.8k</span>
             
 
             <br>
