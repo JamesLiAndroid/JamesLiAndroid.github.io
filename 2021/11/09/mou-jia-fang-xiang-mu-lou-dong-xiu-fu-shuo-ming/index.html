@@ -1,0 +1,1554 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="某甲方项目漏洞修复说明, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="某甲方项目漏洞修复说明解决内容说明优先解决高风险漏洞，包含非常危险和比较危险这两个等级的漏洞，对于其余的漏洞，给出解决时间。
+对于目前不容易解决的漏洞，尽可能给出解决方案，并给出解决时间。
+正式环境的高危漏洞，开发、测试环境的高危漏洞必须解">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>某甲方项目漏洞修复说明 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        某甲方项目漏洞修复说明
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        <span class="chip bg-color">无标签</span>
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-11-09
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="某甲方项目漏洞修复说明"><a href="#某甲方项目漏洞修复说明" class="headerlink" title="某甲方项目漏洞修复说明"></a>某甲方项目漏洞修复说明</h1><h2 id="解决内容说明"><a href="#解决内容说明" class="headerlink" title="解决内容说明"></a>解决内容说明</h2><p>优先解决高风险漏洞，包含非常危险和比较危险这两个等级的漏洞，对于其余的漏洞，给出解决时间。</p>
+<p>对于目前不容易解决的漏洞，尽可能给出解决方案，并给出解决时间。</p>
+<p>正式环境的高危漏洞，开发、测试环境的高危漏洞必须解决！</p>
+<h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><p>主要问题集中在MySQL数据库、Nginx、nacos三个组件上，系统层面问题不大。</p>
+<p>对于三者的版本选择要注意！</p>
+<h3 id="与开发相关的漏洞信息"><a href="#与开发相关的漏洞信息" class="headerlink" title="与开发相关的漏洞信息"></a>与开发相关的漏洞信息</h3><ul>
+<li>nacos权限绕过漏洞(CVE-2021-29441)</li>
+</ul>
+<p>通过重新设置配置信息实现，临时可以不选择升级版本。</p>
+<p>解决方案：<a href="https://www.iitter.com/other/55257.html" target="_blank" rel="noopener">https://www.iitter.com/other/55257.html</a></p>
+<p>难易程度：容易</p>
+<ul>
+<li>nacos弱身份认证漏洞(CVE-2021-29442)</li>
+</ul>
+<p>官方建议升级到1.4.1版本的nacos，并且是hotfix版本，如果不升级该版本，需要修改代码以规避风险。</p>
+<p>修改代码解决方案：<a href="https://www.sohu.com/a/448007719_466874" target="_blank" rel="noopener">https://www.sohu.com/a/448007719_466874</a></p>
+<p>难易程度：难</p>
+<p>2021-11-09补充内容：</p>
+<p>上述两个漏洞均需要通过升级nacos解决，目前将nacos升级到1.4.1版本。然后配置授权验证信息，在nacos安装目录下conf/application.properties我呢见中修改，如下：</p>
+<pre class="line-numbers language-properties"><code class="language-properties">
+<span class="token comment" spellcheck="true">### 开启鉴权</span>
+<span class="token attr-name">nacos.core.auth.enabled</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+
+<span class="token comment" spellcheck="true">### 关闭使用user-agent判断服务端请求并放行鉴权的功能</span>
+<span class="token attr-name">nacos.core.auth.enable.userAgentAuthWhite</span><span class="token punctuation">=</span><span class="token attr-value">false</span>
+
+<span class="token comment" spellcheck="true">### 配置自定义身份识别的key（不可为空）和value（不可为空）</span>
+<span class="token attr-name">nacos.core.auth.server.identity.key</span><span class="token punctuation">=</span><span class="token attr-value">example</span>
+<span class="token attr-name">nacos.core.auth.server.identity.value</span><span class="token punctuation">=</span><span class="token attr-value">example</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后将所有服务添加授权验证信息，在每个微服务的bootstrap.yml文件中进行修改，如下：</p>
+<pre class="line-numbers language-yml"><code class="language-yml">
+spring:
+  application:
+    name: test
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        namespace: ${nacos_namespace:abc4976e-798f-4772-bfd7-1d2f85a55c5d}
+        server-addr: ${nacos_ip:192.168.229.51:38848}
+        file-extension: yml
+          # 添加用户名密码配置
+        username: ${nacos_username:nacos1}
+        password: ${nacos_passwd:nacos1}
+      discovery:
+        namespace: ${nacos_namespace:abc4976e-798f-4772-bfd7-1d2f85a55c5d}
+        server-addr: ${nacos_ip:192.168.229.51:38848}
+          # 添加用户名密码配置
+        username: ${nacos_username:nacos1}
+        password: ${nacos_passwd:nacos1}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>目前存在的隐患是，微服务中的nacos-client依赖并未升级，目前尚未发现有注册和调用的问题，这个需要进一步验证。</p>
+<ul>
+<li>远端WWW服务支持TRACE请求</li>
+</ul>
+<p>目前这个错误应该和目前所有微服务中使用的内置服务器有关，需要确认内置服务器的版本。</p>
+<p>解决方案如下：<a href="https://www.cnblogs.com/zcg-cpdd/p/14485370.html" target="_blank" rel="noopener">https://www.cnblogs.com/zcg-cpdd/p/14485370.html</a></p>
+<p>2021-11-08补充，找到解决方法，使用在Springboot项目中添加配置类实现，配置类编写如下：</p>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token keyword">package</span> com<span class="token punctuation">.</span>example<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>autoconfigure<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> io<span class="token punctuation">.</span>undertow<span class="token punctuation">.</span>server<span class="token punctuation">.</span>HandlerWrapper<span class="token punctuation">;</span>
+<span class="token keyword">import</span> io<span class="token punctuation">.</span>undertow<span class="token punctuation">.</span>server<span class="token punctuation">.</span>HttpHandler<span class="token punctuation">;</span>
+<span class="token keyword">import</span> io<span class="token punctuation">.</span>undertow<span class="token punctuation">.</span>server<span class="token punctuation">.</span>handlers<span class="token punctuation">.</span>DisallowedMethodsHandler<span class="token punctuation">;</span>
+<span class="token keyword">import</span> io<span class="token punctuation">.</span>undertow<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HttpString<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>web<span class="token punctuation">.</span>embedded<span class="token punctuation">.</span>undertow<span class="token punctuation">.</span>UndertowServletWebServerFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>web<span class="token punctuation">.</span>server<span class="token punctuation">.</span>WebServerFactoryCustomizer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span>Configuration<span class="token punctuation">;</span>
+
+
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UndertowWebServerCustomizerConfig</span> <span class="token keyword">implements</span> <span class="token class-name">WebServerFactoryCustomizer</span><span class="token operator">&lt;</span>UndertowServletWebServerFactory<span class="token operator">></span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">customize</span><span class="token punctuation">(</span>UndertowServletWebServerFactory factory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        factory<span class="token punctuation">.</span><span class="token function">addDeploymentInfoCustomizers</span><span class="token punctuation">(</span>deploymentInfo <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            deploymentInfo<span class="token punctuation">.</span><span class="token function">addInitialHandlerChainWrapper</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">HandlerWrapper</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token annotation punctuation">@Override</span>
+                <span class="token keyword">public</span> HttpHandler <span class="token function">wrap</span><span class="token punctuation">(</span>HttpHandler handler<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    HttpString<span class="token punctuation">[</span><span class="token punctuation">]</span> disallowedHttpMethods <span class="token operator">=</span> <span class="token punctuation">{</span>HttpString<span class="token punctuation">.</span><span class="token function">tryFromString</span><span class="token punctuation">(</span><span class="token string">"TRACE"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                            HttpString<span class="token punctuation">.</span><span class="token function">tryFromString</span><span class="token punctuation">(</span><span class="token string">"TRACK"</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">DisallowedMethodsHandler</span><span class="token punctuation">(</span>handler<span class="token punctuation">,</span> disallowedHttpMethods<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>参考地址：<a href="https://blog.csdn.net/nklinsirui/article/details/108540403" target="_blank" rel="noopener">https://blog.csdn.net/nklinsirui/article/details/108540403</a></p>
+<h3 id="与构建相关的漏洞"><a href="#与构建相关的漏洞" class="headerlink" title="与构建相关的漏洞"></a>与构建相关的漏洞</h3><ul>
+<li>Docker Remote API 未授权访问漏洞 —（已完成，对2375端口做了限制，使用tls证书进行认证）</li>
+</ul>
+<p>这个漏洞是因为我们jenkins主机上安装的docker开放了2375远程调用端口导致的，我们jenkins构建时需要开放2375端口进行docker构建打包。</p>
+<p>解决方式：对2375端口做网络访问控制，如设置iptables策略仅允许指定的IP来访问Docker接口。目前可以考虑用防火墙的方式进行限制，但甲方方面的机器防火墙都已经关闭，需要进行测试。</p>
+<p>难易程度：容易</p>
+<p><strong>注意：</strong>在甲方方面无法使用端口限制的方式解决该漏洞，只能使用TLS证书的方式解决！</p>
+<h3 id="与中间件相关的漏洞"><a href="#与中间件相关的漏洞" class="headerlink" title="与中间件相关的漏洞"></a>与中间件相关的漏洞</h3><ul>
+<li>Ffay Lanproxy 路径遍历漏洞(CVE-2021-3019) — （已完成，通过关闭lanproxy服务进行，后续如果需要继续使用，则升级版本）</li>
+<li>uWSGI 路径穿越漏洞(CVE-2018-7490) — （已完成，通过关闭lanproxy服务进行，后续如果需要继续使用，则升级版本）</li>
+<li>SSL/TLS 服务器瞬时 Diffie-Hellman 公共密钥过弱 — （已完成，通过关闭lanproxy服务进行，后续如果需要继续使用，则升级版本）</li>
+</ul>
+<p>这个漏洞是因为在甲方开发环境中部署了内网穿透工具Lanproxy导致的。</p>
+<p>解决方式：如果后续不再使用内网穿透，可以考虑直接关闭该工具解决漏洞。如果需要继续使用，升级最新版本的lanproxy解决。</p>
+<p>难易程度：容易</p>
+<ul>
+<li>nginx 安全漏洞(CVE-2021-23017) — （<em>开发环境</em>已完成，通过修改前端Docker基础镜像、对编译的nginx打补丁）</li>
+</ul>
+<p>这个漏洞是因为在前端部署和在fastdfs文件存储服务中引入nginx导致的。目前针对前端部署的nginx修改，需要变更基础镜像使用的nginx，打补丁和漏洞；针对fastdfs文件存储，直接修复即可。如果粗暴点解决，升级最新版本的nginx，但是需要进行功能层面验证！</p>
+<p>官方给出的解决方式是，更换新版本的nginx。例如：升级到NGINX Open Source 1.20.1 (stable)。但是对于前端docker基础镜像中使用的nginx来说，这个相对来说不好实现</p>
+<p>解决方式：<a href="https://www.nginx.com/blog/updating-nginx-dns-resolver-vulnerability-cve-2021-23017/" target="_blank" rel="noopener">https://www.nginx.com/blog/updating-nginx-dns-resolver-vulnerability-cve-2021-23017/</a><br>         <a href="https://www.secrss.com/articles/31531（编译安装推荐这样解决）" target="_blank" rel="noopener">https://www.secrss.com/articles/31531（编译安装推荐这样解决）</a><br>         <a href="http://nginx.org/download/patch.2021.resolver.txt" target="_blank" rel="noopener">http://nginx.org/download/patch.2021.resolver.txt</a></p>
+<p>难以程度：较难</p>
+<h3 id="与数据库相关的漏洞"><a href="#与数据库相关的漏洞" class="headerlink" title="与数据库相关的漏洞"></a>与数据库相关的漏洞</h3><p>— （<em>开发环境</em>已完成，升级MySQL 5.7.35）</p>
+<ul>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-3822)</li>
+<li>Oracle MySQL Server组件安全漏洞(CVE-2019-5482)</li>
+<li>Oracle MySQL Server安全漏洞(CVE-2019-17543)</li>
+<li>Oracle MySQL Server安全漏洞(CVE-2021-22901)</li>
+<li>Oracle MySQL Server 安全漏洞（CVE-2019-5443）</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-1967)</li>
+<li>Oracle MySQL Server安全漏洞（CVE-2019-2632）</li>
+<li>Oracle MySQL/MariaDB Server 输入验证错误漏洞（CVE-2021-2144）</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14539)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2019-2914)</li>
+<li>Oracle MySQL Server InnoDB 安全漏洞(CVE-2020-14775)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2019-2946)</li>
+<li>Oracle MySQL Server Server: Optimizer 安全漏洞(CVE-2020-14769)</li>
+<li>Oracle MySQL Server组件安全漏洞(CVE-2020-2790)</li>
+<li>Oracle MySQL Server/MariaDB 组件访问控制错误漏洞(CVE-2019-2805)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14576)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-2579)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2178)</li>
+<li>Oracle MySQL Server/MariaDB 安全漏洞(CVE-2019-2974)</li>
+<li>Oracle MySQL Server/MariaDB 组件安全漏洞(CVE-2020-2780)</li>
+<li>Oracle MySQL Server/MariaDB 组件访问控制错误漏洞(CVE-2019-2740)</li>
+<li>Oracle MySQL Server Server: Security: LDAP Auth 安全漏洞(CVE-2020-14827)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2202)</li>
+<li>Oracle MySQL Server/MariaDB Server: FTS组件拒绝服务漏洞(CVE-2020-14765)</li>
+<li>Oracle MySQL Server 信息泄露漏洞(CVE-2019-2969)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2307)</li>
+<li>Oracle MySQL Server/MariaDB 安全漏洞(CVE-2020-2574)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞（CVE-2021-23890）</li>
+<li>Oracle MySQL/MariaDB 拒绝服务漏洞(CVE-2021-2011)</li>
+<li>Oracle MySQL Server安全漏洞（CVE-2019-1559）</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2356)</li>
+<li>Oracle Java SE 输入验证错误漏洞 (CVE-2021-23841)</li>
+<li>Oracle MySQL Server组件安全漏洞(CVE-2020-2804)</li>
+<li>Oracle MySQL Server 远程安全漏洞(CVE-2021-3449)</li>
+<li>Oracle MySQL 安全漏洞(CVE-2020-2570)</li>
+<li>Oracle MySQL Client 安全漏洞(CVE-2020-2573)</li>
+<li>Oracle MySQL Server 代码问题漏洞(CVE-2020-1971)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2390)</li>
+<li>Oracle MySQL Server/MariaDB 组件访问控制错误漏洞(CVE-2019-2758)</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2819)</li>
+<li>Oracle MySQL Server Server Optimizer 安全漏洞(CVE-2020-14760)</li>
+<li>Oracle MySQL Server/MariaDB InnoDB组件安全漏洞(CVE-2020-2760)</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2778)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2019-2993)</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2741)</li>
+<li>Oracle MySQL Server 信息泄露漏洞(CVE-2019-2924)</li>
+<li>Oracle MySQL Server组件安全漏洞(CVE-2020-2806)</li>
+<li>Oracle MySQL Server 信息泄露漏洞(CVE-2019-2922)</li>
+<li>Oracle MySQL Server 信息泄露漏洞(CVE-2019-2923)</li>
+<li>Oracle MySQL Server/MariaDB组件安全漏洞(CVE-2020-2752)</li>
+<li>Oracle MySQL Server/MariaDB 安全漏洞(CVE-2020-14550)</li>
+<li>Oracle MySQL Server/MariaDB 组件访问控制错误漏洞(CVE-2019-2739)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞（CVE-2021-23853）</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-2763)</li>
+<li>Oracle MySQL Server/MariaDB Server: Stored Procedure组件安全漏洞(CVE-2020-2812)</li>
+<li>Oracle MySQL Server/MariaDB 安全漏洞（CVE-2019-2628）</li>
+<li>Oracle MySQL Server/MariaDB 组件安全漏洞(CVE-2020-2814)</li>
+<li>Oracle MySQL/MariaDB Server 输入验证错误漏洞(CVE-2021-2166)</li>
+<li>Oracle MySQL Server组件安全漏洞(CVE-2020-2765)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2179)</li>
+<li>Oracle MySQL 安全漏洞(CVE-2021-2060)</li>
+<li>Oracle MySQL Server Server: Stored Procedure 安全漏洞(CVE-2020-14672)</li>
+<li>Oracle MySQL Server Server：Optimizer 安全漏洞(CVE-2020-14793)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2226)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2169)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14540)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14547)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14567)</li>
+<li>Oracle MySQL Server/MariaDB Server: Locking 安全漏洞(CVE-2020-14812)</li>
+<li>Oracle MySQL 输入验证错误漏洞(CVE-2021-2160)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞（CVE-2021-2146）</li>
+<li>Oracle MySQL/MariaDB Server 输入验证错误漏洞(CVE-2021-2154)</li>
+<li>Oracle MySQL Server/MariaDB InnoDB 安全漏洞(CVE-2020-14776)</li>
+<li>Oracle MySQL Server/MariaDB 拒绝服务漏洞(CVE-2020-14789)</li>
+<li>Oracle MySQL 安全漏洞(CVE-2021-2014)</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2774)</li>
+<li>Oracle MySQL/MariaDB Server 输入验证错误漏洞(CVE-2021-2194)</li>
+<li>Oracle MySQL/MariaDB Server 输入验证错误漏洞(CVE-2021-2180)</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2757)</li>
+<li>Oracle MySQL Server/MariaDB 组件访问控制错误漏洞(CVE-2019-2737)</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2755)</li>
+<li>Oracle MySQL Server/MariaDB 安全漏洞（CVE-2019-2627）</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2019-2948)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2019-2960)</li>
+<li>Oracle MySQL 输入验证错误漏洞(CVE-2021-2342)</li>
+<li>Oracle MySQL Server安全漏洞（CVE-2019-2683）</li>
+<li>Oracle MySQL Server安全漏洞（CVE-2019-2592）</li>
+<li>Oracle MySQL Server安全漏洞（CVE-2019-2581）</li>
+<li>Oracle MySQL Server安全漏洞（CVE-2019-2566）</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-2577)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-2589)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-2660)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14869)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14790)</li>
+<li>Oracle MySQL 安全漏洞(CVE-2021-2001)</li>
+<li>Oracle MySQL Server组件安全漏洞(CVE-2019-1547)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2372)</li>
+<li>Oracle MySQL Server/MariaDB 安全漏洞（CVE-2019-2614）</li>
+<li>Oracle MySQL Server/MariaDB 输入验证错误漏洞(CVE-2019-2938)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-2584)</li>
+<li>Oracle MySQL Server 授权问题漏洞(CVE-2020-14867)</li>
+<li>Oracle MySQL/MariaDB 安全漏洞(CVE-2021-2022)</li>
+<li>Oracle MySQL/MariaDB Server 输入验证错误漏洞(CVE-2021-2174)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞(CVE-2021-2171)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14559)</li>
+<li>Oracle MySQL Server 安全漏洞(CVE-2020-14553)</li>
+<li>Oracle MySQL/MariaDB 访问控制错误漏洞(CVE-2021-2032)</li>
+<li>Oracle MySQL Server 输入验证错误漏洞（CVE-2021-21622）</li>
+<li>Oracle MySQL Server组件访问控制错误漏洞(CVE-2019-2797)</li>
+<li>Oracle MySQL 安全漏洞(CVE-2021-2010)</li>
+</ul>
+<p>数据库层面存在比较严重的问题，目前尚不知道如何去修复！</p>
+<p>解决方案：直接升级MySQL 5.7.35版本解决所有漏洞问题！</p>
+<p>难易程度：较难</p>
+<p>番外：需要同正式环境升级5.7.33 的数据中的CVE数量进行对比，看看升级版本能解决多少问题。</p>
+<p>正式环境服务问题信息：</p>
+<ul>
+<li>Oracle MySQL Server安全漏洞(CVE-2021-22901)</li>
+<li>OracleOracle MySQL Server安全漏洞(CVE-2019-17543)</li>
+<li>OracleOracle MySQL Server 输入验证错误漏洞(CVE-2021-2356)</li>
+<li>OracleOracle MySQL Server 输入验证错误漏洞(CVE-2021-2390)</li>
+<li>OracleOracle MySQL Server 输入验证错误漏洞（CVE-2021-23890)</li>
+<li>OracleOracle MySQL Server 输入验证错误漏洞（CVE-2021-23853）</li>
+<li>OracleOracle MySQL 输入验证错误漏洞(CVE-2021-2342)</li>
+<li>OracleOracle MySQL Server 输入验证错误漏洞(CVE-2021-2372)</li>
+</ul>
+<p>咨询下甲方方面的DBA同志解决下该问题，重新搭建数据库。</p>
+<h3 id="与k8s相关的漏洞"><a href="#与k8s相关的漏洞" class="headerlink" title="与k8s相关的漏洞"></a>与k8s相关的漏洞</h3><ul>
+<li>SSL/TLS协议信息泄露漏洞(CVE-2016-2183)</li>
+</ul>
+<h3 id="与监控相关的漏洞"><a href="#与监控相关的漏洞" class="headerlink" title="与监控相关的漏洞"></a>与监控相关的漏洞</h3><ul>
+<li>Eclipse Jetty HTTP请求走私漏洞（CVE-2017-7658）</li>
+<li>Eclipse Jetty 授权问题漏洞(CVE-2018-12538)</li>
+<li>Eclipse Jetty HTTP请求走私漏洞（CVE-2017-7656）</li>
+<li>Jetty 信息泄露漏洞(CVE-2017-9735)</li>
+<li>Eclipse Jetty 输入验证错误漏洞(CVE-2018-12545)</li>
+<li>Eclipse Jetty跨站脚本执行漏洞（CVE-2019-10241）</li>
+<li>Eclipse Jetty 信息泄露漏洞(CVE-2019-10246)</li>
+<li>Eclipse Jetty信息泄露漏洞（CVE-2018-12536）</li>
+<li>Eclipse Jetty 信息泄露漏洞(CVE-2019-10247)</li>
+</ul>
+<p>这个部分的漏洞和Skywalking相关，目前尚未有合适的解决方案。只能先考虑下升级Skywalking版本看看。</p>
+<p>解决方式：升级Skywalking版本，需要验证对之前的agent有没有影响。</p>
+<p>难易程度：较难</p>
+<p>目前采取的策略是，直接关闭Skywalking服务，因为目前没有用到，也不怎么看调用链路。</p>
+<h2 id="维护策略"><a href="#维护策略" class="headerlink" title="维护策略"></a>维护策略</h2><p>优先解决容易修复的漏洞，以及数据库层面的漏洞。与监控相关的漏洞可以暂时往后放，另外与k8s相关的漏洞暂时想不到处理方式，这个也往后放。</p>
+<p>数据库相关的需要甲方方面的DBA同志支持下。</p>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《某甲方项目漏洞修复说明》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="某甲方项目漏洞修复说明">
+                        
+                        <span class="card-title">某甲方项目漏洞修复说明</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            某甲方项目漏洞修复说明解决内容说明优先解决高风险漏洞，包含非常危险和比较危险这两个等级的漏洞，对于其余的漏洞，给出解决时间。
+对于目前不容易解决的漏洞，尽可能给出解决方案，并给出解决时间。
+正式环境的高危漏洞，开发、测试环境的高危漏洞必须解
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-11-09
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/11/09/mou-jia-fang-xiang-mu-er-qi-zong-jie/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="某甲方项目二期总结">
+                        
+                        <span class="card-title">某甲方项目二期总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            某甲方二期项目总结起始从10月份开始正式进行驻场，一如既往的日子不好过。老问题解决不了，新问题层出不穷，疲于奔命。
+除了为无能的实施买单，也没啥好的挽回余地，更没能找到继续前进的动力。
+二期项目是稀里糊涂开始的，又是稀里糊涂中道崩殂，到现在
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-11-09
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">278.1k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

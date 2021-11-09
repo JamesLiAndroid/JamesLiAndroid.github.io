@@ -2,16 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/</loc>
+    <loc>https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/</loc>
     
-    <lastmod>2021-07-30T05:40:18.910Z</lastmod>
+    <lastmod>2021-11-09T01:55:44.696Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-er-qi-zong-jie/</loc>
+    
+    <lastmod>2021-11-09T01:42:58.107Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/08/25/jenkins-da-bao-wen-ti-pai-cha/</loc>
+    
+    <lastmod>2021-11-09T01:35:36.419Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
+    
+    <lastmod>2021-10-16T07:37:11.801Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/01/15/elk-dan-ji-ri-zhi-xi-tong-da-jian/</loc>
+    
+    <lastmod>2021-10-11T08:57:00.410Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
     
-    <lastmod>2021-07-29T05:40:45.950Z</lastmod>
+    <lastmod>2021-09-30T07:16:18.106Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/</loc>
+    
+    <lastmod>2021-07-30T05:42:32.225Z</lastmod>
     
   </url>
   
@@ -40,13 +75,6 @@
     <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
     
     <lastmod>2021-07-13T09:51:36.428Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
-    
-    <lastmod>2021-07-06T09:33:37.515Z</lastmod>
     
   </url>
   
@@ -226,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -240,7 +268,7 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -355,13 +383,6 @@
     <loc>https://JamesLiAndroid.github.io/2020/01/31/chi-xu-ji-cheng-shi-jian-da-gang/</loc>
     
     <lastmod>2020-05-14T05:43:30.947Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/01/15/elk-dan-ji-ri-zhi-xi-tong-da-jian/</loc>
-    
-    <lastmod>2020-05-14T02:53:49.749Z</lastmod>
     
   </url>
   
@@ -541,14 +562,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     

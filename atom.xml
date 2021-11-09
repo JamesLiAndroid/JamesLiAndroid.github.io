@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-07-30T05:40:18.910Z</updated>
+  <updated>2021-11-09T01:55:44.696Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -17,11 +17,77 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>某甲方项目漏洞修复说明</title>
+    <link href="https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/"/>
+    <id>https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/</id>
+    <published>2021-11-09T01:55:30.000Z</published>
+    <updated>2021-11-09T01:55:44.696Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;某甲方项目漏洞修复说明&quot;&gt;&lt;a href=&quot;#某甲方项目漏洞修复说明&quot; class=&quot;headerlink&quot; title=&quot;某甲方项目漏洞修复说明&quot;&gt;&lt;/a&gt;某甲方项目漏洞修复说明&lt;/h1&gt;&lt;h2 id=&quot;解决内容说明&quot;&gt;&lt;a href=&quot;#解决内容说明&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>某甲方项目二期总结</title>
+    <link href="https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-er-qi-zong-jie/"/>
+    <id>https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-er-qi-zong-jie/</id>
+    <published>2021-11-09T01:42:13.000Z</published>
+    <updated>2021-11-09T01:42:58.107Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;某甲方二期项目总结&quot;&gt;&lt;a href=&quot;#某甲方二期项目总结&quot; class=&quot;headerlink&quot; title=&quot;某甲方二期项目总结&quot;&gt;&lt;/a&gt;某甲方二期项目总结&lt;/h1&gt;&lt;h2 id=&quot;起始&quot;&gt;&lt;a href=&quot;#起始&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>jenkins打包问题排查</title>
+    <link href="https://JamesLiAndroid.github.io/2021/08/25/jenkins-da-bao-wen-ti-pai-cha/"/>
+    <id>https://JamesLiAndroid.github.io/2021/08/25/jenkins-da-bao-wen-ti-pai-cha/</id>
+    <published>2021-08-25T06:23:41.000Z</published>
+    <updated>2021-11-09T01:35:36.419Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;jenkins构建部署问题的排查&quot;&gt;&lt;a href=&quot;#jenkins构建部署问题的排查&quot; class=&quot;headerlink&quot; title=&quot;jenkins构建部署问题的排查&quot;&gt;&lt;/a&gt;jenkins构建部署问题的排查&lt;/h1&gt;&lt;h2 id=&quot;问题出现&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>某甲方项目的微服务构建实施总结与心得</title>
     <link href="https://JamesLiAndroid.github.io/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/"/>
     <id>https://JamesLiAndroid.github.io/2021/07/24/mou-jia-fang-xiang-mu-de-wei-fu-wu-gou-jian-shi-shi-zong-jie-yu-xin-de/</id>
     <published>2021-07-24T07:08:25.000Z</published>
-    <updated>2021-07-30T05:40:18.910Z</updated>
+    <updated>2021-07-30T05:42:32.225Z</updated>
     
     <summary type="html">
     
@@ -177,7 +243,7 @@
     <link href="https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/"/>
     <id>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</id>
     <published>2021-03-19T07:42:08.000Z</published>
-    <updated>2021-07-29T05:40:45.950Z</updated>
+    <updated>2021-09-30T07:16:18.106Z</updated>
     
     <summary type="html">
     
@@ -385,72 +451,6 @@
         
         
           &lt;h1 id=&quot;从《演进式架构》思考我司云平台发展问题&quot;&gt;&lt;a href=&quot;#从《演进式架构》思考我司云平台发展问题&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于微服务中Skywalking监控信息和ELK统一日志管理体系的对接</title>
-    <link href="https://JamesLiAndroid.github.io/2020/11/07/guan-yu-wei-fu-wu-zhong-skywalking-jian-kong-xin-xi-he-elk-tong-yi-ri-zhi-guan-li-ti-xi-de-dui-jie/"/>
-    <id>https://JamesLiAndroid.github.io/2020/11/07/guan-yu-wei-fu-wu-zhong-skywalking-jian-kong-xin-xi-he-elk-tong-yi-ri-zhi-guan-li-ti-xi-de-dui-jie/</id>
-    <published>2020-11-07T02:25:09.000Z</published>
-    <updated>2020-11-25T02:08:09.271Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;当前场景&quot;&gt;&lt;a href=&quot;#当前场景&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>jenkins批量复制job到新的view中的执行脚本</title>
-    <link href="https://JamesLiAndroid.github.io/2020/11/02/jenkins-pi-liang-fu-zhi-job-dao-xin-de-view-zhong-de-zhi-xing-jiao-ben/"/>
-    <id>https://JamesLiAndroid.github.io/2020/11/02/jenkins-pi-liang-fu-zhi-job-dao-xin-de-view-zhong-de-zhi-xing-jiao-ben/</id>
-    <published>2020-11-02T09:54:56.000Z</published>
-    <updated>2021-04-17T01:32:49.062Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;jenkins批量复制job到新的view中的groovy脚本&quot;&gt;&lt;a href=&quot;#jenkins批量复制job到新的view中的groovy脚本&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>ElasticSearch索引的生命周期管理</title>
-    <link href="https://JamesLiAndroid.github.io/2020/10/14/elasticsearch-suo-yin-de-sheng-ming-zhou-qi-guan-li/"/>
-    <id>https://JamesLiAndroid.github.io/2020/10/14/elasticsearch-suo-yin-de-sheng-ming-zhou-qi-guan-li/</id>
-    <published>2020-10-14T06:39:45.000Z</published>
-    <updated>2020-10-14T06:53:26.265Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;ElasticSearch索引的生命周期管理&quot;&gt;&lt;a href=&quot;#ElasticSearch索引的生命周期管理&quot; class=&quot;headerlink&quot;
         
       
     

@@ -293,7 +293,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -836,7 +836,10 @@
     $ /usr/local/logstash/bin/logstash -f /usr/local/logstash/conf/nginx.conf
 
     // 6. 后台启动
-    $ nohup /usr/local/logstash/bin/logstash -f /usr/local/logstash/conf/nginx.conf &amp;</code></pre><p>温馨提示，一定要确保logs目录centos有权限写入，建议我们在启动elk之前在执行一次命令</p>
+    $ nohup /usr/local/logstash/bin/logstash -f /usr/local/logstash/conf/nginx.conf &amp;
+
+    // 7. 检查配置文件是否正常
+    $ /usr/local/logstash/bin/logstash -f /usr/local/logstash/conf/nginx.conf -t</code></pre><p>温馨提示，一定要确保logs目录centos有权限写入，建议我们在启动elk之前在执行一次命令</p>
 <pre><code>    $ sudo chown -R centos.centos /usr/local/logstash</code></pre><p>请确保logstash中的file文件有读取权限，否则无法在ES中创建索引！</p>
 <h2 id="通过kibana进行配置查看"><a href="#通过kibana进行配置查看" class="headerlink" title="通过kibana进行配置查看"></a>通过kibana进行配置查看</h2><ol>
 <li><p>配置elasticsearch</p>
@@ -1533,7 +1536,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="gitlab备份">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="gitlab备份">
                         
                         <span class="card-title">gitlab备份</span>
                     </div>
@@ -1587,7 +1590,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="DevOps介绍">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="DevOps介绍">
                         
                         <span class="card-title">DevOps介绍</span>
                     </div>
@@ -1787,7 +1790,7 @@
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">271.9k</span>
+            <span class="white-color">278.1k</span>
             
 
             <br>
