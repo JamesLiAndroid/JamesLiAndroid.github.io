@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-12-11T06:42:17.202Z</updated>
+  <updated>2021-12-23T07:21:41.812Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>xxl-job在k8s中出现调度机器ip变化的问题总结</title>
+    <link href="https://JamesLiAndroid.github.io/2021/12/23/xxl-job-zai-k8s-zhong-chu-xian-diao-du-ji-qi-ip-bian-hua-de-wen-ti-zong-jie/"/>
+    <id>https://JamesLiAndroid.github.io/2021/12/23/xxl-job-zai-k8s-zhong-chu-xian-diao-du-ji-qi-ip-bian-hua-de-wen-ti-zong-jie/</id>
+    <published>2021-12-23T07:18:36.000Z</published>
+    <updated>2021-12-23T07:21:41.812Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;xxl-job-在k8s中ip地址更换导致定时任务无法调用的问题&quot;&gt;&lt;a href=&quot;#xxl-job-在k8s中ip地址更换导致定时任务无法调用的问题&quot; class=&quot;headerlink&quot; title=&quot;xxl-job
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>ElasticSearch集群修改密码</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;前端私服搭建&quot;&gt;&lt;a href=&quot;#前端私服搭建&quot; class=&quot;headerlink&quot; title=&quot;前端私服搭建&quot;&gt;&lt;/a&gt;前端私服搭建&lt;/h1&gt;&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>12月份济南买车指南</title>
-    <link href="https://JamesLiAndroid.github.io/2020/12/27/12-yue-fen-ji-nan-mai-che-zhi-nan/"/>
-    <id>https://JamesLiAndroid.github.io/2020/12/27/12-yue-fen-ji-nan-mai-che-zhi-nan/</id>
-    <published>2020-12-27T06:39:13.000Z</published>
-    <updated>2020-12-28T06:12:22.148Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;12月份济南买车指南&quot;&gt;&lt;a href=&quot;#12月份济南买车指南&quot; class=&quot;headerlink&quot; title=&quot;12月份济南买车指南&quot;&gt;&lt;/a&gt;12月份济南买车指南&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot;
         
       
     
