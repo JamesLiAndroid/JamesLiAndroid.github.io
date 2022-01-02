@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2021-12-23T07:21:41.812Z</updated>
+  <updated>2022-01-02T04:48:29.863Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于k8s中10250端口报CVE-2016-2183漏洞的问题解决</title>
+    <link href="https://JamesLiAndroid.github.io/2022/01/02/guan-yu-k8s-zhong-10250-duan-kou-bao-cve-2016-2183-lou-dong-de-wen-ti-jie-jue/"/>
+    <id>https://JamesLiAndroid.github.io/2022/01/02/guan-yu-k8s-zhong-10250-duan-kou-bao-cve-2016-2183-lou-dong-de-wen-ti-jie-jue/</id>
+    <published>2022-01-02T01:37:48.000Z</published>
+    <updated>2022-01-02T04:48:29.863Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于k8s中10250端口报CVE-2016-2183漏洞的问题解决&quot;&gt;&lt;a href=&quot;#关于k8s中10250端口报CVE-2016-2183漏洞的问题解决&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>xxl-job在k8s中出现调度机器ip变化的问题总结</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;Springboot拆分打包并进行构建的调整（调整图片）&quot;&gt;&lt;a href=&quot;#Springboot拆分打包并进行构建的调整（调整图片）&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>前端私服搭建及验证</title>
-    <link href="https://JamesLiAndroid.github.io/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/"/>
-    <id>https://JamesLiAndroid.github.io/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/</id>
-    <published>2020-12-28T05:58:03.000Z</published>
-    <updated>2020-12-28T06:03:35.580Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;前端私服搭建&quot;&gt;&lt;a href=&quot;#前端私服搭建&quot; class=&quot;headerlink&quot; title=&quot;前端私服搭建&quot;&gt;&lt;/a&gt;前端私服搭建&lt;/h1&gt;&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot;
         
       
     
