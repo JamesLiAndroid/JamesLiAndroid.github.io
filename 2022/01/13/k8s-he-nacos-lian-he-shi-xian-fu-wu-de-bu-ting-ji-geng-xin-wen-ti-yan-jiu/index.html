@@ -4,16 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="keywords" content="k8s和nacos联合实现服务的不停机更新问题研究, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="kafka教学———————-zookeeper———————–
-分布式协调服务，一个通用的无单点问题的分布式协调框架
-多机多进程
-网络不可靠、通信不同步、关键节点可能不可用
-客户端：curactor
-Observer（只接收请求）、Lea">
+    <meta name="description" content="k8s和nacos联合实现服务的不停机更新问题研究前言起源于甲方的需求，要求实现整个服务发布流程的不停机更新。现有的k8s在更新时已经采取了“一上一下”的滚动更新方式，但是在不停机更新测试中出现了以下问题：
+
+已有的业务流程未执行完就开始更">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +18,7 @@ Observer（只接收请求）、Lea">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>时代与猫的脚步</title>
+    <title>k8s和nacos联合实现服务的不停机更新问题研究 | 时代与猫的脚步</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -295,13 +292,13 @@ Observer（只接收请求）、Lea">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        k8s和nacos联合实现服务的不停机更新问题研究
                     </div>
                 </div>
             </div>
@@ -423,7 +420,7 @@ Observer（只接收请求）、Lea">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-07-25
+                    2022-01-13
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -437,14 +434,14 @@ Observer（只接收请求）、Lea">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    641
+                    2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    8 分
                 </div>
                 
                 
@@ -455,74 +452,280 @@ Observer（只接收请求）、Lea">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="kafka教学"><a href="#kafka教学" class="headerlink" title="kafka教学"></a>kafka教学</h1><p>———————-zookeeper———————–</p>
-<p>分布式协调服务，一个通用的无单点问题的分布式协调框架</p>
-<p>多机多进程</p>
-<p>网络不可靠、通信不同步、关键节点可能不可用</p>
-<p>客户端：curactor</p>
-<p>Observer（只接收请求）、Leader（所有写）、Follower（可成为Leader）</p>
-<p>尝试添加follower角色</p>
-<p>过半数方法</p>
-<p>ZAB协议</p>
-<p>客户端长连接</p>
-<p>zk的节点：有序无序、持久临时</p>
-<p>应用：分布式id，雪花算法、利用zk生成滚动序号，保证递增</p>
-<p>watch机制</p>
-<p>临时性节点+watch机制</p>
-<p>kafka：0.10.2.1  + zookeeper：3.4.6版本对应</p>
-<p>2181对外、2881节点内部通信、3881Leader选举。</p>
-<p>注意配置端口号对应</p>
-<p>clientPort=21810<br>server.1=192.168.229.201:28880:38880<br>server.2=192.168.229.206:28880:38880<br>server.3=192.168.229.209:28880:38880</p>
-<p>实践：对zookeeper配置服务，对kafka配置服务，同时关联kafka manager</p>
-<p>—————–kafka————————</p>
-<p>日志信息</p>
-<p>单机50w~60w的数据</p>
-<p>Partition的副本机制，高可用</p>
-<p>key Hash算法，消息有序性保证，导致partition之间的不均衡。</p>
-<p>多个Consumer来读取一个Topic(理想情况下是一个Consumer读取Topic的一个Partition）,那么可以让这些Consumer属于同一个Consumer Group即可实现消息的多Consumer并行处理。</p>
-<p>消息保留策略：</p>
-<p>log.retention.hours：消息保留多长时间（默认168小时，即一周）<br>log.retention.bytes：消息保留最大占用空间</p>
-<p>最先达到最先触发。</p>
-<p>副本与ISR</p>
-<p>ISR数量必须与分区副本数相同，否则会出现问题</p>
-<p>Producer可靠性</p>
-<p>水位：Leader成功将分区复制到follower中</p>
-<p>问题：jdk的版本选择。</p>
-<p>实践：添加kafka的broker，新增一个进入集群中。</p>
-<p>———————kafka 运维——————————–</p>
-<p>kafka Manager 二次启动时需要删除上一次运行所创建的RUNNING_PID已存在，需要删除该id</p>
-<p>———————-实践部分———————————-</p>
-<p>各类基础服务配置为Service，使用systemctl进行管理。</p>
-<p>需要总结centos中配置服务的教程！</p>
-<p>可以通过脚本的方式触发针对topic的重选举。</p>
-<p>Telegraf+JMXTrans+influxDB+Grafana</p>
-<p>######################################################################################################################</p>
-<h1 id="Telegraf-grafana培训"><a href="#Telegraf-grafana培训" class="headerlink" title="Telegraf+grafana培训"></a>Telegraf+grafana培训</h1><p>TICK技术栈</p>
-<p>Telegraf+InfluxDB+Chronograf+kapacitor（预警）</p>
-<p>实验一完成。</p>
-<p>注意：influxdb使用的是UTC时间</p>
-<p>时间+值，多个序列</p>
-<p>Retention Policies 对所有数据表起作用</p>
-<p>对于InfluxDB初始化:</p>
+                <h1 id="k8s和nacos联合实现服务的不停机更新问题研究"><a href="#k8s和nacos联合实现服务的不停机更新问题研究" class="headerlink" title="k8s和nacos联合实现服务的不停机更新问题研究"></a>k8s和nacos联合实现服务的不停机更新问题研究</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>起源于甲方的需求，要求实现整个服务发布流程的不停机更新。现有的k8s在更新时已经采取了“一上一下”的滚动更新方式，但是在不停机更新测试中出现了以下问题：</p>
 <ol>
-<li>禁用信息收集</li>
+<li>已有的业务流程未执行完就开始更换服务实例，例如已经在该实例上的定时任务正在执行过程中就被中断，导致异常出现。</li>
+<li>第三方系统调用我们的服务，滚动更新时，服务下线不合理，服务列表缓存刷新不到位，导致服务无法被调用到，出现调用超时或者异常的现象。</li>
 </ol>
-<p>reporting-disabled=true</p>
-<ol start="2">
-<li>禁用每个数据库的序列个数</li>
+<p>基于这两个问题，被甲方否定了我们目前的不停机更新方案。</p>
+<p>认真思考下，实际上整个不停机更新的方案，并不只是单方面k8s的问题，应该是更多的考虑一个整体的解决方式，如下：</p>
+<ul>
+<li>微服务基础组件与k8s的协作，这里主要是服务注册和发现中心以及配置中心，我们使用nacos来承载。</li>
+<li>数据库层面的变更，只允许单表内扩展字段，不允许修改字段。如果要修改字段，只能选择停机更新，否则会影响线上生产。</li>
+<li>考虑是否有缓存的影响，是否有消息队列的影响，考虑周围附属内容。我们这边没怎么用消息队列，目前也暂时不考虑这个部分的内容。</li>
+</ul>
+<p>所以目前只考虑k8s和nacos的问题了。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>尽可能对线上生产无感知升级，主要针对后端服务的发布无感知升级。目前的前端服务可以直接升级，升级后直接可用。</p>
+<p>正式环境使用的组件版本：</p>
+<ul>
+<li>kubernetes 1.11.0</li>
+<li>nacos 1.4.1（需要后续升级1.4.2）</li>
+</ul>
+<p>利用nacos 1.4.1以后的新特性，简单进行权重控制。后续证明不需要进行权重控制的问题。直接利用服务下线接口进行服务下线即可。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="具体实施方式"><a href="#具体实施方式" class="headerlink" title="具体实施方式"></a>具体实施方式</h3><ol>
+<li>利用nacos的open api，编写服务主动下线脚本，使用curl进行请求。同时添加服务延时，一个是保证各个微服务的服务列表缓存能同步更新，另一个是保证该服务上的任务能够处理完成，尽可能少的接收新的url请求。这样服务进行主动下线，不用考虑后续停机引发的服务调用不到的问题。</li>
+<li>使用k8s中的preStop回调方法，执行上面编写的脚本。在服务停机之前进行服务的主动下线，不再使用/actuator/shutdown接口进行服务下线的操作。</li>
+<li>完善脚本需要传入的信息，例如podIp、端口号、nacos服务地址等，尽可能做成可以配置的，当然这样也有内容泄露的问题，需要权衡！</li>
 </ol>
-<ol start="3">
-<li>禁用每个维度最多维度的个数</li>
-</ol>
-<p>influxDB配置信息</p>
-<p>业务关系链路，图数据库</p>
-<p>谁向你写入，数据来源</p>
-<p>治理和审计</p>
-<p>预警体系</p>
-<p>自动运维层面</p>
-<p>自有运营与其它产品开发</p>
-<p>TDengine</p>
-<p>Saiku</p>
+<h3 id="服务下线脚本编写"><a href="#服务下线脚本编写" class="headerlink" title="服务下线脚本编写"></a>服务下线脚本编写</h3><p>根据nacos官网中的openapi，编写preStop.sh脚本信息如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+#!/bin/bash
+# 服务停机前操作，从nacos下线服务
+# 通过环境变量获取下列参数
+serviceName="${SERVICE_NAME}"
+groupName="DEFAULT_GROUP"
+metadata="preserved.register.source=SPRING_CLOUD"
+podIp="${IP_ADDR}"
+podPort="${SERVICE_PORT}"
+nacosIp="${NACOS_IP}"
+nacosNamespace="${NACOS_NAMESPACE}"
+nacosUname="${NACOS_UNAME}"
+nacosPasswd="${NACOS_PASSWD}"
+
+echo "$serviceName, $podIp, $podPort"
+
+# 获取nacos的认证信息
+Token=$(curl -s --location --request POST "http://${nacosIp}/nacos/v1/auth/users/login" --form "username=${nacosUname}" --form "password=${nacosPasswd}" | awk -F"accessToken" '{print $2}' | awk -F":" '{print $2}' | awk -F'"' '{print $2}')
+
+echo "=========$Token=============="
+
+# 从nacos注册中心下线
+curl --location --request PUT "http://${nacosIp}/nacos/v1/ns/instance?&accessToken=${Token}" \
+--form "serviceName=${serviceName}" \
+--form "clusterName=DEFAULT" \
+--form "groupName=${groupName}" \
+--form "metadata=${metadata}" \
+--form "namespaceId=${nacosNamespace}" \
+--form "ip=${podIp}" \
+--form "port=${podPort}" \
+--form "ephemeral=true" \
+--form "weight=1" \
+--form "enabled=false"
+
+# 等待30s，刷新nacos网关缓存
+sleep 30
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里针对返回的json也可以使用jq工具来处理json内容，获取accessToken。</p>
+<h3 id="基础镜像修改，添加服务下线脚本"><a href="#基础镜像修改，添加服务下线脚本" class="headerlink" title="基础镜像修改，添加服务下线脚本"></a>基础镜像修改，添加服务下线脚本</h3><p>我们这边利用docker的分层特性，对所有镜像生效，编写基础镜像如下：</p>
+<pre class="line-numbers language-Dockerfile"><code class="language-Dockerfile">
+### 后端Docker基础镜像信息
+### author:lisongyang
+### 以openjdk为基础进行构建  
+### 名称为base_backend:0.0.1
+
+# 1.FROM XX---指定基础镜像
+FROM openjdk:8-alpine
+
+# 2.WORKDIR 设置工作目录
+WORKDIR /app
+
+# 3.添加全局变量
+
+# 启动方式---对应-Dspring.profiles.active
+ENV CHANNEL=""
+
+# 基础IP地址信息---对应-Dspring.cloud.client.ip-address
+ENV IP_ADDR=""
+
+# nacos配置
+
+# Nacos所在地址---对应-Dnacos_ip，需要更换时指定
+ENV NACOS_IP="10.0.88.161:18848"
+
+# Nacos配置的命名空间---对应-Dnacos_namespace，需要更换时指定
+ENV NACOS_NAMESPACE="858b37b1-35be-4564-a24e-dc2c322d5784"
+
+# nacos用户名信息，对应-Dnacos_username
+ENV NACOS_UNAME=""
+
+# nacos密码信息，对应-Dnacos_passwd
+ENV NACOS_PASSWD=""
+
+# skywalking配置
+
+# skywalking的命名空间，对应-Dskywalking.agent.namespace
+ENV SKYWALKING_NAMESPACE=""
+
+# 目标微服务名称，传入的服务名称，对应-Dskywalking.agent.service_name
+# 同时对应jar的名称
+ENV SKYWALKING_TARGET_SERVICE_NAME=""
+
+# Skywalking地址，对应-Dskywalking.collector.backend_service
+ENV SKYWALKING_IP_PORT=""
+
+# 4.复制Skywalking的jar包放入目录
+COPY ./skywalking-agent /app/skywalking-agent
+
+# 5. 写入对应的时区信息
+ENV TZ=Asia/Shanghai
+
+# 安装相应的依赖信息
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&\ 
+    apk update && apk add --no-cache tzdata &&\ 
+    apk add --no-cache tini &&\
+    ln -sf /usr/share/zoneinfo/$TZ /etc/localtime &&\ 
+    echo $TZ > /etc/timezone
+
+# 字体信息安装
+# 安装字体库管理工具并创建文件夹
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&\
+    apk add --no-cache ttf-dejavu fontconfig && \
+    mkdir -p /usr/share/fonts/chinese
+
+# 复制字体到文件夹中
+COPY fonts/msyh.ttf /usr/share/fonts/chinese/
+COPY fonts/msyhbd.ttf /usr/share/fonts/chinese/
+COPY fonts/simsun.ttc /usr/share/fonts/chinese/
+
+# 执行字体缓存创建
+RUN cd /usr/share/fonts/chinese/ && mkfontscale && fc-list :lang=zh
+
+# 6. 基础镜像变更，安装curl工具并添加优雅停机脚本到基础镜像中
+#--------------------------------------------------------
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&\
+    apk add --no-cache curl 
+
+COPY ./scripts/preStop.sh /app/scripts/preStop.sh
+#--------------------------------------------------------
+
+# 7. 设置入口点
+ENTRYPOINT ["/sbin/tini","--"]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>基础镜像相关的变更，在第6部分的内容，主要是添加的curl工具，并将上面的编写的服务下线的脚本拷贝到这个位置上，在后续k8s部署文件中使用。</p>
+<h3 id="k8s部署的yaml文件修改"><a href="#k8s部署的yaml文件修改" class="headerlink" title="k8s部署的yaml文件修改"></a>k8s部署的yaml文件修改</h3><p>在k8s中yaml文件编写如下：</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml">
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> jiafang<span class="token punctuation">-</span>test<span class="token punctuation">-</span>app
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> jiafang<span class="token punctuation">-</span>test
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">minReadySeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+  <span class="token key atrule">revisionHistoryLimit</span><span class="token punctuation">:</span> <span class="token number">5</span>
+  <span class="token key atrule">strategy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> RollingUpdate
+    <span class="token key atrule">rollingUpdate</span><span class="token punctuation">:</span>
+      <span class="token key atrule">maxUnavailable</span><span class="token punctuation">:</span> <span class="token number">0</span>
+      <span class="token key atrule">maxSurge</span><span class="token punctuation">:</span> <span class="token number">1</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">3</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> jiafang<span class="token punctuation">-</span>test<span class="token punctuation">-</span>app
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> jiafang<span class="token punctuation">-</span>test<span class="token punctuation">-</span>app
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">affinity</span><span class="token punctuation">:</span>
+        <span class="token key atrule">podAntiAffinity</span><span class="token punctuation">:</span>
+          <span class="token key atrule">preferredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">podAffinityTerm</span><span class="token punctuation">:</span>
+                <span class="token key atrule">topologyKey</span><span class="token punctuation">:</span> kubernetes.io/hostname
+                <span class="token key atrule">labelSelector</span><span class="token punctuation">:</span>
+                  <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+                    <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> app
+                      <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+                      <span class="token key atrule">values</span><span class="token punctuation">:</span>
+                        <span class="token punctuation">-</span> jiafang<span class="token punctuation">-</span>test<span class="token punctuation">-</span>app
+              <span class="token key atrule">weight</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">nodeAffinity</span><span class="token punctuation">:</span>
+          <span class="token key atrule">requiredDuringSchedulingIgnoredDuringExecution</span><span class="token punctuation">:</span>
+            <span class="token key atrule">nodeSelectorTerms</span><span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># TODO：根据标签的名称进行设置，需要潍柴方面提供</span>
+              <span class="token punctuation">-</span> <span class="token key atrule">matchExpressions</span><span class="token punctuation">:</span>
+                  <span class="token punctuation">-</span> <span class="token key atrule">key</span><span class="token punctuation">:</span> deploy            
+                    <span class="token key atrule">operator</span><span class="token punctuation">:</span> In
+                    <span class="token key atrule">values</span><span class="token punctuation">:</span>
+                      <span class="token punctuation">-</span> worker
+      <span class="token comment" spellcheck="true"># 定义优雅关闭的宽限期</span>
+      <span class="token key atrule">terminationGracePeriodSeconds</span><span class="token punctuation">:</span> <span class="token number">60</span>
+      <span class="token comment" spellcheck="true"># -------------------------------</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> les
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> jiafang<span class="token punctuation">-</span>test<span class="token punctuation">-</span>backend<span class="token punctuation">-</span>les<span class="token punctuation">-</span>prod<span class="token punctuation">:</span>1.0.0
+          <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> Always
+          <span class="token key atrule">lifecycle</span><span class="token punctuation">:</span>
+            <span class="token comment" spellcheck="true"># 修改preStop的脚本执行</span>
+            <span class="token key atrule">preStop</span><span class="token punctuation">:</span>
+              <span class="token key atrule">exec</span><span class="token punctuation">:</span>
+                <span class="token key atrule">command</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"/bin/sh"</span><span class="token punctuation">,</span> <span class="token string">"-c"</span><span class="token punctuation">,</span> <span class="token string">"sh /app/scripts/preStop.sh"</span><span class="token punctuation">]</span>
+            <span class="token comment" spellcheck="true"># ----------------------------------------------------------</span>
+              <span class="token comment" spellcheck="true"># httpGet:</span>
+              <span class="token comment" spellcheck="true">#   port: 20447</span>
+              <span class="token comment" spellcheck="true">#   path: /spring/shutdown</span>
+          <span class="token key atrule">livenessProbe</span><span class="token punctuation">:</span>
+            <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+              <span class="token key atrule">path</span><span class="token punctuation">:</span> /actuator/health
+              <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">20447</span>
+            <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">120</span>
+            <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">5</span>
+            <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+            <span class="token key atrule">successThreshold</span><span class="token punctuation">:</span> <span class="token number">1</span>
+            <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">5</span>
+          <span class="token key atrule">readinessProbe</span><span class="token punctuation">:</span>
+            <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+              <span class="token key atrule">path</span><span class="token punctuation">:</span> /actuator/health
+              <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">20447</span>
+            <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">120</span>
+            <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">5</span>
+            <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+            <span class="token key atrule">successThreshold</span><span class="token punctuation">:</span> <span class="token number">1</span>
+            <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">5</span>
+          <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+            <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+              <span class="token key atrule">memory</span><span class="token punctuation">:</span> 4.0Gi
+            <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+              <span class="token key atrule">memory</span><span class="token punctuation">:</span> 4.0Gi
+          <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">20447</span>
+          <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> localtime
+              <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /etc/localtime
+              <span class="token key atrule">readOnly</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+          <span class="token key atrule">env</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> IP_ADDR
+              <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span>
+                <span class="token key atrule">fieldRef</span><span class="token punctuation">:</span>
+                  <span class="token key atrule">fieldPath</span><span class="token punctuation">:</span> status.podIP
+            <span class="token comment" spellcheck="true"># 新增服务配置信息，以环境变量方式</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> SERVICE_NAME
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> icpcloud<span class="token punctuation">-</span>product<span class="token punctuation">-</span>les
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> SERVICE_PORT
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> <span class="token number">20447</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NACOS_IP
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> 192.168.31.51<span class="token punctuation">:</span><span class="token number">18848</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NACOS_NAMESPACE
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> 7a079926<span class="token punctuation">-</span>b83b<span class="token punctuation">-</span>4fa3<span class="token punctuation">-</span>923d<span class="token punctuation">-</span>e98570b567b6
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NACOS_UNAME
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> nacos
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NACOS_PASSWD
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> nacos
+            <span class="token comment" spellcheck="true"># --------------------------------------------</span>
+      <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> localtime
+          <span class="token key atrule">hostPath</span><span class="token punctuation">:</span>
+            <span class="token key atrule">path</span><span class="token punctuation">:</span> /etc/localtime
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>需要解释一下：</p>
+<ul>
+<li>terminationGracePeriodSeconds 可以定义优雅关闭的宽限期，即在收到停止请求后，有多少时间来进行资源释放或者做其它操作，如果到了最大时间还没有停止，会被强制结束。默认值为30s。</li>
+</ul>
+<p>设置该选项之后，则尽可能将服务上的任务执行完成后再进行停机，最大限度保证不出现定时任务的问题！</p>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>目前暂未发现，比较担心的是，待集群整个扩展之后，会不会出现服务同步时长过长的问题，导致服务列表缓存更新不及时，导致还能调用到该服务！</p>
+<h2 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h2><ul>
+<li><a href="https://www.cnblogs.com/fengjian2016/p/15205477.html" target="_blank" rel="noopener">https://www.cnblogs.com/fengjian2016/p/15205477.html</a></li>
+<li><a href="https://blog.8mi.net/Kubernetes/88.html" target="_blank" rel="noopener">https://blog.8mi.net/Kubernetes/88.html</a></li>
+</ul>
 
             </div>
             <hr />
@@ -681,9 +884,9 @@ Observer（只接收请求）、Lea">
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《》
+                    《k8s和nacos联合实现服务的不停机更新问题研究》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/07/25/kafka-jiao-xue/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2022/01/13/k8s-he-nacos-lian-he-shi-xian-fu-wu-de-bu-ting-ji-geng-xin-wen-ti-yan-jiu/" property="cc:attributionName"
                rel="cc:attributionURL">
                 JamesLiAndroid
             </a> 采用
@@ -985,38 +1188,38 @@ Observer（只接收请求）、Lea">
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/">
+                <a href="/2022/01/13/k8s-he-nacos-lian-he-shi-xian-fu-wu-de-bu-ting-ji-geng-xin-wen-ti-yan-jiu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="k8s和nacos联合实现服务的不停机更新问题研究">
                         
-                        <span class="card-title">关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结</span>
+                        <span class="card-title">k8s和nacos联合实现服务的不停机更新问题研究</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            关于Eureka无法相互注册且服务只是注册到单一Eureka的问题总结场景描述我们有三个Eureka服务，以206、207、208表征。
-在昨天的问题排查中，出现了以下的场景：
+                            k8s和nacos联合实现服务的不停机更新问题研究前言起源于甲方的需求，要求实现整个服务发布流程的不停机更新。现有的k8s在更新时已经采取了“一上一下”的滚动更新方式，但是在不停机更新测试中出现了以下问题：
 
-Eureka不能相互注册成为集群
-有两个Eureka相互注册
+已有的业务流程未执行完就开始更
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-01-13
+                            </span>
                         <span class="publish-author">
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1027,26 +1230,27 @@ Eureka不能相互注册成为集群
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/07/21/centos-xia-bu-tong-jdk-ban-ben-gong-cun-de-wen-ti/">
+                <a href="/2022/01/02/guan-yu-k8s-zhong-10250-duan-kou-bao-cve-2016-2183-lou-dong-de-wen-ti-jie-jue/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="centos下不同jdk版本共存的问题">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="关于k8s中10250端口报CVE-2016-2183漏洞的问题解决">
                         
-                        <span class="card-title">centos下不同jdk版本共存的问题</span>
+                        <span class="card-title">关于k8s中10250端口报CVE-2016-2183漏洞的问题解决</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            问题场景ElasticSearch7.6的安装需要java11支持，而目前服务器安装的是java8（jdk1.8），而且es安装在另一个用户下，独自运行。
-而且es7.6在java8环境下无法进行启动！
-这样需要根据不同用户切换不同的jdk
+                            关于k8s中10250端口报CVE-2016-2183漏洞的问题解决问题以及现象在之前使用kubeadm安装k8s集群后，甲方内部爆出了CVE安全漏洞的问题，报告是这么描述的：
+
+
+这里看到10250端口检测到了该问题。之前以为是k8s版本
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-07-21
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-01-02
                             </span>
                         <span class="publish-author">
                             
@@ -1196,6 +1400,13 @@ Eureka不能相互注册成为集群
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
     <footer class="page-footer bg-color">
     <div class="container row center-align">

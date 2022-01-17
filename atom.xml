@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-01-02T05:52:58.846Z</updated>
+  <updated>2022-01-17T03:29:33.988Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>k8s和nacos联合实现服务的不停机更新问题研究</title>
+    <link href="https://JamesLiAndroid.github.io/2022/01/13/k8s-he-nacos-lian-he-shi-xian-fu-wu-de-bu-ting-ji-geng-xin-wen-ti-yan-jiu/"/>
+    <id>https://JamesLiAndroid.github.io/2022/01/13/k8s-he-nacos-lian-he-shi-xian-fu-wu-de-bu-ting-ji-geng-xin-wen-ti-yan-jiu/</id>
+    <published>2022-01-13T03:02:25.000Z</published>
+    <updated>2022-01-17T03:29:33.988Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;k8s和nacos联合实现服务的不停机更新问题研究&quot;&gt;&lt;a href=&quot;#k8s和nacos联合实现服务的不停机更新问题研究&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于k8s中10250端口报CVE-2016-2183漏洞的问题解决</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;python路径问题&quot;&gt;&lt;a href=&quot;#python路径问题&quot; class=&quot;headerlink&quot; title=&quot;python路径问题&quot;&gt;&lt;/a&gt;python路径问题&lt;/h1&gt;&lt;h2 id=&quot;路径描述和解决方案&quot;&gt;&lt;a href=&quot;#路径描述和解决方案&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Springboot拆分依赖构建微服务方案</title>
-    <link href="https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/"/>
-    <id>https://JamesLiAndroid.github.io/2020/12/28/springboot-chai-fen-yi-lai-gou-jian-wei-fu-wu-fang-an/</id>
-    <published>2020-12-28T07:39:31.000Z</published>
-    <updated>2021-01-14T12:29:16.847Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;Springboot拆分打包并进行构建的调整（调整图片）&quot;&gt;&lt;a href=&quot;#Springboot拆分打包并进行构建的调整（调整图片）&quot; class=&quot;headerlink&quot;
         
       
     
