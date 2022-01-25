@@ -300,7 +300,7 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -442,7 +442,7 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    32.5k
+                    32.6k
                 </div>
                 
 
@@ -1377,6 +1377,13 @@ sed -i &#39;s#SELINUX=enforcing#SELINUX=disabled#g&#39; /etc/selinux/config
       <span class="token key atrule">labels</span><span class="token punctuation">:</span>
         <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
     <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token comment" spellcheck="true"># 添加下面两句话</span>
+      <span class="token comment" spellcheck="true"># 解决部署中出现panic: unable to load configmap based request-header-client-ca-file: Get "https://10.96.0.1:443/api/v1/namespaces/kube-system/configmaps/extension-apiserver-authentication": dial tcp 10.96.0.1:443: i/o timeout</span>
+      <span class="token comment" spellcheck="true"># goroutine 1 [running]:</span>
+      <span class="token comment" spellcheck="true"># main.main()</span>
+      <span class="token comment" spellcheck="true">#     /go/src/sigs.k8s.io/metrics-server/cmd/metrics-server/metrics-server.go:39 +0xfc</span>
+      <span class="token key atrule">hostNetwork</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> Always
       <span class="token key atrule">containers</span><span class="token punctuation">:</span>
         <span class="token punctuation">-</span> <span class="token key atrule">args</span><span class="token punctuation">:</span>
             <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>cert<span class="token punctuation">-</span>dir=/tmp
@@ -1444,7 +1451,7 @@ sed -i &#39;s#SELINUX=enforcing#SELINUX=disabled#g&#39; /etc/selinux/config
     <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
   <span class="token key atrule">version</span><span class="token punctuation">:</span> v1beta1
   <span class="token key atrule">versionPriority</span><span class="token punctuation">:</span> <span class="token number">100</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>安装命令<br>kubectl apply -f comp.yaml</p>
 <p>安装完成后，查看指标信息<br>kubectl top node<br>NAME            CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%<br>k8s-master-01   161m         8%     1363Mi          35%<br>k8s-master-02   154m         7%     1310Mi          34%<br>k8s-master-03   152m         7%     1272Mi          33%<br>k8s-node-01     86m          4%     1090Mi          28%<br>k8s-node-02     92m          4%     1073Mi          28%</p>
 <p>安装dashboard，配置文件有两个</p>
@@ -5657,7 +5664,7 @@ spec:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
                         
                         <span class="card-title">k8s 1.20.5 二进制安装教程</span>
                     </div>
@@ -5697,7 +5704,7 @@ spec:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="全链路灰度发布实践">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="全链路灰度发布实践">
                         
                         <span class="card-title">全链路灰度发布实践</span>
                     </div>
@@ -5876,7 +5883,7 @@ spec:
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">287.3k</span>
+            <span class="white-color">287.4k</span>
             
 
             <br>
