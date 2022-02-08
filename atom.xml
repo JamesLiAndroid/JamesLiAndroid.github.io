@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-01-17T03:40:29.436Z</updated>
+  <updated>2022-02-08T03:44:56.466Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>gitlab版本升级实例</title>
+    <link href="https://JamesLiAndroid.github.io/2022/02/08/gitlab-ban-ben-sheng-ji-shi-li/"/>
+    <id>https://JamesLiAndroid.github.io/2022/02/08/gitlab-ban-ben-sheng-ji-shi-li/</id>
+    <published>2022-02-08T02:33:27.000Z</published>
+    <updated>2022-02-08T03:44:56.466Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;记一次gitlab版本升级操作流程&quot;&gt;&lt;a href=&quot;#记一次gitlab版本升级操作流程&quot; class=&quot;headerlink&quot; title=&quot;记一次gitlab版本升级操作流程&quot;&gt;&lt;/a&gt;记一次gitlab版本升级操作流程&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>k8s和nacos联合实现服务的不停机更新问题研究</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;关于多module代码结构的gitlab构建问题解决&quot;&gt;&lt;a href=&quot;#关于多module代码结构的gitlab构建问题解决&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>python文件路径问题</title>
-    <link href="https://JamesLiAndroid.github.io/2020/12/31/python-wen-jian-lu-jing-wen-ti/"/>
-    <id>https://JamesLiAndroid.github.io/2020/12/31/python-wen-jian-lu-jing-wen-ti/</id>
-    <published>2020-12-31T01:46:31.000Z</published>
-    <updated>2020-12-31T01:57:12.876Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;python路径问题&quot;&gt;&lt;a href=&quot;#python路径问题&quot; class=&quot;headerlink&quot; title=&quot;python路径问题&quot;&gt;&lt;/a&gt;python路径问题&lt;/h1&gt;&lt;h2 id=&quot;路径描述和解决方案&quot;&gt;&lt;a href=&quot;#路径描述和解决方案&quot;
         
       
     
