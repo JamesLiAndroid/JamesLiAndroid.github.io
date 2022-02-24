@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2022/02/24/yi-ci-nei-cun-xie-lu-de-wen-ti-pai-cha/</loc>
+    
+    <lastmod>2022-02-24T11:37:52.580Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2022/02/08/gitlab-ban-ben-sheng-ji-shi-li/</loc>
     
     <lastmod>2022-02-08T03:44:56.466Z</lastmod>
@@ -289,13 +296,6 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
@@ -304,6 +304,13 @@
   
   <url>
     <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
+    
+    <lastmod>2020-10-14T02:53:43.436Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -597,14 +604,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/archives/index.html</loc>
+    <loc>https://JamesLiAndroid.github.io/categories/index.html</loc>
     
     <lastmod>2020-01-28T05:55:28.706Z</lastmod>
     

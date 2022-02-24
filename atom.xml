@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-02-08T03:44:56.466Z</updated>
+  <updated>2022-02-24T11:37:52.580Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一次内存泄露的问题排查</title>
+    <link href="https://JamesLiAndroid.github.io/2022/02/24/yi-ci-nei-cun-xie-lu-de-wen-ti-pai-cha/"/>
+    <id>https://JamesLiAndroid.github.io/2022/02/24/yi-ci-nei-cun-xie-lu-de-wen-ti-pai-cha/</id>
+    <published>2022-02-24T08:34:31.000Z</published>
+    <updated>2022-02-24T11:37:52.580Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一次JVM内存泄露的问题排查&quot;&gt;&lt;a href=&quot;#一次JVM内存泄露的问题排查&quot; class=&quot;headerlink&quot; title=&quot;一次JVM内存泄露的问题排查&quot;&gt;&lt;/a&gt;一次JVM内存泄露的问题排查&lt;/h1&gt;&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>gitlab版本升级实例</title>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;CentOS-7-备份与恢复&quot;&gt;&lt;a href=&quot;#CentOS-7-备份与恢复&quot; class=&quot;headerlink&quot; title=&quot;CentOS 7 备份与恢复&quot;&gt;&lt;/a&gt;CentOS 7 备份与恢复&lt;/h1&gt;&lt;h2 id=&quot;迁移环境介绍&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于多module下代码结构的gitlab构建问题解决</title>
-    <link href="https://JamesLiAndroid.github.io/2021/01/14/guan-yu-duo-module-xia-dai-ma-jie-gou-de-gitlab-gou-jian-wen-ti-jie-jue/"/>
-    <id>https://JamesLiAndroid.github.io/2021/01/14/guan-yu-duo-module-xia-dai-ma-jie-gou-de-gitlab-gou-jian-wen-ti-jie-jue/</id>
-    <published>2021-01-14T12:21:23.000Z</published>
-    <updated>2021-01-16T02:25:44.133Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;关于多module代码结构的gitlab构建问题解决&quot;&gt;&lt;a href=&quot;#关于多module代码结构的gitlab构建问题解决&quot; class=&quot;headerlink&quot;
         
       
     
