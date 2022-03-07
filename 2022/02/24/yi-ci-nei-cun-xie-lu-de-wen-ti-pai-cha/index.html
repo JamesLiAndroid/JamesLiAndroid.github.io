@@ -290,7 +290,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -536,11 +536,11 @@ plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.2.200.v20210429-1609
 <p>其次是需要把内存放大，因为heap文件太大的问题，需要大内存支撑分析。</p>
 <p>设置完成后，保存配置信息，启动MAT工具，File-&gt;Open Heap Dump… ，找到对应路径下的heap文件，开始分析即可。时间比较长，可以先喝一杯水等等看看！</p>
 <p>分析后可以看到首页的情况，如下图：</p>
-<p>![MAT分析首页](点击Leak Suspects进一步分析.PNG)</p>
+<p><img src="%E7%82%B9%E5%87%BBLeakSuspects%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%88%86%E6%9E%90.PNG" alt="MAT分析首页"></p>
 <p>点击图中红线处的*<em>Leak Suspects</em>，进一步分析如下：</p>
 <p><img src="MAT%E5%88%86%E6%9E%90%E5%88%9D%E6%8E%A2.PNG" alt="MAT Leak Suspects"></p>
 <p>看到所有的大对象的分布情况，找到第一个<em>Problem Suspect 1</em>，点击<em>See stacktrace</em>，可以看到整个的调用栈的情况。查看所有的调用栈信息，找到对应自身业务代码的情况，如下：</p>
-<p>![MAT Leak调用栈结果](MAT Leak调用栈结果.png)</p>
+<p><img src="MAT_Leak%E8%B0%83%E7%94%A8%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="MAT Leak调用栈结果"></p>
 <p>之所以打码是因为有敏感信息，打码的位置是对应于业务代码内容。根据分析得知，是在数据库查询时，有一个巨大的对象留在了jvm中无法被释放，导致服务宕机的问题。</p>
 <p>找到了调用栈，反推代码中的调用信息，在Mapper类中看到下面的代码：</p>
 <pre class="line-numbers language-java"><code class="language-java">
@@ -1028,7 +1028,7 @@ IPage<span class="token operator">&lt;</span>TestTaskVO<span class="token operat
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="一次内存泄露的问题排查">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="一次内存泄露的问题排查">
                         
                         <span class="card-title">一次内存泄露的问题排查</span>
                     </div>
@@ -1063,7 +1063,7 @@ IPage<span class="token operator">&lt;</span>TestTaskVO<span class="token operat
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="gitlab版本升级实例">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="gitlab版本升级实例">
                         
                         <span class="card-title">gitlab版本升级实例</span>
                     </div>
@@ -1248,7 +1248,7 @@ cpu动不动就到100%，代码无法拉取
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">291.1k</span>
+            <span class="white-color">291.2k</span>
             
 
             <br>
