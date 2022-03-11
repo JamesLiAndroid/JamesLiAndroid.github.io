@@ -4,11 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="12月份济南买车指南, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="keywords" content="docker buildx进行多架构打包的操作记录, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="12月份济南买车指南前言今年因为疫情的原因，感觉到12月份的时候，车市进行了好几拨车展以及优惠活动，以此为契机做了个小型调查。主要参与的是我的两位同学，zh先生和lin先生。以12月初的舜耕车展加上经十东路、匡山一带、北园大街一带的4s店为">
+    <meta name="description" content="docker buildx进行多架构打包的操作和使用背景介绍为支持华为的arm架构的服务器，引出了多架构打包的需求，具体就是构建支持arm架构运行的镜像，并能简单的在x86_64架构下进行测试。
+构建思路分为两种，一种是考虑使用docker">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>12月份济南买车指南 | 时代与猫的脚步</title>
+    <title>docker buildx进行多架构打包的操作记录 | 时代与猫的脚步</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -290,13 +291,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        12月份济南买车指南
+                        docker buildx进行多架构打包的操作记录
                     </div>
                 </div>
             </div>
@@ -418,7 +419,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-27
+                    2021-12-10
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -432,14 +433,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.8k
+                    2.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    12 分
                 </div>
                 
                 
@@ -450,133 +451,212 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="12月份济南买车指南"><a href="#12月份济南买车指南" class="headerlink" title="12月份济南买车指南"></a>12月份济南买车指南</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今年因为疫情的原因，感觉到12月份的时候，车市进行了好几拨车展以及优惠活动，以此为契机做了个小型调查。主要参与的是我的两位同学，zh先生和lin先生。以12月初的舜耕车展加上经十东路、匡山一带、北园大街一带的4s店为主要范围进行调查。</p>
-<h2 id="价格范围和备选"><a href="#价格范围和备选" class="headerlink" title="价格范围和备选"></a>价格范围和备选</h2><p>价格初步确定在10万到15万左右的A级或者B级车，这个价格是裸车价。落地价格范围选在12万到18万之间的车型，最主要的比较是轿车这个范围内的，混合有瑞虎8、观致7、荣威RX5 max这三款SUV。</p>
-<p>我个人倾向于手动档，而zh先生倾向于自动挡中的AT版本而且倾向于买旅行车，lin先生就没啥意见，只要换挡好使就行。</p>
-<p>然后备选车型确定如下：</p>
-<ul>
-<li><p>马自达</p>
-<ul>
-<li>次世代昂克塞拉， 1.5 手动质美</li>
-<li>cx-4 2.0 中配，2.5低配两款</li>
-<li>阿特兹2.5最低配</li>
+                <h1 id="docker-buildx进行多架构打包的操作和使用"><a href="#docker-buildx进行多架构打包的操作和使用" class="headerlink" title="docker buildx进行多架构打包的操作和使用"></a>docker buildx进行多架构打包的操作和使用</h1><h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>为支持华为的arm架构的服务器，引出了多架构打包的需求，具体就是构建支持arm架构运行的镜像，并能简单的在x86_64架构下进行测试。</p>
+<p>构建思路分为两种，一种是考虑使用docker buildx新特性，支持在x86_64架构下构建aarch、aarch64等异构架构的镜像。另一种是在arm的机器上进行构建对应架构的镜像。这里直接选择使用docker buildx来构建多架构镜像，但是该特性在19.03版本之上生效，而且后续还有限制，在后面进行说明。</p>
+<h2 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h2><p>以BASE前端项目为例进行构建测试，以DICT后端项目进行构建测试。利用上述两个项目进行验证！</p>
+<h3 id="0-开启buildx特性"><a href="#0-开启buildx特性" class="headerlink" title="0. 开启buildx特性"></a>0. 开启buildx特性</h3><p>两种方式开启buildx特性，第一种方式临时生效，直接在命令行中执行：</p>
+<pre><code>$ export DOCKER_CLI_EXPERIMENTAL=enabled
+</code></pre><p>第二种方式永久生效，在对应目录下创建config.json文件，进行设置：</p>
+<pre><code>$ mkdir -p ~/.docker &amp;&amp; touch config.json
+
+$ vim ~/.docker/config.json
+// 输入以下内容
+{
+    &quot;experimental&quot;: &quot;enabled&quot;
+}
+
+// :wq保存退出
+
+// 重启下docker服务
+$ sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart docker
+</code></pre><p>只要在该用户下执行即可。</p>
+<p>现在开始测试buildx命令，如下：</p>
+<pre><code>$ docker buildx version
+github.com/docker/buildx v0.3.1-tp-docker 6db68d029599c6710a32aa7adcba8e5a344795a7
+</code></pre><h3 id="1-qemu依赖信息添加"><a href="#1-qemu依赖信息添加" class="headerlink" title="1. qemu依赖信息添加"></a>1. qemu依赖信息添加</h3><p>在进行多架构构建docker镜像之前，需要先了解跨平台运行的内容。我们通过添加qemu相关依赖来支持多架构构建。添加依赖的方法如下：</p>
+<pre><code>// 安装qemu多镜像支持
+$ docker run --rm --privileged tonistiigi/binfmt --install all
+// 输出以下内容
+installing: mips64 OK
+installing: s390x OK
+installing: ppc64le OK
+installing: mips64le OK
+installing: arm64 OK
+installing: arm OK
+installing: riscv64 OK
+{
+  &quot;supported&quot;: [
+    &quot;linux/amd64&quot;,
+    &quot;linux/arm64&quot;,
+    &quot;linux/riscv64&quot;,
+    &quot;linux/ppc64le&quot;,
+    &quot;linux/s390x&quot;,
+    &quot;linux/386&quot;,
+    &quot;linux/mips64le&quot;,
+    &quot;linux/mips64&quot;,
+    &quot;linux/arm/v7&quot;,
+    &quot;linux/arm/v6&quot;
+  ],
+  &quot;emulators&quot;: [
+    &quot;qemu-aarch64&quot;,
+    &quot;qemu-arm&quot;,
+    &quot;qemu-mips64&quot;,
+    &quot;qemu-mips64el&quot;,
+    &quot;qemu-ppc64le&quot;,
+    &quot;qemu-riscv64&quot;,
+    &quot;qemu-s390x&quot;
+  ]
+}
+
+// 创建builder
+$ docker buildx create --name aaa-builder --driver docker-container
+aaa-builder
+
+$ docker buildx ls
+NAME/NODE       DRIVER/ENDPOINT             STATUS   PLATFORMS
+aaa-builder     docker-container
+  aaa-builder0  unix:///var/run/docker.sock inactive
+default *       docker
+  default       default                     running  linux/amd64, linux/386
+
+// 使用该builder
+$ docker buildx use aaa-builder
+
+$ docker buildx ls
+NAME/NODE       DRIVER/ENDPOINT             STATUS   PLATFORMS
+aaa-builder *   docker-container
+  aaa-builder0  unix:///var/run/docker.sock inactive
+default         docker
+  default       default                     running  linux/amd64, linux/386
+</code></pre><h3 id="2-基础镜像打包和试运行"><a href="#2-基础镜像打包和试运行" class="headerlink" title="2. 基础镜像打包和试运行"></a>2. 基础镜像打包和试运行</h3><p>首先下载BaseDockerImage项目，拉取后找到BaseDockerfile文件，进行前端基础镜像构建，如下：</p>
+<pre><code>$ ls -a | grep Base
+BaseDockerfile
+
+// 开始构建，支持多架构模式
+$  docker buildx build --platform linux/amd64,linux/arm64/v8 -t 192.168.229.105/test-cloud-arm64/base_backend_test -f ./BaseDockerfile .
+// 以下为输出内容
+WARN[0000] No output specified for docker-container driver. Build result will only remain in the build cache. To push result image into registry use --push or to load image into docker use --load
+[+] Building 101.5s (12/12) FINISHED
+ =&gt; [internal] booting buildkit                                                                                                                                                                                                 18.8s
+ =&gt; =&gt; pulling image moby/buildkit:buildx-stable-1                                                                                                                                                                              16.5s
+ =&gt; =&gt; creating container buildx_buildkit_aaa-builder0                                                                                                                                                                           2.3s
+ =&gt; [internal] load build definition from BaseDockerfile                                                                                                                                                                         0.6s
+ =&gt; =&gt; transferring dockerfile: 632B                                                                                                                                                                                             0.0s
+ =&gt; [internal] load .dockerignore                                                                                                                                                                                                0.6s
+ =&gt; =&gt; transferring context: 2B                                                                                                                                                                                                  0.0s
+ =&gt; [linux/arm64 internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                         11.2s
+ =&gt; [linux/amd64 internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                         10.8s
+ =&gt; [internal] load build context                                                                                                                                                                                                1.0s
+ =&gt; =&gt; transferring context: 5.96kB                                                                                                                                                                                              0.0s
+ =&gt; [linux/amd64 1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                    0.0s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.5s
+ =&gt; [linux/arm64 1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                   17.2s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.4s
+ =&gt; =&gt; sha256:e0fefc6407c797c074da2a31dc9793c251dd48fe31c893346a6bf1c93b0fe653 16.49MB / 16.49MB                                                                                                                                14.0s
+ =&gt; =&gt; sha256:8bfa913040406727f36faa9b69d0b96e071b13792a83ad69c19389031a9f3797 2.72MB / 2.72MB                                                                                                                                  15.3s
+ =&gt; =&gt; extracting sha256:8bfa913040406727f36faa9b69d0b96e071b13792a83ad69c19389031a9f3797                                                                                                                                        0.2s
+ =&gt; =&gt; extracting sha256:e0fefc6407c797c074da2a31dc9793c251dd48fe31c893346a6bf1c93b0fe653                                                                                                                                        1.5s
+ =&gt; CANCELED [linux/amd64 2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                           0.0s
+ =&gt; [linux/arm64 2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                                    1.7s
+ =&gt; [linux/amd64 3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                                   49.6s
+ =&gt; [linux/arm64 3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                                   44.1s
+</code></pre><p>构建成功后，查看buildx的状态如下：</p>
+<pre><code>$  docker buildx ls
+NAME/NODE       DRIVER/ENDPOINT             STATUS  PLATFORMS
+aaa-builder *   docker-container
+  aaa-builder0  unix:///var/run/docker.sock running linux/amd64, linux/arm64, linux/riscv64, linux/ppc64le, linux/s390x, linux/386, linux/mips64le, linux/mips64, linux/arm/v7, linux/arm/v6
+</code></pre><p>此时已经能够进行推送操作了。下面就来说说两个问题：</p>
+<h4 id="2-1-推送的时候无法指定镜像仓库的地址"><a href="#2-1-推送的时候无法指定镜像仓库的地址" class="headerlink" title="2.1 推送的时候无法指定镜像仓库的地址"></a>2.1 推送的时候无法指定镜像仓库的地址</h4><p>在进行push操作的时候，无法进行镜像仓库地址的指定。</p>
+<pre><code>$ docker buildx build --platform linux/amd64,linux/arm64/v8 -t 192.168.229.105/test-cloud-arm64/base_backend_test --push -f ./BaseDockerfile .
+[+] Building 12.4s (12/12) FINISHED
+ =&gt; [internal] load build definition from BaseDockerfile                                                                                                                                                                         0.4s
+ =&gt; =&gt; transferring dockerfile: 632B                                                                                                                                                                                             0.0s
+ =&gt; [internal] load .dockerignore                                                                                                                                                                                                0.5s
+ =&gt; =&gt; transferring context: 2B                                                                                                                                                                                                  0.0s
+ =&gt; [linux/arm64 internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                          7.9s
+ =&gt; [linux/amd64 internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                          8.0s
+ =&gt; [linux/arm64 1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                    0.7s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.6s
+ =&gt; [internal] load build context                                                                                                                                                                                                0.1s
+ =&gt; =&gt; transferring context: 63B                                                                                                                                                                                                 0.0s
+ =&gt; [linux/amd64 1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                    0.0s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.5s
+ =&gt; CACHED [linux/arm64 2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                             0.0s
+ =&gt; CACHED [linux/arm64 3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                             0.0s
+ =&gt; CACHED [linux/amd64 2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                             0.0s
+ =&gt; CACHED [linux/amd64 3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                             0.0s
+ =&gt; ERROR exporting to image                                                                                                                                                                                                     2.8s
+ =&gt; =&gt; exporting layers                                                                                                                                                                                                          1.9s
+ =&gt; =&gt; exporting manifest sha256:139e5cc441f5b62e2dc2001aed70ce718c8962a80702fce6484cb9e11a4a2243                                                                                                                                0.1s
+ =&gt; =&gt; exporting config sha256:41ee6c4c6a4778222197a4bd7d35827abeb532d84b7fcb5d8540734a6211c7d0                                                                                                                                  0.1s
+ =&gt; =&gt; exporting manifest sha256:3230317e9c0905bf801a95972e46c2663235bf70391cb5758c4841925577f008                                                                                                                                0.1s
+ =&gt; =&gt; exporting config sha256:78b792e6f793a446d97f44fa78f6cc2e97b878dc405338eaf25527a7a1abe52f                                                                                                                                  0.1s
+ =&gt; =&gt; exporting manifest list sha256:faa4f3c30ff67cc7fce75f36159f55278411c8730b6d36121f301ab8a1f7218f                                                                                                                           0.2s
+ =&gt; =&gt; pushing layers                                                                                                                                                                                                            0.0s
+------
+ &gt; exporting to image:
+------
+failed to solve: rpc error: code = Unknown desc = failed to do request: Head &quot;https://192.168.229.105/v2/test-cloud-arm64/base_backend_test/blobs/sha256:78b792e6f793a446d97f44fa78f6cc2e97b878dc405338eaf25527a7a1abe52f&quot;: dial tcp 192.168.229.105:443: connect: connection refused
+
+</code></pre><p>我们实际的镜像仓库地址是：192.168.229.105，并没有后面的192.168.229.105/v2，而且目前该仓库属于insecure-registries中，不需要使用https进行访问。这一点无法进行指定，目前尚未有办法解决。</p>
+<h4 id="2-2-多架构镜像导出的问题"><a href="#2-2-多架构镜像导出的问题" class="headerlink" title="2.2 多架构镜像导出的问题"></a>2.2 多架构镜像导出的问题</h4><p>在上面的操作中，指定了多个架构的镜像，<em>–platform linux/amd64,linux/arm64/v8</em>指定了amd64和arm64两种架构，但是两种架构并不能导出两个镜像如下：</p>
+<pre><code>$ docker buildx build --platform linux/amd64,linux/arm64/v8 -t 192.168.229.105/test-cloud-arm64/base_backend_test --load -f ./BaseDockerfile .
+[+] Building 3.0s (12/12) FINISHED
+ =&gt; [internal] load build definition from BaseDockerfile                                                                                                                                                                         0.2s
+ =&gt; =&gt; transferring dockerfile: 632B                                                                                                                                                                                             0.0s
+ =&gt; [internal] load .dockerignore                                                                                                                                                                                                0.3s
+ =&gt; =&gt; transferring context: 2B                                                                                                                                                                                                  0.0s
+ =&gt; [linux/arm64 internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                          2.2s
+ =&gt; [linux/amd64 internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                          2.0s
+ =&gt; [internal] load build context                                                                                                                                                                                                0.1s
+ =&gt; =&gt; transferring context: 63B                                                                                                                                                                                                 0.0s
+ =&gt; [linux/arm64 1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                    0.2s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.2s
+ =&gt; [linux/amd64 1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                    0.0s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.3s
+ =&gt; CACHED [linux/amd64 2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                             0.0s
+ =&gt; CACHED [linux/amd64 3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                             0.0s
+ =&gt; CACHED [linux/arm64 2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                             0.0s
+ =&gt; CACHED [linux/arm64 3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                             0.0s
+ =&gt; ERROR exporting to oci image format                                                                                                                                                                                          0.0s
+------
+ &gt; exporting to oci image format:
+------
+failed to solve: rpc error: code = Unknown desc = docker exporter does not currently support exporting manifest lists
+</code></pre><p>这样就无法进行导出，只有试用单架构进行构建时才可以导出，如下：</p>
+<pre><code>$ docker buildx build --platform linux/arm64/v8 -t 192.168.229.105/test-cloud-arm64/base_backend_test --load -f ./BaseDockerfile .
+[+] Building 8.0s (9/9) FINISHED
+ =&gt; [internal] load build definition from BaseDockerfile                                                                                                                                                                         0.2s
+ =&gt; =&gt; transferring dockerfile: 632B                                                                                                                                                                                             0.0s
+ =&gt; [internal] load .dockerignore                                                                                                                                                                                                0.3s
+ =&gt; =&gt; transferring context: 2B                                                                                                                                                                                                  0.0s
+ =&gt; [internal] load metadata for docker.io/arm64v8/nginx:1.17.7-alpine-perl                                                                                                                                                      6.1s
+ =&gt; [internal] load build context                                                                                                                                                                                                0.1s
+ =&gt; =&gt; transferring context: 63B                                                                                                                                                                                                 0.0s
+ =&gt; [1/3] FROM docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.1s
+ =&gt; =&gt; resolve docker.io/arm64v8/nginx:1.17.7-alpine-perl@sha256:bbf7e44bd02ee1a86082f0c0ad25d4f564e10666098a8d01b31a4fdc73ffedc1                                                                                                0.1s
+ =&gt; CACHED [2/3] COPY nginx/ /etc/nginx/                                                                                                                                                                                         0.0s
+ =&gt; CACHED [3/3] RUN apk --no-cache add tzdata  &amp;&amp;     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &amp;&amp;     echo Asia/Shanghai &gt; /etc/timezone                                                                         0.0s
+ =&gt; exporting to oci image format                                                                                                                                                                                                0.7s
+ =&gt; =&gt; exporting layers                                                                                                                                                                                                          0.0s
+ =&gt; =&gt; exporting manifest sha256:3230317e9c0905bf801a95972e46c2663235bf70391cb5758c4841925577f008                                                                                                                                0.1s
+ =&gt; =&gt; exporting config sha256:78b792e6f793a446d97f44fa78f6cc2e97b878dc405338eaf25527a7a1abe52f                                                                                                                                  0.1s
+ =&gt; =&gt; sending tarball                                                                                                                                                                                                           0.3s
+ =&gt; importing to docker                                                                                                                                                                                                          0.5s
+
+$ docker images | grep base_backend_test
+192.168.229.105/test-cloud-arm64/base_backend_test           latest              78b792e6f793        12 minutes ago      59.2MB
+</code></pre><p>只有进行单个架构构建时才能导出到本地docker镜像中，也只有这样导出完毕后才能试用docker push命令进行推送。</p>
+<h3 id="3-业务镜像打包和试运行"><a href="#3-业务镜像打包和试运行" class="headerlink" title="3. 业务镜像打包和试运行"></a>3. 业务镜像打包和试运行</h3><p>上一步产出了基础镜像，在业务镜像打包时，只需要修改Dockerfile中基础镜像名称即可。也就是说，基础镜像为arm架构的，在x86下进行打包也可以正常进行，而且打包后的镜像也可以继续运行在arm架构上。</p>
+<p>替换命令如下：</p>
+<pre><code>sed -i &#39;s$192.168.229.105/test-cloud/base_backend:0.0.3$192.168.229.105/test-cloud-arm64/base_backend_test:latest$g&#39; $WORKSPACE/Dockerfile
+</code></pre><h3 id="4-传入服务器验证"><a href="#4-传入服务器验证" class="headerlink" title="4. 传入服务器验证"></a>4. 传入服务器验证</h3><p>首先在x86的服务器进行简单验证：</p>
+<pre><code>$ docker run --rm -t 192.168.229.105/test-cloud-arm64/base_backend_test:latest uname -m
+aarch64
+</code></pre><p>然后传入arm服务器镜像运行即可。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://docs.docker.com/buildx/working-with-buildx/" target="_blank" rel="noopener">https://docs.docker.com/buildx/working-with-buildx/</a></li>
 </ul>
-</li>
-<li><p>领克</p>
-<ul>
-<li>03 1.5t高配， 2.0t低配两款车型</li>
-</ul>
-</li>
-<li><p>本田</p>
-<ul>
-<li>雅阁 1.5t 最低配</li>
-<li>思域 1.5t手动</li>
-</ul>
-</li>
-<li><p>标致</p>
-<ul>
-<li>508L 1.6t 最低配</li>
-</ul>
-</li>
-<li><p>现代</p>
-<ul>
-<li>索纳塔 1.5t最低配</li>
-</ul>
-</li>
-<li><p>福特</p>
-<ul>
-<li>福克斯 2020款st-line</li>
-<li>福克斯Active 2021款</li>
-</ul>
-</li>
-<li><p>观致</p>
-<ul>
-<li>观致7 1.6t顶配</li>
-</ul>
-</li>
-<li><p>奇瑞</p>
-<ul>
-<li>瑞虎8 1.6t 5座精英版</li>
-</ul>
-</li>
-<li><p>雪弗兰</p>
-<ul>
-<li>迈锐宝xl 2.0t中配</li>
-</ul>
-</li>
-<li><p>上汽名爵</p>
-<ul>
-<li>名爵6 1.5t手动豪华版</li>
-</ul>
-</li>
-<li><p>上汽荣威</p>
-<ul>
-<li>荣威RX5 max 1.5t最低配手动版本</li>
-</ul>
-</li>
-<li><p>斯柯达</p>
-<ul>
-<li>明锐1.5自动顶配</li>
-<li>明锐旅行最低配</li>
-</ul>
-</li>
-</ul>
-<p>整个的车型列表就是这样。从我本人角度来说，10万左右选择昂克塞拉、名爵6、思域对比，只对比手动版本，15万左右选择508l和迈锐宝xl。在zh先生角度，领克03、福克斯Active、明锐旅行，这三款他比较喜欢。lin先生就跟着打酱油了（狗头）。</p>
-<h2 id="车展和探店"><a href="#车展和探店" class="headerlink" title="车展和探店"></a>车展和探店</h2><p>这里没有很详细的报价单，好多是不允许拍照或者出具的，目前只能凭借记忆去写一下，然后是只能给出个大概的价格，仅供参考，毕竟这玩意一个时期一个价格。主要的价格信息包括，裸车价、落地价、贷款政策以及月供。</p>
-<h3 id="1-领克"><a href="#1-领克" class="headerlink" title="1.领克"></a>1.领克</h3><p>我们在车展的时候了解的的是1.5t版本的高配，报价裸车是14.68万元，优惠1.1万元，贷款是两年6.6万元免息，月供大概在2800元左右。顺理成章的我们就去探店了，zh先生还是对3缸没信心，就直接看了2.0版本的低配，这台车报价是裸车优惠完成是138800，最高给到的优惠是17000元（这个优惠价格1.5t、2.0t相同），落地价格为164000元。免息政策同上，开走价格需要98000元，而且只能是现场订车，当日交定金。另外，以开走价格80000元计算，24期贷款月供需要3566元，需要1800元利息。</p>
-<p>综合来说，领克2.0t的购置税较高，而且保险给定在了8500左右，贷款手续费和gps费用加起来差不多在9000，是收费最高的一个品牌，其它的品牌贷款手续费和gps费用大概在7000元左右。领克的宣传话术，就是什么玩意都往沃尔沃上靠（三大件+安全性）。zh先生带了驾照，有幸进行了1.5t高配版本的试驾，直观感受是车辆机械素质不错，配置齐全，变速箱反应灵敏，但是风噪不是很低，胎噪路噪非常重，后排空间不错，但是中间无头枕，过弯指向性优秀。</p>
-<h3 id="2-本田"><a href="#2-本田" class="headerlink" title="2. 本田"></a>2. 本田</h3><p>车展上展出的是雅阁顶配版本的，我咨询了低配版本的价格，1.5t最低配，裸车报价16.99万元（优惠1万元后）。贷款政策为6万元18期免息，并未咨询落地价格，因为雅阁太贵了，而且1.5t感觉就是思域的1.5t刷了个一阶动力程序，真就是买发动机送车呗。探店时经十东路店聊到的是思域，这时候就开始不爽了，不管是1.5t最低配三厢手动，还是两厢版本次顶配，都没车，而且都告诉我订不到车，到车时间未知。在北园大街店是能订到车，目前1.5t手动三厢优惠1万元，贷款政策同上，落地价格在14.50左右。</p>
-<p>综合来说，给人的感觉是本田很傲慢，对顾客态度有些差，但我没想到这是歧视我这样喜欢开手动档人士的开始！静态体验雅阁，感觉后排头部空间不足，</p>
-<h3 id="3-标致"><a href="#3-标致" class="headerlink" title="3. 标致"></a>3. 标致</h3><p>车展看了508L，并未探店。508L静态体验比较好，没有那么反人类了，座椅舒适程度不错。咨询了1.6t最低配的价格，裸车价格在15.80万元，保险6000左右，带2980的金融服务费（无gps收费），24期免息可贷6.3万元，月供2500以内。未计算落地价格。</p>
-<h3 id="4-现代"><a href="#4-现代" class="headerlink" title="4. 现代"></a>4. 现代</h3><p>车展主要看了新索纳塔，由于新车上市的原因，一分优惠没有，1.5t最低配16.18万元，36期免息可贷8.8万元，月供2500以内，3000元服务费，1980元gps费，公证费1120元。静态体验，乘坐一般，后排头部空间不足，中控感觉廉价了些。屌丝三宝之首得让给迈锐宝了。</p>
-<h3 id="5-福特"><a href="#5-福特" class="headerlink" title="5. 福特"></a>5. 福特</h3><p>福特这边主要是受到福特性能部门的影响，心仪福克斯系列。车展主要看的是2020款福克斯st-line两厢，优惠后裸车价格在12万元，而且是清仓，还有两台红色两厢，三厢卖完，贷款是24期免息贷5万元，落地在14.5万元左右。探店时，看的是福克斯Active，旅行版本比两厢版本大不少，空间也好了很多，只是报价是一分钱不优惠，15.38万元，分期免息政策同上。</p>
-<p>静态体验福克斯st-line，运动感营造较强，整车做工感觉还是差点，内饰缝隙不小，座椅有感觉，方向盘设计平底好评。</p>
-<h3 id="6-观致"><a href="#6-观致" class="headerlink" title="6. 观致"></a>6. 观致</h3><p>车展主要看的是观致7 1.6t顶配版本，裸车13.68万元，贷款分期36期内任意金额，无免息，厂家贴息1.1万元，保险+购置税在1.5万元左右，落地14万元，提供所有颜色。</p>
-<h3 id="7-奇瑞"><a href="#7-奇瑞" class="headerlink" title="7. 奇瑞"></a>7. 奇瑞</h3><p>车展主要看的是瑞虎8，咨询的是瑞虎8 1.6t精英版5座，裸车价格12.69万元，免息政策是24期5万元，手续费3000元，店内上保险4500元，上牌费120元。未探店。</p>
-<p>静态体验了瑞虎8，确实空间非常好，做工感觉比观致7要好一些，但是科技程度不如观致7，毕竟和人顶配比，不太现实。</p>
-<h3 id="8-雪弗兰"><a href="#8-雪弗兰" class="headerlink" title="8. 雪弗兰"></a>8. 雪弗兰</h3><p>车展上未看雪弗兰，直接进店看的车。展车是迈锐宝xl 2.0t低配版本，带机械式仪表的那种。中配报价15.69万元，贷款政策79000元，18期免息月供4388元。另一个是贷款10万元，39期，月供2791元，利息8867元。最终落地价格18.56万元。</p>
-<p>静态体验，乘坐舒适，空间好，销售方面承诺有一个到明年4月份的保价协议，有降价或者其它4s有更低报价补差价的4倍赔偿。</p>
-<h3 id="9-上汽名爵"><a href="#9-上汽名爵" class="headerlink" title="9. 上汽名爵"></a>9. 上汽名爵</h3><p>车展上未看，直接去4s看名爵6，配置为手动豪华版，裸车价格99800元。首付上路价格50451元，免息政策为24期贷款69860元，月供2910元，到车周期一周内，最快的三天。</p>
-<p>名爵的保险是可以自己确定的，大概在4000左右，以出具的保单为准，而其它4s店都是一口价并且均在6000元以上，可能是因为车险改革的问题。</p>
-<h3 id="10-上汽荣威"><a href="#10-上汽荣威" class="headerlink" title="10. 上汽荣威"></a>10. 上汽荣威</h3><p>直接探店，荣威RX5 max 1.5t最低配手动版本，直接告诉我不生产，也订不到车。</p>
-<h3 id="11-斯柯达"><a href="#11-斯柯达" class="headerlink" title="11. 斯柯达"></a>11. 斯柯达</h3><p>直接探店，明锐只有自动挡版本了，手动挡一样订不到车，展车是1.5顶配的，咨询的是1.5自动最低配，报价9.38万元，后续未咨询。</p>
-<h3 id="12-马自达"><a href="#12-马自达" class="headerlink" title="12. 马自达"></a>12. 马自达</h3><p>最后介绍马自达，马自达是看的最多的牌子，从阿特兹、cx-4到昂克塞拉。阿特兹2.5版本，裸车17.68万元，服务费4000+500，50%首付，24期无息。cx-4便宜7000元，金融政策相同。</p>
-<p>而昂克塞拉，这个是我最早能找到订到车的4s店，1.5手动质美，裸车价格10.99万元，购置税+保险+4s服务费加上，第一次报价12.88万元，第二次阴差阳错搞出个4680的收费，而且落地价格一路奔着13.78万元去了。贷款厂家金融12期7万免息，低息24期7万，利息4000元。走银行可以贷9万元，36期，每年3000元利息，月供2800元，24期月供4000元。首付后开走的费用，从38880元，一路涨到50000元出头，这是最过山车的事儿。我还差点签了合同！</p>
-<h2 id="其它信息"><a href="#其它信息" class="headerlink" title="其它信息"></a>其它信息</h2><ul>
-<li><p>心得</p>
-<ol>
-<li>销售会咨询你，最早什么时候用车？也就是判断你会不会最近买，如果是，就使劲了；如果不是，就不太叼你。</li>
-<li>最好在网上咨询，联系上某个销售后，再进店，否则你要的配置要么定不着，要么没啥优惠。</li>
-</ol>
-</li>
-<li><p>购置税计算</p>
-</li>
-<li><p>保险报价问题</p>
-</li>
-</ul>
-<p>大部分报价都在6000元以上，实际上自己单独买的话，只是三者100万+车损+交强在4000元左右，4s给上的基本上是全险，啥玩意玻璃险都有。但是我同事经历的事儿是，车玻璃被人砸了，但是玻璃险没给赔，因为找不到是谁干的。。。</p>
-<ul>
-<li>附加内容</li>
-<li>临牌有效时间</li>
-</ul>
-<p>目前临牌有效时间在15天，可以打两次</p>
-<ul>
-<li><p>砍价策略</p>
-</li>
-<li><p>对比理由</p>
-<ol>
-<li>昂克塞拉、名爵6、思域三厢，这三个都有手动档</li>
-<li>508L、迈锐宝xl 2.0t、阿特兹，这三个都是B级车</li>
-<li>瑞虎8、观致7、cx-4，这三个都是suv</li>
-</ol>
-</li>
-</ul>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
-<li>并不是年底就真的便宜，车展时和探店时不一个优惠。</li>
-<li>4s店各项收费太难受，尽量还是不要考虑贷款买车，否则会十分痛苦。（只针对我自己）</li>
-<li>贵不一定好，需要多权衡，多看自己的用车场景。例如领克03，看着非常不错，但是试乘后隔音稀烂，还不如马自达3。</li>
-<li>尽可能试驾，试驾后再对比！</li>
-</ol>
 
             </div>
             <hr />
@@ -735,9 +815,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《12月份济南买车指南》
+                    《docker buildx进行多架构打包的操作记录》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/12/27/12-yue-fen-ji-nan-mai-che-zhi-nan/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2021/12/10/docker-buildx-jin-xing-duo-jia-gou-da-bao-de-cao-zuo-ji-lu/" property="cc:attributionName"
                rel="cc:attributionURL">
                 JamesLiAndroid
             </a> 采用
@@ -1043,33 +1123,28 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/12/28/qian-duan-si-fu-da-jian-ji-yan-zheng/">
+                <a href="/2021/12/11/elasticsearch-ji-qun-xiu-gai-mi-ma/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="前端私服搭建及验证">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="ElasticSearch集群修改密码">
                         
-                        <span class="card-title">前端私服搭建及验证</span>
+                        <span class="card-title">ElasticSearch集群修改密码</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            前端私服搭建准备工作环境准备：
+                            ElasticSearch集群修改密码1. 停止写入es的相关程序这里基本上是Logstash，需要将Logstash停机。如果logstash有多个，都需要停机。
 
-镜像仓库：nexus 3.11
-nodejs版本：10.16.0
-yarn版本：1.22.4
-npm版本：6.9.0
+$ sudo systemctl stop logstash
 
-nexus3 仓库设置和用户设置仓库设置前端仓库创建如下：
-
-npm-hosted: 
+2. 修
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-12-28
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2021-12-11
                         </span>
                         <span class="publish-author">
                             
@@ -1086,25 +1161,26 @@ npm-hosted:
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/11/20/cong-yan-jin-shi-jia-gou-si-kao-wo-si-yun-ping-tai-fa-zhan-wen-ti/">
+                <a href="/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="从《演进式架构》思考我司云平台发展问题">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="某甲方项目漏洞修复说明">
                         
-                        <span class="card-title">从《演进式架构》思考我司云平台发展问题</span>
+                        <span class="card-title">某甲方项目漏洞修复说明</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            从《演进式架构》思考我司云平台发展问题第一，肯定我们走微服务架构的路子，为了应对变化，分割为细小单元是正确的。但是，最大的问题在于组织机构建设不到位，人员培养不到位，逆康威定律影响的具体体现！
-第二，支持微服务的方式，应该崇尚快速灵活、减少
+                            某甲方项目漏洞修复说明解决内容说明优先解决高风险漏洞，包含非常危险和比较危险这两个等级的漏洞，对于其余的漏洞，给出解决时间。
+对于目前不容易解决的漏洞，尽可能给出解决方案，并给出解决时间。
+正式环境的高危漏洞，开发、测试环境的高危漏洞必须解
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-11-20
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2021-11-09
                             </span>
                         <span class="publish-author">
                             

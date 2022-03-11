@@ -149,6 +149,28 @@
   </entry>
   
   <entry>
+    <title>docker buildx进行多架构打包的操作记录</title>
+    <link href="https://JamesLiAndroid.github.io/2021/12/10/docker-buildx-jin-xing-duo-jia-gou-da-bao-de-cao-zuo-ji-lu/"/>
+    <id>https://JamesLiAndroid.github.io/2021/12/10/docker-buildx-jin-xing-duo-jia-gou-da-bao-de-cao-zuo-ji-lu/</id>
+    <published>2021-12-10T05:46:01.000Z</published>
+    <updated>2022-03-11T05:54:03.240Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;docker-buildx进行多架构打包的操作和使用&quot;&gt;&lt;a href=&quot;#docker-buildx进行多架构打包的操作和使用&quot; class=&quot;headerlink&quot; title=&quot;docker buildx进行多架构打包的操作和使用&quot;&gt;&lt;/a&gt;docker
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>某甲方项目漏洞修复说明</title>
     <link href="https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/"/>
     <id>https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/</id>
@@ -429,28 +451,6 @@
         
         
           &lt;h1 id=&quot;灰度部署预研和实践&quot;&gt;&lt;a href=&quot;#灰度部署预研和实践&quot; class=&quot;headerlink&quot; title=&quot;灰度部署预研和实践&quot;&gt;&lt;/a&gt;灰度部署预研和实践&lt;/h1&gt;&lt;p&gt;后端服务主要依赖于Nepxion
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS 7 备份与恢复</title>
-    <link href="https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/"/>
-    <id>https://JamesLiAndroid.github.io/2021/02/04/centos-7-bei-fen-yu-hui-fu/</id>
-    <published>2021-02-04T06:48:10.000Z</published>
-    <updated>2021-02-04T07:09:35.732Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;CentOS-7-备份与恢复&quot;&gt;&lt;a href=&quot;#CentOS-7-备份与恢复&quot; class=&quot;headerlink&quot; title=&quot;CentOS 7 备份与恢复&quot;&gt;&lt;/a&gt;CentOS 7 备份与恢复&lt;/h1&gt;&lt;h2 id=&quot;迁移环境介绍&quot;&gt;&lt;a
         
       
     
