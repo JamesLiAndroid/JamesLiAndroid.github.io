@@ -438,14 +438,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    12.2k
+                    12.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    64 分
+                    65 分
                 </div>
                 
                 
@@ -612,7 +612,7 @@ EOF
 // 替换软件源
 # sed -i -e &#39;/mirrors.cloud.aliyuncs.com/d&#39; -e &#39;/mirrors.aliyuncs.com/d&#39; /etc/yum.repos.d/CentOS-Base.repo
 
-// 更新绕过内核信息，内核我们后续自行安装
+// 更新绕过内核信息，内核我们后续自行安装，也是为了防止升级内核后，机器启动不了的问题
 # yum update -y --exclude=kernel* 
 </code></pre><p>安装必备工具</p>
 <pre><code># yum install -y wget git unzip net-tools curl vim telnet psmisc  tree sshpass jq
@@ -799,19 +799,27 @@ EOF
 </code></pre><p>解压文件夹，并将用到的组件放置到执行路径下：</p>
 <pre><code># tar -xf kubernetes-server-linux-amd64.tar.gz --strip-components=3 -C /usr/local/bin kubernetes/server/bin/kube{let,ctl,-apiserver,-controller-manager,-scheduler,-proxy}
 
-# chomod +x /usr/local/bin/kube*
+# chmod +x /usr/local/bin/kube*
 </code></pre><p>下载etcd安装包，二进制安装etcd 3.4.13，从<a href="https://github.com/etcd-io/etcd/releases/tag/v3.4.13" target="_blank" rel="noopener">该地址</a>进行下载，或者直接下载：</p>
 <pre><code># wget https://github.com/etcd-io/etcd/releases/download/v3.4.13/etcd-v3.4.13-linux-amd64.tar.gz
 
 # tar -zxvf etcd-v3.4.13-linux-amd64.tar.gz --strip-components=1 -C /usr/local/bin etcd-v3.4.13-linux-amd64/etcd{,ctl}
 
-# chomod +x /usr/local/bin/etcd*
+# chmod +x /usr/local/bin/etcd*
 </code></pre><p>将这些组件从k8s-master-01节点上，统一传输到各个节点，操作如下：</p>
-<pre><code>MasterNodes=&#39;k8s-master-02 k8s-master-03&#39;
+<pre><code>
+# vim transfer_tools_to_other_nodes.sh
+// 输入以下内容
+#!/bin/bash
+MasterNodes=&#39;k8s-master-02 k8s-master-03&#39;
 WorkerNodes=&#39;k8s-worker-01 k8s-worker-02 k8s-worker-03&#39;
 for NODE in $MasterNodes; do echo $NODE; scp /usr/local/bin/kube{let,-apiserver,-controller-manager,-scheduler,-proxy} $NODE:/usr/local/bin/; scp /usr/local/bin/etcd* $NODE:/usr/local/bin/; done
 for NODE in $WorkerNodes; do scp /usr/local/bin/kube{let,-proxy} $NODE:/usr/local/bin/; done
-</code></pre><p>最后查看版本</p>
+
+// :wq 保存退出
+
+// 执行脚本如下
+# sh +x transfer_tools_to_other_nodes.sh</code></pre><p>最后查看版本</p>
 <pre><code># kubelet --version
 Kubernetes v1.20.5
 
@@ -837,13 +845,14 @@ API version: 3.4
     }
   ],
   &quot;ca&quot;: {
-      &quot;expiry&quot;: &quot;87600h&quot;
+      &quot;expiry&quot;: &quot;876000h&quot;
   }
 }
 </code></pre><p>注：</p>
 <ul>
 <li>CN：Common Name，kube-apiserver 从证书中提取该字段作为请求的用户名 (User Name)；浏览器使用该字段验证网站是否合法；</li>
 <li>O：Organization，kube-apiserver 从证书中提取该字段作为请求用户所属的组 (Group)</li>
+<li>“expiry”: “876000h”，保证证书有效期在100年</li>
 </ul>
 <p>创建CA证书：</p>
 <pre><code># cfssl gencert -initca ca-csr.json  | cfssljson -bare ca
@@ -862,7 +871,7 @@ API version: 3.4
                   &quot;server auth&quot;,
                   &quot;client auth&quot;
               ],
-              &quot;expiry&quot;: &quot;87600h&quot;
+              &quot;expiry&quot;: &quot;876000h&quot;
           }
       }
   }
@@ -896,7 +905,9 @@ API version: 3.4
 etcd-key.pem  etcd.pem
 </code></pre><h4 id="2-etcd服务部署以及验证"><a href="#2-etcd服务部署以及验证" class="headerlink" title="2. etcd服务部署以及验证"></a>2. etcd服务部署以及验证</h4><p>一共需要配置三个etcd节点，分别位于k8s-master-01、k8s-master-02、k8s-master-03。etcd配置文件在各个节点上分别进行设置如下：</p>
 <p>k8s-master-01节点</p>
-<pre><code># vim /etc/etcd/etcd.conf
+<pre><code># mkdir /etc/etcd
+
+# vim /etc/etcd/etcd.conf
 
 #[Member]
 ETCD_NAME=&quot;k8s-master-01&quot;
@@ -984,7 +995,9 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 
 </code></pre><p>从k8s-master-01节点开始设置etcd证书，并将证书发送到各个节点，如下：</p>
-<pre><code># cp ca*.pem /etc/etcd/ssl/
+<pre><code>// 注意在其它master节点上也要创建该文件路径
+# mkdir /etc/etcd/ssl/
+# cp ca*.pem /etc/etcd/ssl/
 # cp etcd*.pem /etc/etcd/ssl/
 # cp etcd.conf /etc/etcd/
 # cp etcd.service /usr/lib/systemd/system/
@@ -993,7 +1006,7 @@ WantedBy=multi-user.target
 // 如果之前编写统一的配置文件，发送到不同节点的操作如下，注意修改配置文件中的ip地址信息
 # for i in k8s-master-02 k8s-master-03;do rsync -vaz etcd.conf $i:/etc/etcd/;done
 # for i in k8s-master-02 k8s-master-03;do rsync -vaz etcd.service $i:/usr/lib/systemd/system/;done
-</code></pre><p>在各个节点同时执行etcd服务启动，如下：</p>
+</code></pre><p>在各个master节点同时执行etcd服务启动，如下：</p>
 <pre><code># mkdir -p /var/lib/etcd/default.etcd
 # systemctl daemon-reload
 # systemctl enable etcd.service
@@ -1230,8 +1243,12 @@ WantedBy=multi-user.target
 </code></pre><h4 id="3-同步证书到其它节点并启动服务"><a href="#3-同步证书到其它节点并启动服务" class="headerlink" title="3. 同步证书到其它节点并启动服务"></a>3. 同步证书到其它节点并启动服务</h4><p>在k8s-master-01节点上，同步证书操作如下：</p>
 <pre><code># cp ca*.pem /etc/kubernetes/ssl/
 # cp kube-apiserver*.pem /etc/kubernetes/ssl/
+# cp token.csv /etc/kubernetes/
 
 # for i in k8s-master-02 k8s-master-03; do rsync -vaz ca*.pem kube-apiserver*.pem $i:/etc/kubernetes/ssl/;done
+
+// 注意不要忘记token.csv文件也要同步到其余节点上
+# for i in k8s-master-02 k8s-master-03; do rsync -vaz token.csv $i:/etc/kubernetes/;done
 </code></pre><p>注意检查好k8s-master-02、k8s-master-03节点kube-apiserver服务配置文件所在ip地址。</p>
 <p>最后，在三个节点上同时进行服务启动操作，如下：</p>
 <pre><code># systemctl daemon-reload
@@ -1528,7 +1545,7 @@ Connection closed by foreign host.
 <li>O指定该证书的 Group 为 system:masters，kubelet 使用该证书访问 kube-apiserver 时 ，由于证书被 CA 签名，所以认证通过，同时由于证书用户组为经过预授权的 system:masters，所以被授予访问所有 API 的权限；</li>
 <li>注意后续证书的设置，所有的<em>names</em>下的设置信息各不相同。</li>
 </ul>
-<p>注意：这个admin 证书，是将来生成管理员用的kube config 配置文件用的，现在我们一般建议使用RBAC 来对kubernetes 进行角色权限控制， kubernetes 将证书中的CN 字段 作为User， O 字段作为 Group；<br>“O”: “system:masters”, 必须是system:masters，否则后面kubectl create clusterrolebinding报错。</p>
+<p>注意：这个admin 证书，是将来生成管理员用的kube.config 配置文件用的，现在我们一般建议使用RBAC 来对kubernetes 进行角色权限控制， kubernetes 将证书中的CN 字段 作为User， O 字段作为 Group；<br>“O”: “system:masters”, 必须是system:masters，否则后面kubectl create clusterrolebinding报错。</p>
 <p>生成证书操作如下：</p>
 <pre><code># cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=kubernetes admin-csr.json | cfssljson -bare admin
 
@@ -1553,6 +1570,9 @@ admin-key.pem  admin.pem
 // 创建文件夹并拷贝文件
 # mkdir ~/.kube
 # cp kube.config ~/.kube/config
+
+// 拷贝kube.config到/etc/kubernetes/admin.conf，防止下一步执行的时候出现找不到文件的问题！
+# cp kube.config /etc/kubernetes/admin.conf
 
 // 授权kubernetes证书访问kubelet api权限
 # kubectl create clusterrolebinding kube-apiserver:kubelet-apis --clusterrole=system:kubelet-api-admin --user kubernetes
@@ -1650,6 +1670,7 @@ KUBE_CONTROLLER_MANAGER_OPTS=&quot;--port=0 \
   --leader-elect=true \
   --feature-gates=RotateKubeletServerCertificate=true \
   --controllers=*,bootstrapsigner,tokencleaner \
+  // 该参数1.21版本后已经去除，如果安装1.22以及以上的版本，需要去掉下面两个horizontal参数才能正常安装
   --horizontal-pod-autoscaler-use-rest-clients=true \
   --horizontal-pod-autoscaler-sync-period=10s \
   --tls-cert-file=/etc/kubernetes/ssl/kube-controller-manager.pem \
@@ -1831,6 +1852,7 @@ WantedBy=multi-user.target
   &quot;cgroupDriver&quot;: &quot;systemd&quot;,
   &quot;hairpinMode&quot;: &quot;promiscuous-bridge&quot;,
   &quot;serializeImagePulls&quot;: false,
+  // 1.22版本以后，featureGates不能设置下面两个选项
   &quot;featureGates&quot;: {
     &quot;RotateKubeletClientCertificate&quot;: true,
     &quot;RotateKubeletServerCertificate&quot;: true
@@ -1880,11 +1902,11 @@ WantedBy=multi-user.target
 <p>注意：在该启动文件中，<em>pod-infra-container-image</em>容器地址已经变更为阿里云镜像源，不是gcr.io，也就是更换为在kubelet安装步骤开始前，拉取的容器镜像。</p>
 <h4 id="3-将各个配置信息传输到各个节点上"><a href="#3-将各个配置信息传输到各个节点上" class="headerlink" title="3. 将各个配置信息传输到各个节点上"></a>3. 将各个配置信息传输到各个节点上</h4><pre><code>// k8s-master-01上复制文件信息
 # cp kubelet-bootstrap.kubeconfig /etc/kubernetes/
-# cp kubelet.json /etc/kubernetes/
+// # cp kubelet.json /etc/kubernetes/
 # cp kubelet.service /usr/lib/systemd/system/
 
 // 以上步骤，如果master节点不安装kubelet，则剔除k8s-master-02、k8s-master-03
-# for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz kubelet-bootstrap.kubeconfig kubelet.json $i:/etc/kubernetes/;done
+# for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz kubelet-bootstrap.kubeconfig /etc/kubernetes/kubelet.json $i:/etc/kubernetes/;done
 # for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz ca.pem $i:/etc/kubernetes/ssl/;done
 # for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz kubelet.service $i:/usr/lib/systemd/system/;done
 </code></pre><p><strong>注意：</strong>传输完成后，kubelete.json配置文件中的<strong>address</strong>改为各个节点的ip地址。</p>
@@ -2010,8 +2032,8 @@ WantedBy=multi-user.target
 # cp kube-proxy.service /usr/lib/systemd/system/
 
 // 以上步骤，如果master节点不安装kubelet，则剔除k8s-master-02、k8s-master-03
-# for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz kube-proxy.kubeconfig kube-proxy.yaml $i:/etc/kubernetes/;done
-# for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz kube-proxy.service $i:/usr/lib/systemd/system/;done
+# for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz kube-proxy.kubeconfig /etc/kubernetes/kube-proxy.yaml $i:/etc/kubernetes/;done
+# for i in k8s-master-02 k8s-master-03 k8s-worker-01 k8s-worker-02 k8s-worker-03;do rsync -vaz /usr/lib/systemd/system/kube-proxy.service $i:/usr/lib/systemd/system/;done
 </code></pre><p><strong>注意：</strong>传输完成后，kube-proxy.yaml配置文件中的<strong>bindAddress</strong>、<strong>healthzBindAddress</strong>、<strong>metricsBindAddress</strong>改为各个节点的ip地址，端口号不变。</p>
 <h4 id="5-启动服务"><a href="#5-启动服务" class="headerlink" title="5. 启动服务"></a>5. 启动服务</h4><p>在所有节点上执行以下命令，启动kube-proxy。如下：</p>
 <pre><code># mkdir -p /var/lib/kube-proxy
@@ -2083,7 +2105,7 @@ kube-system   calico-node-rtf8b                          1/1     Running        
 kube-system   calico-node-sjd6j                          1/1     Running             0          10m
 kube-system   calico-node-x4qfn                          1/1     Running             0          10m
 kube-system   calico-node-zhnv4                          1/1     Running             0          10m
-</code></pre><p>查看各个节点，均为Ready的状态。</p>
+</code></pre><p>查看各个节点，均为Ready的状态。注意可能需要等待很长时间才行，取决于你的服务器性能。</p>
 <h4 id="2-CoreDNS组件安装"><a href="#2-CoreDNS组件安装" class="headerlink" title="2. CoreDNS组件安装"></a>2. CoreDNS组件安装</h4><p>下载CoreDNS配置文件如下：</p>
 <pre><code># wget https://raw.githubusercontent.com/coredns/deployment/master/kubernetes/coredns.yaml.sed
 
@@ -3073,7 +3095,7 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">294.7k</span>
+            <span class="white-color">295k</span>
             
 
             <br>
