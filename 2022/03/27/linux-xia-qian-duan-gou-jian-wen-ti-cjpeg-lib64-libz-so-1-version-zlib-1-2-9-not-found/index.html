@@ -4,14 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="运维平台方案预研, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="keywords" content="Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9&#39; not found, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="关于运维平台搭建方案前言根据目前微服务平台的需求，主要是针对DevOps的迫切需求，结合目前的CI/CD平台，引入新的运维平台，来统一进行微服务以及服务器的运维工作。
-当前情况
-已有CI/CD平台
-缺少统一的日志管理平台，未利用ELK进行搭">
+    <meta name="description" content="Linux下前端构建问题–cjpeg: /lib64/libz.so.1: version `ZLIB_1.2.9’ not found问题日志前端服务在jenkins中进行构建，而jenkins部署在CentOS 7.9上，在服务进行编译">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>运维平台方案预研 | 时代与猫的脚步</title>
+    <title>Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9&#39; not found | 时代与猫的脚步</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -293,13 +290,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        运维平台方案预研
+                        Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9&#39; not found
                     </div>
                 </div>
             </div>
@@ -409,24 +406,11 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/DevOps/" target="_blank">
-                            <span class="chip bg-color">DevOps</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/DevOps/" class="post-category" target="_blank">
-                            DevOps
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -434,7 +418,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-05
+                    2022-03-27
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -448,14 +432,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    6 分
                 </div>
                 
                 
@@ -466,113 +450,110 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="关于运维平台搭建方案"><a href="#关于运维平台搭建方案" class="headerlink" title="关于运维平台搭建方案"></a>关于运维平台搭建方案</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>根据目前微服务平台的需求，主要是针对DevOps的迫切需求，结合目前的CI/CD平台，引入新的运维平台，来统一进行微服务以及服务器的运维工作。</p>
-<h2 id="当前情况"><a href="#当前情况" class="headerlink" title="当前情况"></a>当前情况</h2><ul>
-<li>已有CI/CD平台</li>
-<li>缺少统一的日志管理平台，未利用ELK进行搭建</li>
-<li>针对公有云、私有云、混合云的管理，目前没有合适的工具</li>
-<li>运维流程没有进行建设，未制定运维规则</li>
-<li>未针对服务器以及容器，添加运维告警的内容</li>
-<li>需要以产品思维面向运维内容</li>
-</ul>
-<h2 id="需求列表及其说明"><a href="#需求列表及其说明" class="headerlink" title="需求列表及其说明"></a>需求列表及其说明</h2><ul>
-<li>用户管理和权限管理</li>
-</ul>
-<p>结合平台目前已有的内容进行实现，开发和运维相关人员不做区分，实践DevOps理念。服务器访问的权限控制，例如验证码的引入。</p>
-<ul>
-<li>工作流程以及自定义表单信息</li>
-</ul>
-<p>结合平台目前已有的内容进行实现，主要体现在工单信息提交，问题提交处理信息。</p>
-<ul>
-<li>资产管理–CMDB</li>
-</ul>
-<p>对接各类公有云平台，例如阿里云、腾讯云、华为云等；针对私有云平台，执行动态扩容缩容，增删机器设备等操作。</p>
-<ul>
-<li>任务管理和任务调度，定时执行</li>
-</ul>
-<p>定时的任务执行平台，对定时任务的管理，对定时任务执行的管理，对其执行结果的管理。</p>
-<ul>
-<li>CI/CD接入，持续集成</li>
-</ul>
-<p>针对持续集成平台的管理，接入jenkins体系。对构建的管理，对构建结果的管理，根据构建返回的信息，定位错误并报警</p>
-<ul>
-<li>数据管理，SQL执行管理</li>
-</ul>
-<p>数据库资源的管理，例如MySQL、postgresql、MongoDB、Redis。针对SQL部分，慢SQL查询，SQL执行审计。</p>
-<ul>
-<li>工单系统</li>
-</ul>
-<p>常见资源申请工单提交，测试提交流程，需求/bug的修复流程以及修复确认。</p>
-<ul>
-<li>文件管理</li>
-</ul>
-<p>整个文件上传的集群构建，大文件管理，文件分发到各个服务器。</p>
-<ul>
-<li>知识库信息</li>
-</ul>
-<p>团队知识管理，知识积累，形成技术周报并分发到每个开发人员。</p>
-<ul>
-<li>监控系统</li>
-</ul>
-<p>针对服务器的监控，针对docker镜像的监控运维，容错和避免单点故障，平台预警。针对各类数据库、缓存、消息队列等进行监控。</p>
-<ul>
-<li>堡垒机，WebShell，操作审计</li>
-</ul>
-<p>提供内外网交互的渠道，直接在线输入命令信息，针对各个服务器的操作，进行审计。</p>
-<ul>
-<li>配置管理</li>
-</ul>
-<p>例如Nginx配置管理和下发，Redis的配置管理和下发，多用于支持配置信息的组件。区别于微服务的配置中心，这里配置管理不对微服务镜像配置。</p>
-<ul>
-<li>镜像管理，应用管理</li>
-</ul>
-<p>利用k8s集群，管理镜像信息。</p>
-<ul>
-<li>微服务基础平台信息</li>
-</ul>
-<p>配置中心、注册中心、全链路监控信息，针对目前的痛点而言，要配置在线的参数传入。</p>
-<ul>
-<li>安全审计</li>
-</ul>
-<p>系统安全、混沌工程、接口安全监控、非法调用等信息</p>
-<ul>
-<li>API制定</li>
-</ul>
-<p>对外提供API的调用</p>
-<h2 id="风险点"><a href="#风险点" class="headerlink" title="风险点"></a>风险点</h2><ol>
-<li>依托开源项目进行开发，优先引入各模块管理页面信息。</li>
-<li>需求需要进行边界梳理。</li>
-<li>可能会出现跨语言的情况，例如使用Python或者Rust进行开发，尽量寻找java相关的平台。</li>
-</ol>
-<h2 id="开源平台"><a href="#开源平台" class="headerlink" title="开源平台"></a>开源平台</h2><ol>
-<li><p>针对k8s管理，使用<a href="https://kubesphere.com.cn/" target="_blank" rel="noopener">kubesphere</a></p>
-</li>
-<li><p>针对运维平台，可参考的项目如下：</p>
-<ul>
-<li>蓝鲸智云 <a href="https://github.com/Tencent/bk-bcs-saas" target="_blank" rel="noopener">https://github.com/Tencent/bk-bcs-saas</a></li>
-<li>Rainbond <a href="https://www.rainbond.com/" target="_blank" rel="noopener">https://www.rainbond.com/</a></li>
-<li>猪齿鱼 <a href="http://choerodon.io/zh/" target="_blank" rel="noopener">http://choerodon.io/zh/</a></li>
-<li>CoDo  <a href="http://www.opendevops.cn" target="_blank" rel="noopener">www.opendevops.cn</a></li>
-<li>Hygieia <a href="https://github.com/Hygieia/Hygieia" target="_blank" rel="noopener">https://github.com/Hygieia/Hygieia</a></li>
-<li>女娲 <a href="http://nvwa-io.com/" target="_blank" rel="noopener">http://nvwa-io.com/</a></li>
-<li>adminset <a href="https://github.com/guohongze/adminset" target="_blank" rel="noopener">https://github.com/guohongze/adminset</a></li>
-<li>super-devops <a href="https://github.com/wl4g/super-devops" target="_blank" rel="noopener">https://github.com/wl4g/super-devops</a></li>
-<li>devops-x <a href="https://github.com/unixhot/devops-x" target="_blank" rel="noopener">https://github.com/unixhot/devops-x</a></li>
-<li>super-cloudops <a href="https://github.com/wl4g/super-cloudops" target="_blank" rel="noopener">https://github.com/wl4g/super-cloudops</a></li>
-<li>Jpom <a href="https://gitee.com/keepbx/Jpom" target="_blank" rel="noopener">https://gitee.com/keepbx/Jpom</a></li>
-<li>bee-apm <a href="https://gitee.com/beetle082/bee-apm" target="_blank" rel="noopener">https://gitee.com/beetle082/bee-apm</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>针对微服务的后续开发，应提升运维保障的高度，因为服务分拆之后，对比之前单机的运维方式，需要更深层次的运维管理，不仅是水平扩展的问题，在垂直层面进行微服务的拆分和部署的时候，更需要运维层面进行保障。</p>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
-<li><a href="https://juejin.im/entry/5b568dc4e51d451964625b8c" target="_blank" rel="noopener">https://juejin.im/entry/5b568dc4e51d451964625b8c</a></li>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzU5MDY1MzcyOQ==&amp;mid=2247483682&amp;idx=1&amp;sn=aa393af4a869db5ec402da4722cf681f&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzU5MDY1MzcyOQ==&amp;mid=2247483682&amp;idx=1&amp;sn=aa393af4a869db5ec402da4722cf681f&amp;scene=21#wechat_redirect</a></li>
-<li><a href="https://mp.weixin.qq.com/s/HwOi-ARTvvNjGTWrDmZIkQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/HwOi-ARTvvNjGTWrDmZIkQ</a></li>
-<li><a href="https://github.com/Hygieia/Hygieia" target="_blank" rel="noopener">https://github.com/Hygieia/Hygieia</a></li>
-<li><a href="https://blog.csdn.net/wowotuo/article/details/79293323" target="_blank" rel="noopener">https://blog.csdn.net/wowotuo/article/details/79293323</a></li>
-<li><a href="https://www.cosmoplat.com/pc/community/topicDetail?id=2304922" target="_blank" rel="noopener">https://www.cosmoplat.com/pc/community/topicDetail?id=2304922</a></li>
-</ul>
+                <h1 id="Linux下前端构建问题–cjpeg-lib64-libz-so-1-version-ZLIB-1-2-9’-not-found"><a href="#Linux下前端构建问题–cjpeg-lib64-libz-so-1-version-ZLIB-1-2-9’-not-found" class="headerlink" title="Linux下前端构建问题–cjpeg: /lib64/libz.so.1: version `ZLIB_1.2.9’ not found"></a>Linux下前端构建问题–cjpeg: /lib64/libz.so.1: version `ZLIB_1.2.9’ not found</h1><h2 id="问题日志"><a href="#问题日志" class="headerlink" title="问题日志"></a>问题日志</h2><p>前端服务在jenkins中进行构建，而jenkins部署在CentOS 7.9上，在服务进行编译时，出现了以下错误。</p>
+<pre class="line-numbers language-log"><code class="language-log">
+14:13:15 Exit code: 1
+14:13:15 Command: node lib/install.js
+14:13:15 Arguments: 
+14:13:15 Directory: /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg
+14:13:15 Output:
+14:13:15 Command failed: /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg/vendor/cjpeg -version
+14:13:15 /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg/vendor/cjpeg: /lib64/libz.so.1: version `ZLIB_1.2.9' not found (required by /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg/vendor/cjpeg)
+14:13:15 
+14:13:15 
+14:13:15 mozjpeg pre-build test failed
+14:13:15 compiling from source
+14:13:15 Error: Command failed: /bin/sh -c autoreconf -fiv
+14:13:15 autoreconf: Entering directory `.'
+14:13:15 autoreconf: configure.ac: not using Gettext
+14:13:15 autoreconf: running: aclocal --force 
+14:13:15 autoreconf: configure.ac: tracing
+14:13:15 autoreconf: configure.ac: not using Libtool
+14:13:15 autoreconf: running: /usr/bin/autoconf --force
+14:13:15 configure.ac:23: error: possibly undefined macro: AC_PROG_LIBTOOL
+14:13:15       If this token and others are legitimate, please use m4_pattern_allow.
+14:13:15       See the Autoconf documentation.
+14:13:15 autoreconf: /usr/bin/autoconf failed with exit status: 1
+14:13:15 
+14:13:15 
+14:13:15     at /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/execa/index.js:231:11
+14:13:15     at runMicrotasks (<anonymous>)
+14:13:15     at processTicksAndRejections (internal/process/task_queues.js:93:5)
+14:13:15     at async Promise.all (index 0)
+14:13:15     at ProcessTermError.ExtendableBuiltin (/home/jenkins/nodejs/lib/node_modules/yarn/lib/cli.js:721:66)
+14:13:15     at ProcessTermError.MessageError (/home/jenkins/nodejs/lib/node_modules/yarn/lib/cli.js:750:123)
+14:13:15     at new ProcessTermError (/home/jenkins/nodejs/lib/node_modules/yarn/lib/cli.js:790:113)
+14:13:15     at ChildProcess.<anonymous> (/home/jenkins/nodejs/lib/node_modules/yarn/lib/cli.js:25783:17)
+14:13:15     at ChildProcess.emit (events.js:315:20)
+14:13:15     at maybeClose (internal/child_process.js:1048:16)
+14:13:15     at Process.ChildProcess._handle.onexit (internal/child_process.js:288:5)
+14:13:15 error /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg: Command failed.
+14:13:15 Exit code: 1
+14:13:15 Command: node lib/install.js
+14:13:15 Arguments: 
+14:13:15 Directory: /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg
+14:13:15 Output:
+14:13:15 Command failed: /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg/vendor/cjpeg -version
+14:13:15 /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg/vendor/cjpeg: /lib64/libz.so.1: version `ZLIB_1.2.9' not found (required by /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/mozjpeg/vendor/cjpeg)
+14:13:15 
+14:13:15 
+14:13:15 mozjpeg pre-build test failed
+14:13:15 compiling from source
+14:13:15 Error: Command failed: /bin/sh -c autoreconf -fiv
+14:13:15 autoreconf: Entering directory `.'
+14:13:15 autoreconf: configure.ac: not using Gettext
+14:13:15 autoreconf: running: aclocal --force 
+14:13:15 autoreconf: configure.ac: tracing
+14:13:15 autoreconf: configure.ac: not using Libtool
+14:13:15 autoreconf: running: /usr/bin/autoconf --force
+14:13:15 configure.ac:23: error: possibly undefined macro: AC_PROG_LIBTOOL
+14:13:15       If this token and others are legitimate, please use m4_pattern_allow.
+14:13:15       See the Autoconf documentation.
+14:13:15 autoreconf: /usr/bin/autoconf failed with exit status: 1
+14:13:15 
+14:13:15 
+14:13:15     at /var/lib/jenkins/workspace/test-main-frontend-prod/node_modules/execa/index.js:231:11
+14:13:15     at runMicrotasks (<anonymous>)
+14:13:15     at processTicksAndRejections (internal/process/task_queues.js:93:5)
+14:13:15     at async Promise.all (index 0)
+14:13:15 info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
+14:13:15 Build step 'Execute shell' marked build as failure
+14:13:15 Finished: FAILURE
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>前端的构建命令为：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+yarn install --verbose
+
+yarn run build
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>根据同前端同志的交流，在windows下使用yarn编译没有问题。实际上问题的核心就在于*<em>/lib64/libz.so.1: version `ZLIB_1.2.9’ not found *</em>这条日志上。</p>
+<h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><p>下载zlib 1.2.9版本的源码，编译安装后，重新设置<strong>libz.so.1</strong>文件指向即可，过程如下：</p>
+<pre><code>
+$ wget http://www.zlib.net/fossils/zlib-1.2.9.tar.gz
+
+$ tar -zxvf zlib-1.2.9.tar.gz
+
+$ cd zlib-1.2.9
+
+$ ./configure --prefix=/lib64
+
+$ make
+
+$ sudo make install
+
+// 创建软链接
+$ sudo ln -snf /lib64/libz.so.1 /lib64/lib/libz.so.1.2.9
+</code></pre><p>上述设置完成后，重新构建前端服务，即可成功。</p>
+<h2 id="补充：zlib库要慎重修改"><a href="#补充：zlib库要慎重修改" class="headerlink" title="补充：zlib库要慎重修改"></a>补充：zlib库要慎重修改</h2><p>对于客户的服务器，我们没有完整的root权限，只有分配给我们的用户有sudo执行的权利。在第一次尝试修改libz.so.1，想要把新编译好的<strong>libz.so.1.2.9</strong>替换为<strong>libz.so.1</strong>，操作如下：</p>
+<pre><code>
+// 备份原来的包，先用mv命令
+$ cd /lib64 &amp;&amp; sudo mv libz.so.1 libz.so.1.bak
+
+$ cd ~/zlib-1.2.9 &amp;&amp; sudo cp libz.so.1.2.9 /lib64/libz.so.1
+sudo: error in /etc/sudo.conf, line 19 while loading plugin &quot;sudoers_policy&quot;
+sudo: unable to load /usr/libexec/sudo/sudoers.so: libz.so.1: cannot open shared object file: No such file or directory
+sudo: fatal error, unable to load plugins
+</code></pre><p>这样就导致了sudo命令不可用，在没有root权限的情况下，属于灭顶之灾了。所以尽可能不要修改这个文件，如果修改也务必谨慎操作！尽可能使用cp命令进行备份后，再操作软连接设置，这样不至于出现sudo用不了的情况！</p>
 
             </div>
             <hr />
@@ -731,9 +712,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《运维平台方案预研》
+                    《Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9&#39; not found》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/01/05/yun-wei-ping-tai-fang-an-yu-yan/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2022/03/27/linux-xia-qian-duan-gou-jian-wen-ti-cjpeg-lib64-libz-so-1-version-zlib-1-2-9-not-found/" property="cc:attributionName"
                rel="cc:attributionURL">
                 JamesLiAndroid
             </a> 采用
@@ -1035,56 +1016,36 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/01/12/devops-jie-shao/">
+                <a href="/2022/03/27/linux-xia-qian-duan-gou-jian-wen-ti-cjpeg-lib64-libz-so-1-version-zlib-1-2-9-not-found/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="DevOps介绍">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9' not found">
                         
-                        <span class="card-title">DevOps介绍</span>
+                        <span class="card-title">Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9' not found</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            DevOps ppt讲解
-理念
-
-
-是什么？并没有明确的定义！
-
-字面意思：Develop+Operations，开发运维一体化
-深层次含义：DevOps集文化理念、实践和工具于一身。可以提高组织交付应用程序和服务的能力。与使用传统软件和基
+                            Linux下前端构建问题–cjpeg: /lib64/libz.so.1: version `ZLIB_1.2.9’ not found问题日志前端服务在jenkins中进行构建，而jenkins部署在CentOS 7.9上，在服务进行编译
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-03-27
+                            </span>
                         <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/DevOps/" class="post-category" target="_blank">
-                                    DevOps
-                                </a>
-                            
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/DevOps/" target="_blank">
-                        <span class="chip bg-color">DevOps</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -1095,60 +1056,29 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/05/kai-yuan-xiang-mu-yan-jiu-dui-bi/">
+                <a href="/2022/02/24/yi-ci-nei-cun-xie-lu-de-wen-ti-pai-cha/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="开源项目研究对比">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="一次内存泄露的问题排查">
                         
-                        <span class="card-title">开源项目研究对比</span>
+                        <span class="card-title">一次内存泄露的问题排查</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            当前已封装的微服务框架对比开发层面–微服务架构1. 项目基本信息
-
-
-名称
-地址
-star数
-最近维护日期
-是否可演示
-演示地址
-技术栈
-issue总数
-issue解决数
-开源协议
-
-
-
-zhangxd1989/spring-boot-cl
+                            一次JVM内存泄露的问题排查问题描述在甲方的测试环境中，莫名其妙的出现了服务掉线的情况，具体表现为服务突然从nacos下线了，有时能重新上线，有时不能。另外伴随内存突然升高，服务卡顿的现象。目前的测试收到了比较大的影响，因此进行了相应的排查
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-02-24
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Java/" class="post-category" target="_blank">
-                                    Java
-                                </a>
-                            
-                            
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Java-SpringCloud-微服务/" target="_blank">
-                        <span class="chip bg-color">Java SpringCloud 微服务</span>
-                    </a>
-                    
                 </div>
                 
             </div>
