@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-03-27T02:40:07.077Z</updated>
+  <updated>2022-04-02T07:06:17.379Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于某项目k8s环境下前端访问后端服务的问题说明</title>
+    <link href="https://JamesLiAndroid.github.io/2022/04/02/guan-yu-mou-xiang-mu-k8s-huan-jing-xia-qian-duan-fang-wen-hou-duan-fu-wu-de-wen-ti-shuo-ming/"/>
+    <id>https://JamesLiAndroid.github.io/2022/04/02/guan-yu-mou-xiang-mu-k8s-huan-jing-xia-qian-duan-fang-wen-hou-duan-fu-wu-de-wen-ti-shuo-ming/</id>
+    <published>2022-04-02T07:04:21.000Z</published>
+    <updated>2022-04-02T07:06:17.379Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于某项目k8s环境下前端访问后端服务的问题说明&quot;&gt;&lt;a href=&quot;#关于某项目k8s环境下前端访问后端服务的问题说明&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于某项目k8s下网络问题排查的方法说明</title>
+    <link href="https://JamesLiAndroid.github.io/2022/04/02/guan-yu-mou-xiang-mu-k8s-xia-wang-luo-wen-ti-pai-cha-de-fang-fa-shuo-ming/"/>
+    <id>https://JamesLiAndroid.github.io/2022/04/02/guan-yu-mou-xiang-mu-k8s-xia-wang-luo-wen-ti-pai-cha-de-fang-fa-shuo-ming/</id>
+    <published>2022-04-02T07:01:08.000Z</published>
+    <updated>2022-04-02T07:03:23.555Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;关于某项目k8s下网络问题排查记录&quot;&gt;&lt;a href=&quot;#关于某项目k8s下网络问题排查记录&quot; class=&quot;headerlink&quot; title=&quot;关于某项目k8s下网络问题排查记录&quot;&gt;&lt;/a&gt;关于某项目k8s下网络问题排查记录&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Linux下前端构建问题--cjpeg: /lib64/libz.so.1: version ZLIB_1.2.9&#39; not found</title>
@@ -406,51 +450,6 @@
         
         
           &lt;h1 id=&quot;k8s-1-20-5-二进制安装教程&quot;&gt;&lt;a href=&quot;#k8s-1-20-5-二进制安装教程&quot; class=&quot;headerlink&quot; title=&quot;k8s 1.20.5 二进制安装教程&quot;&gt;&lt;/a&gt;k8s 1.20.5 二进制安装教程&lt;/h1&gt;&lt;h2
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>k8s一阶段学习记录</title>
-    <link href="https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/"/>
-    <id>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</id>
-    <published>2021-03-19T07:42:08.000Z</published>
-    <updated>2022-03-01T08:45:17.117Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;k8s学习&lt;/p&gt;
-&lt;h2 id=&quot;第一章-kubeadm方式安装k8s集群&quot;&gt;&lt;a href=&quot;#第一章-kubeadm方式安装k8s集群&quot; class=&quot;headerlink&quot; title=&quot;第一章 kubeadm方式安装k8s集群&quot;&gt;&lt;/a&gt;第一章
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>全链路灰度发布实践</title>
-    <link href="https://JamesLiAndroid.github.io/2021/03/06/quan-lian-lu-hui-du-fa-bu-shi-jian/"/>
-    <id>https://JamesLiAndroid.github.io/2021/03/06/quan-lian-lu-hui-du-fa-bu-shi-jian/</id>
-    <published>2021-03-06T05:24:53.000Z</published>
-    <updated>2021-03-06T05:29:40.468Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;全链路灰度发布方案&quot;&gt;&lt;a href=&quot;#全链路灰度发布方案&quot; class=&quot;headerlink&quot; title=&quot;全链路灰度发布方案&quot;&gt;&lt;/a&gt;全链路灰度发布方案&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
         
       
     
