@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://JamesLiAndroid.github.io/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/</loc>
+    <lastmod>2022-04-17</lastmod>
+  </url>  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</loc>
+    <lastmod>2022-04-03</lastmod>
+  </url>  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
+    <lastmod>2022-04-02</lastmod>
+  </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2022/04/02/guan-yu-mou-xiang-mu-k8s-huan-jing-xia-qian-duan-fang-wen-hou-duan-fu-wu-de-wen-ti-shuo-ming/</loc>
     <lastmod>2022-04-02</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2022/04/02/guan-yu-mou-xiang-mu-k8s-xia-wang-luo-wen-ti-pai-cha-de-fang-fa-shuo-ming/</loc>
     <lastmod>2022-04-02</lastmod>
-  </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</loc>
-    <lastmod>2022-03-27</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2022/03/27/linux-xia-qian-duan-gou-jian-wen-ti-cjpeg-lib64-libz-so-1-version-zlib-1-2-9-not-found/</loc>
     <lastmod>2022-03-27</lastmod>
@@ -18,9 +24,6 @@
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2022/02/24/yi-ci-nei-cun-xie-lu-de-wen-ti-pai-cha/</loc>
     <lastmod>2022-03-07</lastmod>
-  </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
-    <lastmod>2022-03-01</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2022/02/08/gitlab-ban-ben-sheng-ji-shi-li/</loc>
     <lastmod>2022-02-08</lastmod>
@@ -133,19 +136,19 @@
     <loc>https://JamesLiAndroid.github.io/2020/08/03/qian-duan-wei-fu-wu-zai-jenkins-xia-de-gou-jian-gai-zao/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/09/gitlab-qian-yi-he-zhuan-ru-cao-zuo-ji-lu/</loc>

@@ -4,16 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="《架构真经》读书笔记, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="keywords" content="前端构建内存限制问题, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="《架构真经》读书心得50条可扩展性规则前提
-拒绝教条，灵活运用
-结合实际，适用于当前环境，并且可稍稍向前走一点
-有所为有所不为，把握实施的关键节点
-批判继承，结合当前国内的互联网环境，结合公司目前所处位置以及所能调动的资源
-符合自己当前的需">
+    <meta name="description" content="前端构建内存限制问题解决问题说明前端项目将代码同步到甲方之后，触发流水线构建，流水线命令如下：
+# 设置淘宝镜像代理
+pnpm config set registry https://registry.npm.taobao.org
+
+# 脚">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>《架构真经》读书笔记 | 时代与猫的脚步</title>
+    <title>前端构建内存限制问题 | 时代与猫的脚步</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -295,13 +294,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        《架构真经》读书笔记
+                        前端构建内存限制问题
                     </div>
                 </div>
             </div>
@@ -411,24 +410,11 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/读书心得/" target="_blank">
-                            <span class="chip bg-color">读书心得</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/READ/" class="post-category" target="_blank">
-                            READ
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -436,7 +422,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-06-02
+                    2022-04-17
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -450,14 +436,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.1k
+                    1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    4 分
                 </div>
                 
                 
@@ -468,126 +454,125 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="《架构真经》读书心得"><a href="#《架构真经》读书心得" class="headerlink" title="《架构真经》读书心得"></a>《架构真经》读书心得</h1><h2 id="50条可扩展性规则"><a href="#50条可扩展性规则" class="headerlink" title="50条可扩展性规则"></a>50条可扩展性规则</h2><h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><ol>
-<li>拒绝教条，灵活运用</li>
-<li>结合实际，适用于当前环境，并且可稍稍向前走一点</li>
-<li>有所为有所不为，把握实施的关键节点</li>
-<li>批判继承，结合当前国内的互联网环境，结合公司目前所处位置以及所能调动的资源</li>
-<li>符合自己当前的需求，符合当前公司、项目的需求</li>
+                <h1 id="前端构建内存限制问题解决"><a href="#前端构建内存限制问题解决" class="headerlink" title="前端构建内存限制问题解决"></a>前端构建内存限制问题解决</h1><h2 id="问题说明"><a href="#问题说明" class="headerlink" title="问题说明"></a>问题说明</h2><p>前端项目将代码同步到甲方之后，触发流水线构建，流水线命令如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell"># 设置淘宝镜像代理
+pnpm config set registry https://registry.npm.taobao.org
+
+# 脚本目录为代码库根目录
+# ./build.sh
+node -v && npm -v
+# ls -l
+# 删除lock文件
+rm -rf pnpm-lock.yaml
+#pnpm install
+#pnpm run build
+# 依赖安装
+pnpm i --verbose --no-frozen-lockfile
+# 项目编译打包
+pnpm vite:build --verbose
+ls 
+echo "build successful"
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>触发构建后，构建日志如下：</p>
+<pre class="line-numbers language-log"><code class="language-log">
+<--- Last few GCs --->
+[142:0x464f8e0]    36725 ms: Mark-sweep (reduce) 2039.1 (2053.7) -> 2038.7 (2054.7) MB, 2129.8 / 0.0 ms  (average mu = 0.125, current mu = 0.002) allocation failure scavenge might not succeed
+[142:0x464f8e0]    39759 ms: Mark-sweep (reduce) 2039.9 (2051.7) -> 2039.6 (2052.7) MB, 3029.8 / 0.0 ms  (average mu = 0.056, current mu = 0.001) allocation failure scavenge might not succeed
+<--- JS stacktrace --->
+FATAL ERROR: MarkCompactCollector: young object promotion failed Allocation failed - JavaScript heap out of memory
+ 1: 0xa03530 node::Abort() [node]
+ 2: 0x94e471 node::FatalError(char const*, char const*) [node]
+ 3: 0xb7773e v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [node]
+ 4: 0xb77ab7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [node]
+ 5: 0xd32345  [node]
+ 6: 0xd62ede v8::internal::EvacuateNewSpaceVisitor::Visit(v8::internal::HeapObject, int) [node]
+ 7: 0xd6ef16 v8::internal::FullEvacuator::RawEvacuatePage(v8::internal::MemoryChunk*, long*) [node]
+ 8: 0xd5b0ff v8::internal::Evacuator::EvacuatePage(v8::internal::MemoryChunk*) [node]
+ 9: 0xd5b378 v8::internal::PageEvacuationTask::RunInParallel(v8::internal::ItemParallelJob::Task::Runner) [node]
+10: 0xd4dc59 v8::internal::ItemParallelJob::Run() [node]
+11: 0xd70e70 void v8::internal::MarkCompactCollectorBase::CreateAndExecuteEvacuationTasks<v8::internal::FullEvacuator, v8::internal::MarkCompactCollector>(v8::internal::MarkCompactCollector*, v8::internal::ItemParallelJob*, v8::internal::MigrationObserver*, long) [node]
+12: 0xd7170c v8::internal::MarkCompactCollector::EvacuatePagesInParallel() [node]
+13: 0xd718d5 v8::internal::MarkCompactCollector::Evacuate() [node]
+14: 0xd838c1 v8::internal::MarkCompactCollector::CollectGarbage() [node]
+15: 0xd3fbe8 v8::internal::Heap::MarkCompact() [node]
+16: 0xd416d8 v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [node]
+17: 0xd44b1c v8::internal::Heap::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [node]
+18: 0xd131fb v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType, v8::internal::AllocationOrigin) [node]
+19: 0x105919f v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [node]
+20: 0x13ff179  [node]
+Aborted (core dumped)
+ ERROR  Command failed with exit code 134.
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在公司环境中并未能复现上述的问题，因为我们自己使用的jenkins构建工具并未运行在容器中，而且配置比较高，前后端都在用，另外就是公司前端人员在开发机上也未能复现这个问题。而甲方层面使用的构建平台属于自己购买的产品，使用k8s进行构建任务调度。目前从日志上判断，单个pod给了大概2G内存用于构建任务，这样导致了out of memory的问题。</p>
+<h2 id="构建命令调整"><a href="#构建命令调整" class="headerlink" title="构建命令调整"></a>构建命令调整</h2><p>为了解决上述问题，就是对构建命令进行调整，根据能查到的最为公开的解决方案，首先尝试设置环境变量，对内存进行限制，如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+...
+
+# 添加降内存的环境变量
+export NODE_OPTIONS='--max_old_space_size=1536'
+
+# 依赖安装
+pnpm i --verbose --no-frozen-lockfile
+
+...
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>参考自<a href="https://github.com/vitejs/vite/issues/2433#issuecomment-831399876" target="_blank" rel="noopener">这个链接</a>进行的修改，显然无法使用！</p>
+<p>其次就是安装内存限制工具了，调整如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+...
+
+# 安装降内存工具
+npm install increase-memory-limit cross-env -g
+# 执行命令
+npm run fix-memory-limit
+
+# 添加降内存的环境变量
+# export NODE_OPTIONS='--max_old_space_size=1536'
+
+# 依赖安装
+pnpm i --verbose --no-frozen-lockfile
+
+...
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>除了调整shell之外，还需要调整package.json文件，添加一条命令，如下：</p>
+<pre class="line-numbers language-package.json"><code class="language-package.json">
+{
+  "name": "ant-design",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    ...
+    "fix-memory-limit": "cross-env LIMIT=1536 increase-memory-limit"
+    ...
+  },
+
+...
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>添加**”fix-memory-limit”: “cross-env LIMIT=1536 increase-memory-limit”<em>到</em>scripts*下，使用npm执行这个操作。</p>
+<p>重新打包验证还是不行。</p>
+<h2 id="最终解决方式"><a href="#最终解决方式" class="headerlink" title="最终解决方式"></a>最终解决方式</h2><p>最后参考<a href>这个链接</a>，重新调整构建，package.json中添加**”fix-memory-limit”: “cross-env LIMIT=1536 increase-memory-limit”<em>到</em>scripts*下之后，对构建命令里面进行调整如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+...
+
+# 安装降内存工具
+npm install increase-memory-limit-fixbug cross-env -g
+# 执行命令
+npm run fix-memory-limit
+
+# 添加降内存的环境变量
+# export NODE_OPTIONS='--max_old_space_size=1536'
+
+# 依赖安装
+pnpm i --verbose --no-frozen-lockfile
+
+...
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意，安装时一定安装的是fixbug的版本，否则会像我之前那样不生效。但是我并未在github上找到这个fixbug的源码，还是略有不放心！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>npm更换为pnpm我想应该问题也不大。</li>
+<li>由于nodejs在执行js时候，内存受到v8限制，导致出现了Javascript heap out of memory问题。限制内存原因是垃圾回收时，js线程会暂停执行，大量的堆内存回收严重影响性能。</li>
 </ol>
-<h3 id="大道至简"><a href="#大道至简" class="headerlink" title="大道至简"></a>大道至简</h3><h4 id="避免过度设计"><a href="#避免过度设计" class="headerlink" title="避免过度设计"></a>避免过度设计</h4><p>警惕复杂的解决方案</p>
-<h4 id="2-DID方法"><a href="#2-DID方法" class="headerlink" title="2. DID方法"></a>2. DID方法</h4><ul>
-<li>D - Design 设计20倍容量</li>
-<li>I - Implement 实施3倍容量</li>
-<li>D - Deploy 部署1.5倍容量</li>
-</ul>
-<p>要注意的是，避免过度设计！我认为在这个位置，如果一个公司是初期技术形态，亟待创立自己的技术体系，可以先按照<strong>3-2-1</strong>模式走。如果是相对成熟的公司，可以按照DID方法考虑实施。</p>
-<h4 id="3-三次简化方案"><a href="#3-三次简化方案" class="headerlink" title="3. 三次简化方案"></a>3. 三次简化方案</h4><ul>
-<li>项目范围： 帕累托原则（2-8原则）简化范围</li>
-<li>设计：考虑成本优化和可扩展性来简化设计</li>
-<li>实施：依靠其他人经验来简化部署</li>
-</ul>
-<p>80%的收益来自20%的工作，确定核心业务所在边界，是非常重要的。例如，在之前的某养车项目中，其核心业务应该是车辆保养，那么应该强化车辆保养业务在项目中的地位，削弱或者降低洗车、维修、保险这样的非核心业务的优先级。并且根据保养业务需求，简化保养流程设计，并快速实施！</p>
-<h4 id="4-减少域名解析"><a href="#4-减少域名解析" class="headerlink" title="4. 减少域名解析"></a>4. 减少域名解析</h4><p>尽量将所有对象加载放在同一个域名内。这点要批判性的看，第一就是CDN的作用，第二个就是如果这样操作是否会造成负载过大的情况。需要集体评审决定。</p>
-<h4 id="5-减少页面目标"><a href="#5-减少页面目标" class="headerlink" title="5. 减少页面目标"></a>5. 减少页面目标</h4><ul>
-<li>减少或合并对象，但要平衡最大并发连接数。</li>
-<li>寻找机会减轻对象的重量</li>
-<li>不断测试确保性能提升</li>
-</ul>
-<p>无法一蹴而就的行动，需要反复测试，在易用性、可用性、性能之间做平衡。</p>
-<h4 id="6-采用同构网络"><a href="#6-采用同构网络" class="headerlink" title="6. 采用同构网络"></a>6. 采用同构网络</h4><p>这点的化，基本上在国内云主机厂商中，用一家不混用一般是可以的。</p>
-<h3 id="分而治之–AKF扩展立方体-三轴扩展"><a href="#分而治之–AKF扩展立方体-三轴扩展" class="headerlink" title="分而治之–AKF扩展立方体+三轴扩展"></a>分而治之–AKF扩展立方体+三轴扩展</h3><p><img src="AKF%E7%AB%8B%E6%96%B9%E4%BD%93.png" alt></p>
-<p><img src="%E4%B8%89%E8%BD%B4%E6%89%A9%E5%B1%95.png" alt></p>
-<h4 id="7-X轴扩展"><a href="#7-X轴扩展" class="headerlink" title="7. X轴扩展"></a>7. X轴扩展</h4><p>其核心是<strong>水平复制</strong>，例如数据库架构中的一写多读，以复制数据和功能为代价获得事务的快速扩展。</p>
-<h4 id="8-Y轴拆分"><a href="#8-Y轴拆分" class="headerlink" title="8. Y轴拆分"></a>8. Y轴拆分</h4><p>其核心是<strong>服务或者资源的拆分</strong>，沿动词（服务）拆分，沿名词（资源或者数据）拆分，或者是沿着动词/名词的边界拆分服务和数据。</p>
-<h4 id="9-Z轴拆分"><a href="#9-Z轴拆分" class="headerlink" title="9. Z轴拆分"></a>9. Z轴拆分</h4><p>其核心是<strong>分片、分组、分块</strong>，例如基于用户群属性，将数据库拆分为学生、工人、白领、农民四个层次，在此基础上，将服务进行这四个维度的拆分，调整数据库大小和读写策略。<br>总结就是通过克隆扩展（X轴），通过拆分不同的东西扩展（Y轴），通过拆分类似的东西来扩展（Z轴）。</p>
-<h3 id="水平扩展"><a href="#水平扩展" class="headerlink" title="水平扩展"></a>水平扩展</h3><h4 id="10-向外扩展"><a href="#10-向外扩展" class="headerlink" title="10. 向外扩展"></a>10. 向外扩展</h4><p>横向拆分数据库和事务。对应于<em>向上扩展</em>，购买更强的硬件配置实现。我认为，向上扩展可以结合当前云服务商的弹性伸缩功能去用，不要一棒子打死！</p>
-<h4 id="11-商品化系统"><a href="#11-商品化系统" class="headerlink" title="11. 商品化系统"></a>11. 商品化系统</h4><p>阿里的去IOE行为，抛弃大型、特定的硬件，转而使用小型廉价灵活的系统，这样适合于快速调整，也有利于人员成本降低。</p>
-<h4 id="12-托管方案扩展"><a href="#12-托管方案扩展" class="headerlink" title="12. 托管方案扩展"></a>12. 托管方案扩展</h4><p>核心是三数据中心配置：</p>
-<p><img src="%E4%B8%89%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E9%85%8D%E7%BD%AE.png" alt></p>
-<p><img src="%E5%A4%9A%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E6%88%90%E6%9C%AC%E6%AF%94%E8%BE%831.png" alt></p>
-<p><img src="%E5%A4%9A%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E6%88%90%E6%9C%AC%E6%AF%94%E8%BE%832.png" alt></p>
-<p>结合我们的AKF立方体进行拆分，在不同数据中心做不同的配置。对比冷-热双活数据库配置，这样是极好的。</p>
-<h4 id="13-利用云"><a href="#13-利用云" class="headerlink" title="13. 利用云"></a>13. 利用云</h4><p>可以将三数据中心的一个数据中心，上云。利用云服务的弹性伸缩功能，灵活扩展，应对突发需求。但是上云也要注意数据安全！</p>
-<h3 id="工欲善其事，必先利其器"><a href="#工欲善其事，必先利其器" class="headerlink" title="工欲善其事，必先利其器"></a>工欲善其事，必先利其器</h3><p>马斯洛的锤子理论：如果你手里拿着一把锤子，看什么就都会像钉子。不要妄图“一招鲜，吃遍天”。</p>
-<h4 id="14-适当使用数据库"><a href="#14-适当使用数据库" class="headerlink" title="14. 适当使用数据库"></a>14. 适当使用数据库</h4><p>关系型和非关系型数据库结合使用。NoSQL划分为Key-Value和File两种，强调利用各自优势！</p>
-<p><img src="%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%B9%E6%A1%88%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B.png" alt></p>
-<h4 id="15-慎重使用防火墙"><a href="#15-慎重使用防火墙" class="headerlink" title="15. 慎重使用防火墙"></a>15. 慎重使用防火墙</h4><p>只对核心业务以及安全性要求高的业务使用，例如：支付流程、用户信息等。</p>
-<h4 id="16-积极使用日志文件"><a href="#16-积极使用日志文件" class="headerlink" title="16. 积极使用日志文件"></a>16. 积极使用日志文件</h4><p>通过日志信息诊断和预防问题，也可以进行事故现场复原分析。利用InfluxDB+Grafana进行监控也是极好的。<br>但是日志是有代价的，比如：运行状态变慢、过多日志带来的额外数据成本等。</p>
-<ul>
-<li>总结<br>引入每项新技术，都需要另外一种技能来支持。尽管工作中使用合适的工具很重要，但是不要过度强调专业化，以至于没有足够深度的技能来支持。先用，有了问题再去解决和攻关，用的时候胆大心细即可。</li>
-</ul>
-<h3 id="画龙点睛"><a href="#画龙点睛" class="headerlink" title="画龙点睛"></a>画龙点睛</h3><h4 id="17-避免画蛇添足"><a href="#17-避免画蛇添足" class="headerlink" title="17. 避免画蛇添足"></a>17. 避免画蛇添足</h4><p>永远不要为确认操作是否有效而读取刚刚写入的数据。同样的，扩展一下，减少在创建数据的时候重复去查询已有的数据。</p>
-<h4 id="18-停止重定向"><a href="#18-停止重定向" class="headerlink" title="18. 停止重定向"></a>18. 停止重定向</h4><h4 id="19-放宽时间约束–针对数据库事务"><a href="#19-放宽时间约束–针对数据库事务" class="headerlink" title="19. 放宽时间约束–针对数据库事务"></a>19. 放宽时间约束–针对数据库事务</h4><p>CAP原则：</p>
-<p>Consistency- 一致性<br>Availability- 可用性<br>Partition tolerance- 分区容错性</p>
-<p>解决方案-BASE：</p>
-<p>Basically Available - 基本可用<br>Soft state - 软状态<br>Eventually consistent - 最终一致性</p>
-<h3 id="缓存为王"><a href="#缓存为王" class="headerlink" title="缓存为王"></a>缓存为王</h3><h4 id="20-利用CDN缓存"><a href="#20-利用CDN缓存" class="headerlink" title="20. 利用CDN缓存"></a>20. 利用CDN缓存</h4><p>针对静态资源获取，减少动态生成js文件，减轻服务器压力。要结合前后端分离做！<br>向上添加边缘加速服务，提升访问速度。</p>
-<h4 id="21-灵活管理缓存"><a href="#21-灵活管理缓存" class="headerlink" title="21. 灵活管理缓存"></a>21. 灵活管理缓存</h4><p>使用Expires头和Cache-Control头来减少请求量。</p>
-<h4 id="22-利用Ajax缓存"><a href="#22-利用Ajax缓存" class="headerlink" title="22. 利用Ajax缓存"></a>22. 利用Ajax缓存</h4><p>适当调整实时性要求不高的请求接口进行缓存，适当调整Last-Modified、Cache-Control、Expires头。核心目标是减少在网络上来回传输数据，减少用户感知的响应时间和降低服务器负载！</p>
-<h4 id="23-利用页面缓存"><a href="#23-利用页面缓存" class="headerlink" title="23. 利用页面缓存"></a>23. 利用页面缓存</h4><p>例如Nginx中针对静态文件的缓存。要实施页面缓存，使用适当的http头，尽可能包括RFC2616中另外的HTTP头。</p>
-<h4 id="24-利用应用缓存"><a href="#24-利用应用缓存" class="headerlink" title="24. 利用应用缓存"></a>24. 利用应用缓存</h4><p>确定可能使用的情况，根据AFK立方体进行拆分。</p>
-<h4 id="25-利用对象缓存"><a href="#25-利用对象缓存" class="headerlink" title="25. 利用对象缓存"></a>25. 利用对象缓存</h4><p>Redis、Memcached，确定使用哪种类型的对象缓存，在数据库和应用层之间实施。最后需要监控缓存命中率，及时调整负载。</p>
-<h4 id="26-独立对象缓存"><a href="#26-独立对象缓存" class="headerlink" title="26. 独立对象缓存"></a>26. 独立对象缓存</h4><p>缓存层的建设和划分，单独作为一层进行建设。</p>
-<h3 id="前车之鉴"><a href="#前车之鉴" class="headerlink" title="前车之鉴"></a>前车之鉴</h3><h4 id="27-失败乃成功之母"><a href="#27-失败乃成功之母" class="headerlink" title="27. 失败乃成功之母"></a>27. 失败乃成功之母</h4><p>抓住每个机会，尤其是失败的机会，学习经验并吸取教训。犯错不可怕，从错误中学习和进步才是重要的。创建学习型团队，应对业务的不断增长！例如，针对华为项目的特殊要求，我们对当前单体应用支持逐步扩展，满足其业务需求，也对于我们自身下一步的成长打下基础！</p>
-<ul>
-<li>关注失败</li>
-<li>拒绝简化解释</li>
-<li>对操作的敏感性</li>
-<li>坚守弹性承诺</li>
-<li>尊重专业经验</li>
-</ul>
-<h4 id="28-不靠QA发现错误"><a href="#28-不靠QA发现错误" class="headerlink" title="28. 不靠QA发现错误"></a>28. 不靠QA发现错误</h4><p>交付QA时，尽量保证自己的代码测试到位！通过QA去认识问题缺陷，更好的学习！</p>
-<h4 id="29-不能回滚注定失败"><a href="#29-不能回滚注定失败" class="headerlink" title="29. 不能回滚注定失败"></a>29. 不能回滚注定失败</h4><p>代码的版本控制。<br>数据库文件的版本控制，针对数据修改时：</p>
-<ul>
-<li>数据库结构的变更仅可以增加</li>
-<li>数据库变更脚本化并经过测试</li>
-<li>限制应用中SQL的查询的使用，尤其是：<strong>select *</strong>这样的调用</li>
-<li>数据的语义变化</li>
-<li>上线、下线可控</li>
-</ul>
-<p>产出过程可控，产物可控！例如，一个比较极端的例子，在之前的养车项目中，后端源代码丢失，导致修改时只能进行jar包反编译，添加代码后再编译打包放入服务器，由此带来的生产事故是：某次打包放入服务器的jar包有错误，修改之前未备份，导致整个服务不能工作。</p>
-<h3 id="重中之重"><a href="#重中之重" class="headerlink" title="重中之重"></a>重中之重</h3><h4 id="30-从事务中清除商务智能"><a href="#30-从事务中清除商务智能" class="headerlink" title="30. 从事务中清除商务智能"></a>30. 从事务中清除商务智能</h4><p>减少数据库里面所使用的存储过程和商业逻辑，对不同系统进行拆分和隔离。专注于重要系统的工作，拆分出占比不高或者优先级较低的业务！</p>
-<h4 id="31-注意昂贵的关系"><a href="#31-注意昂贵的关系" class="headerlink" title="31. 注意昂贵的关系"></a>31. 注意昂贵的关系</h4><p>设计数据库模型时，考虑数据库分离和未来可能的数据需求，谨慎的考虑数据库变更带来的成本问题。这一点可能需要提前设计！数据库三范式以及表查询连接。</p>
-<h4 id="32-正确使用数据库锁"><a href="#32-正确使用数据库锁" class="headerlink" title="32. 正确使用数据库锁"></a>32. 正确使用数据库锁</h4><p>选择锁类型以及如何使用，重中之重！确保最佳的解决方案！</p>
-<h4 id="33-禁用分阶段提交"><a href="#33-禁用分阶段提交" class="headerlink" title="33. 禁用分阶段提交"></a>33. 禁用分阶段提交</h4><p>两阶段和三阶段提交，锁定应用服务器太久的问题，引发超时或者无响应的反馈！</p>
-<h4 id="34-慎用Select-for-Update"><a href="#34-慎用Select-for-Update" class="headerlink" title="34. 慎用Select for Update"></a>34. 慎用Select for Update</h4><p>For update语句导致游标长期占用锁的问题，减缓事务完成时间。</p>
-<p>结合我们之前华为项目中大BOM列表加载时间问题，可以由此排查下？</p>
-<h4 id="35-避免选择所有列"><a href="#35-避免选择所有列" class="headerlink" title="35. 避免选择所有列"></a>35. 避免选择所有列</h4><p>不要在查询中使用Select *。</p>
-<h3 id="有备无患"><a href="#有备无患" class="headerlink" title="有备无患"></a>有备无患</h3><h4 id="36-用泳道隔离故障"><a href="#36-用泳道隔离故障" class="headerlink" title="36. 用泳道隔离故障"></a>36. 用泳道隔离故障</h4><p>禁止故障隔离的服务和数据间同步通信或访问。</p>
-<p>原则：</p>
-<ul>
-<li>泳道之间什么都不共享</li>
-<li>泳道之间不进行同步调用</li>
-<li>限制泳道之间的同步调用</li>
-<li>绝对必要时，如何实现跨越泳道边界的异步传输</li>
-</ul>
-<p><img src="%E6%95%85%E9%9A%9C%E9%9A%94%E7%A6%BB%E4%BC%98%E5%8A%BF.PNG" alt></p>
-<p><img src="%E6%95%85%E9%9A%9C%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99.PNG" alt></p>
-<h4 id="37-拒绝单点故障"><a href="#37-拒绝单点故障" class="headerlink" title="37. 拒绝单点故障"></a>37. 拒绝单点故障</h4><p>消除系统内的单点故障，努力实施主动/主动模式，负载均衡。单例情形下，可在主动/被动模式的实例中采用控制服务。</p>
-<h4 id="38-避免系统串联"><a href="#38-避免系统串联" class="headerlink" title="38. 避免系统串联"></a>38. 避免系统串联</h4><p>层级之间串联，层级内并联多个相同组件，可选择性。通过减少串联组件或者增加并联组件来降低风险。</p>
-<h4 id="39-启用与禁用功能"><a href="#39-启用与禁用功能" class="headerlink" title="39. 启用与禁用功能"></a>39. 启用与禁用功能</h4><p>可随时控制服务的上线下线。</p>
-<h3 id="超然物外"><a href="#超然物外" class="headerlink" title="超然物外"></a>超然物外</h3><h4 id="40-力求无状态"><a href="#40-力求无状态" class="headerlink" title="40. 力求无状态"></a>40. 力求无状态</h4><p>无状态系统构建，减少相互之间依赖！简单和容易更加重要！</p>
-<h4 id="41-在浏览器保存会话数据"><a href="#41-在浏览器保存会话数据" class="headerlink" title="41. 在浏览器保存会话数据"></a>41. 在浏览器保存会话数据</h4><p>如果一定是有状态的系统，尽量使用cookie来保存数据。使用SSL协议进行通信加解密，然后建议使用至少两个cookie的模式，一个是授权cookie，针对ajax请求；另一个，是普通cookie，请求不重要的数据时，通过不安全的HTTP传输。</p>
-<h4 id="42-用分布式缓存处理状态"><a href="#42-用分布式缓存处理状态" class="headerlink" title="42. 用分布式缓存处理状态"></a>42. 用分布式缓存处理状态</h4><p><img src="%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E7%A6%81%E5%BF%8C.png" alt></p>
-<p><img src="%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E8%80%83%E8%99%91.png" alt></p>
-<p>改造趋势从42，41，40的路线去走，切记不要一蹴而就！</p>
-<h3 id="异步通信"><a href="#异步通信" class="headerlink" title="异步通信"></a>异步通信</h3><h4 id="43-尽可能异步通信"><a href="#43-尽可能异步通信" class="headerlink" title="43. 尽可能异步通信"></a>43. 尽可能异步通信</h4><h4 id="44-扩展消息总线"><a href="#44-扩展消息总线" class="headerlink" title="44. 扩展消息总线"></a>44. 扩展消息总线</h4><p><img src="%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BFAKF%E7%AB%8B%E6%96%B9%E4%BD%93.png" alt></p>
-<p><img src="%E6%B6%88%E6%81%AF%E6%80%BB%E7%BA%BFAKF%E7%AB%8B%E6%96%B9%E4%BD%932.png" alt></p>
-<h4 id="45-避免消息总线过度拥挤"><a href="#45-避免消息总线过度拥挤" class="headerlink" title="45. 避免消息总线过度拥挤"></a>45. 避免消息总线过度拥挤</h4><p>不要发布一切消息到消息总线中，要判断消息价值几何！</p>
-<p>选择消息队列框架，需要根据需求和使用场景筛选。</p>
-<h3 id="意犹未尽"><a href="#意犹未尽" class="headerlink" title="意犹未尽"></a>意犹未尽</h3><h4 id="46-警惕第三方方案"><a href="#46-警惕第三方方案" class="headerlink" title="46. 警惕第三方方案"></a>46. 警惕第三方方案</h4><p>第三方服务慎重选择！不要过度依赖供应商的产品，要进行多地灾备！</p>
-<h4 id="47-梯形存储策略"><a href="#47-梯形存储策略" class="headerlink" title="47. 梯形存储策略"></a>47. 梯形存储策略</h4><p>将存储成本和数据价值匹配，应用RFM营销概念，即近因、频率、货币化分析！</p>
-<p><img src="RFM%E7%9A%84AKF%E7%AB%8B%E6%96%B9%E4%BD%93.png" alt></p>
-<p><img src="RFM%E7%9A%84%E4%BB%B7%E5%80%BC%E6%88%90%E6%9C%AC%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.png" alt></p>
-<h4 id="48-分类处理不同负载"><a href="#48-分类处理不同负载" class="headerlink" title="48 分类处理不同负载"></a>48 分类处理不同负载</h4><p>归纳、演绎、批处理、用户产品交互(OLTP)</p>
-<h4 id="49-完善监控"><a href="#49-完善监控" class="headerlink" title="49. 完善监控"></a>49. 完善监控</h4><p>设计监控系统，结合日志进行考虑。</p>
-<p><img src="%E7%9B%91%E6%8E%A7%E8%8C%83%E5%9B%B4%E4%B8%89%E8%A7%92%E5%BD%A2.png" alt></p>
-<h4 id="50-保持竞争力"><a href="#50-保持竞争力" class="headerlink" title="50. 保持竞争力"></a>50. 保持竞争力</h4><p>架构的每个部分都有竞争力，而且对于团队而言，补齐短板，均衡发展！</p>
-<h3 id="谋定而动"><a href="#谋定而动" class="headerlink" title="谋定而动"></a>谋定而动</h3><p><img src="%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%E9%A3%8E%E9%99%A9%E5%88%86%E6%9E%90.png" alt></p>
-<h2 id="最终思考路线图"><a href="#最终思考路线图" class="headerlink" title="最终思考路线图"></a>最终思考路线图</h2><p>整体套用AKF三角形！</p>
-<p>业务拆分-&gt;数据库优化-&gt;故障隔离-&gt;异地多活-&gt;缓存应用-&gt;存储系统-&gt;负载均衡-&gt;消息队列-&gt;前端优化-&gt;监控系统</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="%E3%80%8A%E6%9E%B6%E6%9E%84%E7%9C%9F%E7%BB%8F%E3%80%8B%E6%9C%80%E7%BB%88%E8%84%91%E5%9B%BE.png" alt></p>
 
             </div>
             <hr />
@@ -746,9 +731,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《《架构真经》读书笔记》
+                    《前端构建内存限制问题》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/06/02/jia-gou-zhen-jing-du-shu-bi-ji/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/" property="cc:attributionName"
                rel="cc:attributionURL">
                 JamesLiAndroid
             </a> 采用
@@ -1050,51 +1035,40 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/07/05/cha-jian-hua-yu-zu-jian-hua/">
+                <a href="/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="插件化与组件化">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="前端构建内存限制问题">
                         
-                        <span class="card-title">插件化与组件化</span>
+                        <span class="card-title">前端构建内存限制问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            插件化、组件化、模块化的思考——App架构从开发到构建核心参考从代码组织层面，我们可以参考这样下面的图片去进行。
+                            前端构建内存限制问题解决问题说明前端项目将代码同步到甲方之后，触发流水线构建，流水线命令如下：
+# 设置淘宝镜像代理
+pnpm config set registry https://registry.npm.taobao.org
 
-三面立体，上面作为职责划分，前面作为代码层级划分，右面作为功能划分。也就是说，可以从三个维度去思考，然后在每个维度里面，又从
+# 脚
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-04-17
+                            </span>
                         <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/移动端开发/" class="post-category" target="_blank">
-                                    移动端开发
-                                </a>
-                            
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Android-iOS-移动开发/" target="_blank">
-                        <span class="chip bg-color">Android iOS 移动开发</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -1102,53 +1076,37 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="fa fa-dot-circle-o"></i>
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/06/02/jia-gou-zhen-jing-du-shu-bi-ji/">
+                <a href="/2022/04/02/guan-yu-mou-xiang-mu-k8s-huan-jing-xia-qian-duan-fang-wen-hou-duan-fu-wu-de-wen-ti-shuo-ming/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="《架构真经》读书笔记">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="关于某项目k8s环境下前端访问后端服务的问题说明">
                         
-                        <span class="card-title">《架构真经》读书笔记</span>
+                        <span class="card-title">关于某项目k8s环境下前端访问后端服务的问题说明</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            《架构真经》读书心得50条可扩展性规则前提
-拒绝教条，灵活运用
-结合实际，适用于当前环境，并且可稍稍向前走一点
-有所为有所不为，把握实施的关键节点
-批判继承，结合当前国内的互联网环境，结合公司目前所处位置以及所能调动的资源
-符合自己当前的需
+                            关于某项目k8s环境下前端访问后端服务的问题说明问题描述在甲方项目环境中，我们部署了前端服务，k8s部署文件如下：
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-b
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-06-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-04-02
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/READ/" class="post-category" target="_blank">
-                                    READ
-                                </a>
-                            
-                            
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/读书心得/" target="_blank">
-                        <span class="chip bg-color">读书心得</span>
-                    </a>
-                    
                 </div>
                 
             </div>

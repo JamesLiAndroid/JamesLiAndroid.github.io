@@ -300,7 +300,7 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -442,14 +442,14 @@ VIP不要和内网ip地址重复，需要和主机ip在同一个局域网段内
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    32.7k
+                    34.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    157 分
+                    171 分
                 </div>
                 
                 
@@ -2814,6 +2814,700 @@ kubectl create -f service-external-endpoint.yaml
 <p>Ingress用于实现用域名的方式访问k8s的内部应用。</p>
 <p>服务发布的方式：负载均衡设施 –&gt; Ingress –&gt; Service –&gt; Deployment/Pod/DaemonSet/StatefulSet</p>
 <p>番外：什么是eBPF？</p>
+<p>2.12.2- external 使用yaml文件安装ingress</p>
+<p>备注：善用docker search命令，搜索相关的ingress镜像如下：</p>
+<pre><code>
+$ docker search ingress-nginx-controller --no-trunc
+
+$ docker search kube-webhook-certgen --no-trunc
+</code></pre><p>部署文件下载和修改如下：</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml">
+<span class="token comment" spellcheck="true">#GENERATED FOR K8S 1.20</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Namespace
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">automountServiceAccountToken</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> pre<span class="token punctuation">-</span>install<span class="token punctuation">,</span>pre<span class="token punctuation">-</span>upgrade<span class="token punctuation">,</span>post<span class="token punctuation">-</span>install<span class="token punctuation">,</span>post<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> namespaces
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> configmaps
+  <span class="token punctuation">-</span> pods
+  <span class="token punctuation">-</span> secrets
+  <span class="token punctuation">-</span> endpoints
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> services
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingresses
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingresses/status
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> update
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingressclasses
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resourceNames</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingress<span class="token punctuation">-</span>controller<span class="token punctuation">-</span>leader
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> configmaps
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> update
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> configmaps
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> create
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> events
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> create
+  <span class="token punctuation">-</span> patch
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> pre<span class="token punctuation">-</span>install<span class="token punctuation">,</span>pre<span class="token punctuation">-</span>upgrade<span class="token punctuation">,</span>post<span class="token punctuation">-</span>install<span class="token punctuation">,</span>post<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> secrets
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> create
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> configmaps
+  <span class="token punctuation">-</span> endpoints
+  <span class="token punctuation">-</span> nodes
+  <span class="token punctuation">-</span> pods
+  <span class="token punctuation">-</span> secrets
+  <span class="token punctuation">-</span> namespaces
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> nodes
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> services
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingresses
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">""</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> events
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> create
+  <span class="token punctuation">-</span> patch
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingresses/status
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> update
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> ingressclasses
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> pre<span class="token punctuation">-</span>install<span class="token punctuation">,</span>pre<span class="token punctuation">-</span>upgrade<span class="token punctuation">,</span>post<span class="token punctuation">-</span>install<span class="token punctuation">,</span>post<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> admissionregistration.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> validatingwebhookconfigurations
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> update
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> RoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> RoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> pre<span class="token punctuation">-</span>install<span class="token punctuation">,</span>pre<span class="token punctuation">-</span>upgrade<span class="token punctuation">,</span>post<span class="token punctuation">-</span>install<span class="token punctuation">,</span>post<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> pre<span class="token punctuation">-</span>install<span class="token punctuation">,</span>pre<span class="token punctuation">-</span>upgrade<span class="token punctuation">,</span>post<span class="token punctuation">-</span>install<span class="token punctuation">,</span>post<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">allow-snippet-annotations</span><span class="token punctuation">:</span> <span class="token string">"true"</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ConfigMap
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">externalTrafficPolicy</span><span class="token punctuation">:</span> Local
+  <span class="token key atrule">ipFamilies</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> IPv4
+  <span class="token key atrule">ipFamilyPolicy</span><span class="token punctuation">:</span> SingleStack
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">appProtocol</span><span class="token punctuation">:</span> http
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> http
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+    <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> http
+  <span class="token punctuation">-</span> <span class="token key atrule">appProtocol</span><span class="token punctuation">:</span> https
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> https
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">443</span>
+    <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> https
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> LoadBalancer
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller<span class="token punctuation">-</span>admission
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">appProtocol</span><span class="token punctuation">:</span> https
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> https<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">443</span>
+    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> webhook
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> ClusterIP
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">minReadySeconds</span><span class="token punctuation">:</span> <span class="token number">0</span>
+  <span class="token key atrule">revisionHistoryLimit</span><span class="token punctuation">:</span> <span class="token number">10</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+      <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+      <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+        <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">args</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> /nginx<span class="token punctuation">-</span>ingress<span class="token punctuation">-</span>controller
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>publish<span class="token punctuation">-</span>service=$(POD_NAMESPACE)/ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>election<span class="token punctuation">-</span>id=ingress<span class="token punctuation">-</span>controller<span class="token punctuation">-</span>leader
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>controller<span class="token punctuation">-</span>class=k8s.io/ingress<span class="token punctuation">-</span>nginx
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>ingress<span class="token punctuation">-</span>class=nginx
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>configmap=$(POD_NAMESPACE)/ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>validating<span class="token punctuation">-</span>webhook=<span class="token punctuation">:</span><span class="token number">8443</span>
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>validating<span class="token punctuation">-</span>webhook<span class="token punctuation">-</span>certificate=/usr/local/certificates/cert
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>validating<span class="token punctuation">-</span>webhook<span class="token punctuation">-</span>key=/usr/local/certificates/key
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> POD_NAME
+          <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span>
+            <span class="token key atrule">fieldRef</span><span class="token punctuation">:</span>
+              <span class="token key atrule">fieldPath</span><span class="token punctuation">:</span> metadata.name
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> POD_NAMESPACE
+          <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span>
+            <span class="token key atrule">fieldRef</span><span class="token punctuation">:</span>
+              <span class="token key atrule">fieldPath</span><span class="token punctuation">:</span> metadata.namespace
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> LD_PRELOAD
+          <span class="token key atrule">value</span><span class="token punctuation">:</span> /usr/local/lib/libmimalloc.so
+        <span class="token comment" spellcheck="true">#image: k8s.gcr.io/ingress-nginx/controller:v1.1.2@sha256:28b11ce69e57843de44e3db6413e98d09de0f6688e33d4bd384002a44f78405c</span>
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> willdockerhub/ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller<span class="token punctuation">:</span>v1.1.2
+        <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
+        <span class="token key atrule">lifecycle</span><span class="token punctuation">:</span>
+          <span class="token key atrule">preStop</span><span class="token punctuation">:</span>
+            <span class="token key atrule">exec</span><span class="token punctuation">:</span>
+              <span class="token key atrule">command</span><span class="token punctuation">:</span>
+              <span class="token punctuation">-</span> /wait<span class="token punctuation">-</span>shutdown
+        <span class="token key atrule">livenessProbe</span><span class="token punctuation">:</span>
+          <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">5</span>
+          <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+            <span class="token key atrule">path</span><span class="token punctuation">:</span> /healthz
+            <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">10254</span>
+            <span class="token key atrule">scheme</span><span class="token punctuation">:</span> HTTP
+          <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+          <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+          <span class="token key atrule">successThreshold</span><span class="token punctuation">:</span> <span class="token number">1</span>
+          <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> controller
+        <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">80</span>
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> http
+          <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">443</span>
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> https
+          <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">8443</span>
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> webhook
+          <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+        <span class="token key atrule">readinessProbe</span><span class="token punctuation">:</span>
+          <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">3</span>
+          <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+            <span class="token key atrule">path</span><span class="token punctuation">:</span> /healthz
+            <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">10254</span>
+            <span class="token key atrule">scheme</span><span class="token punctuation">:</span> HTTP
+          <span class="token key atrule">initialDelaySeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+          <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+          <span class="token key atrule">successThreshold</span><span class="token punctuation">:</span> <span class="token number">1</span>
+          <span class="token key atrule">timeoutSeconds</span><span class="token punctuation">:</span> <span class="token number">1</span>
+        <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+          <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+            <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 100m
+            <span class="token key atrule">memory</span><span class="token punctuation">:</span> 90Mi
+        <span class="token key atrule">securityContext</span><span class="token punctuation">:</span>
+          <span class="token key atrule">allowPrivilegeEscalation</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+          <span class="token key atrule">capabilities</span><span class="token punctuation">:</span>
+            <span class="token key atrule">add</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> NET_BIND_SERVICE
+            <span class="token key atrule">drop</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> ALL
+          <span class="token key atrule">runAsUser</span><span class="token punctuation">:</span> <span class="token number">101</span>
+        <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /usr/local/certificates/
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> webhook<span class="token punctuation">-</span>cert
+          <span class="token key atrule">readOnly</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">dnsPolicy</span><span class="token punctuation">:</span> ClusterFirst
+      <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span>
+        <span class="token key atrule">kubernetes.io/os</span><span class="token punctuation">:</span> linux
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+      <span class="token key atrule">terminationGracePeriodSeconds</span><span class="token punctuation">:</span> <span class="token number">300</span>
+      <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> webhook<span class="token punctuation">-</span>cert
+        <span class="token key atrule">secret</span><span class="token punctuation">:</span>
+          <span class="token key atrule">secretName</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> batch/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Job
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> pre<span class="token punctuation">-</span>install<span class="token punctuation">,</span>pre<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission<span class="token punctuation">-</span>create
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+        <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+        <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+        <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission<span class="token punctuation">-</span>create
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">args</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> create
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>host=ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller<span class="token punctuation">-</span>admission<span class="token punctuation">,</span>ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller<span class="token punctuation">-</span>admission.$(POD_NAMESPACE).svc
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>namespace=$(POD_NAMESPACE)
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>secret<span class="token punctuation">-</span>name=ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> POD_NAMESPACE
+          <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span>
+            <span class="token key atrule">fieldRef</span><span class="token punctuation">:</span>
+              <span class="token key atrule">fieldPath</span><span class="token punctuation">:</span> metadata.namespace
+        <span class="token comment" spellcheck="true">#image: k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1@sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660</span>
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> jettech/kube<span class="token punctuation">-</span>webhook<span class="token punctuation">-</span>certgen<span class="token punctuation">:</span>v1.1.1
+        <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> create
+        <span class="token key atrule">securityContext</span><span class="token punctuation">:</span>
+          <span class="token key atrule">allowPrivilegeEscalation</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span>
+        <span class="token key atrule">kubernetes.io/os</span><span class="token punctuation">:</span> linux
+      <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> OnFailure
+      <span class="token key atrule">securityContext</span><span class="token punctuation">:</span>
+        <span class="token key atrule">fsGroup</span><span class="token punctuation">:</span> <span class="token number">2000</span>
+        <span class="token key atrule">runAsNonRoot</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">runAsUser</span><span class="token punctuation">:</span> <span class="token number">2000</span>
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> batch/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Job
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">helm.sh/hook</span><span class="token punctuation">:</span> post<span class="token punctuation">-</span>install<span class="token punctuation">,</span>post<span class="token punctuation">-</span>upgrade
+    <span class="token key atrule">helm.sh/hook-delete-policy</span><span class="token punctuation">:</span> before<span class="token punctuation">-</span>hook<span class="token punctuation">-</span>creation<span class="token punctuation">,</span>hook<span class="token punctuation">-</span>succeeded
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission<span class="token punctuation">-</span>patch
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+        <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+        <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+        <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+        <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission<span class="token punctuation">-</span>patch
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">args</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> patch
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>webhook<span class="token punctuation">-</span>name=ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>namespace=$(POD_NAMESPACE)
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>patch<span class="token punctuation">-</span>mutating=false
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>secret<span class="token punctuation">-</span>name=ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>patch<span class="token punctuation">-</span>failure<span class="token punctuation">-</span>policy=Fail
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> POD_NAMESPACE
+          <span class="token key atrule">valueFrom</span><span class="token punctuation">:</span>
+            <span class="token key atrule">fieldRef</span><span class="token punctuation">:</span>
+              <span class="token key atrule">fieldPath</span><span class="token punctuation">:</span> metadata.namespace
+        <span class="token comment" spellcheck="true">#image: k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1@sha256:64d8c73dca984af206adf9d6d7e46aa550362b1d7a01f3a0a91b20cc67868660</span>
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> jettech/kube<span class="token punctuation">-</span>webhook<span class="token punctuation">-</span>certgen<span class="token punctuation">:</span>v1.1.1
+        <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> patch
+        <span class="token key atrule">securityContext</span><span class="token punctuation">:</span>
+          <span class="token key atrule">allowPrivilegeEscalation</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span>
+        <span class="token key atrule">kubernetes.io/os</span><span class="token punctuation">:</span> linux
+      <span class="token key atrule">restartPolicy</span><span class="token punctuation">:</span> OnFailure
+      <span class="token key atrule">securityContext</span><span class="token punctuation">:</span>
+        <span class="token key atrule">fsGroup</span><span class="token punctuation">:</span> <span class="token number">2000</span>
+        <span class="token key atrule">runAsNonRoot</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">runAsUser</span><span class="token punctuation">:</span> <span class="token number">2000</span>
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> IngressClass
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> controller
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nginx
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">controller</span><span class="token punctuation">:</span> k8s.io/ingress<span class="token punctuation">-</span>nginx
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> admissionregistration.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ValidatingWebhookConfiguration
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/component</span><span class="token punctuation">:</span> admission<span class="token punctuation">-</span>webhook
+    <span class="token key atrule">app.kubernetes.io/instance</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/managed-by</span><span class="token punctuation">:</span> Helm
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/part-of</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+    <span class="token key atrule">app.kubernetes.io/version</span><span class="token punctuation">:</span> 1.1.2
+    <span class="token key atrule">helm.sh/chart</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>4.0.18
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>admission
+<span class="token key atrule">webhooks</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">admissionReviewVersions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> v1
+  <span class="token key atrule">clientConfig</span><span class="token punctuation">:</span>
+    <span class="token key atrule">service</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx<span class="token punctuation">-</span>controller<span class="token punctuation">-</span>admission
+      <span class="token key atrule">namespace</span><span class="token punctuation">:</span> ingress<span class="token punctuation">-</span>nginx
+      <span class="token key atrule">path</span><span class="token punctuation">:</span> /networking/v1/ingresses
+  <span class="token key atrule">failurePolicy</span><span class="token punctuation">:</span> Fail
+  <span class="token key atrule">matchPolicy</span><span class="token punctuation">:</span> Equivalent
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> validate.nginx.ingress.kubernetes.io
+  <span class="token key atrule">rules</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> networking.k8s.io
+    <span class="token key atrule">apiVersions</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> v1
+    <span class="token key atrule">operations</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> CREATE
+    <span class="token punctuation">-</span> UPDATE
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> ingresses
+  <span class="token key atrule">sideEffects</span><span class="token punctuation">:</span> None
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>2.12.2 helm安装Ingress</p>
 <p>安装helm3：</p>
 <pre><code>// 下载helm 3.5.0 的压缩包
@@ -5670,7 +6364,7 @@ spec:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="k8s 1.20.5 二进制安装教程">
                         
                         <span class="card-title">k8s 1.20.5 二进制安装教程</span>
                     </div>
@@ -5710,7 +6404,7 @@ spec:
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="全链路灰度发布实践">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="全链路灰度发布实践">
                         
                         <span class="card-title">全链路灰度发布实践</span>
                     </div>
@@ -5889,7 +6583,7 @@ spec:
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">299.1k</span>
+            <span class="white-color">302.5k</span>
             
 
             <br>

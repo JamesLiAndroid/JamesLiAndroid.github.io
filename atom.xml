@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-04-02T07:06:17.379Z</updated>
+  <updated>2022-04-17T02:24:23.287Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端构建内存限制问题</title>
+    <link href="https://JamesLiAndroid.github.io/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/"/>
+    <id>https://JamesLiAndroid.github.io/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/</id>
+    <published>2022-04-17T01:53:53.000Z</published>
+    <updated>2022-04-17T02:24:23.287Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;前端构建内存限制问题解决&quot;&gt;&lt;a href=&quot;#前端构建内存限制问题解决&quot; class=&quot;headerlink&quot; title=&quot;前端构建内存限制问题解决&quot;&gt;&lt;/a&gt;前端构建内存限制问题解决&lt;/h1&gt;&lt;h2 id=&quot;问题说明&quot;&gt;&lt;a href=&quot;#问题说明&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>关于某项目k8s环境下前端访问后端服务的问题说明</title>
@@ -428,28 +450,6 @@
         
         
           &lt;h1 id=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;a href=&quot;#两个gitlab之间的仓库同步问题解决&quot; class=&quot;headerlink&quot; title=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;/a&gt;两个gitlab之间的仓库同步问题解决&lt;/h1&gt;&lt;h2
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>k8s 1.20.5 二进制安装教程</title>
-    <link href="https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/"/>
-    <id>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</id>
-    <published>2021-04-04T01:58:57.000Z</published>
-    <updated>2022-03-27T10:07:49.918Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;k8s-1-20-5-二进制安装教程&quot;&gt;&lt;a href=&quot;#k8s-1-20-5-二进制安装教程&quot; class=&quot;headerlink&quot; title=&quot;k8s 1.20.5 二进制安装教程&quot;&gt;&lt;/a&gt;k8s 1.20.5 二进制安装教程&lt;/h1&gt;&lt;h2
         
       
     
