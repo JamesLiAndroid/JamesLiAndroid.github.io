@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-04-17T02:24:23.287Z</updated>
+  <updated>2022-04-17T03:14:55.529Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -17,11 +17,55 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在jenkins中实现通用的webhook连接调用的方案说明</title>
+    <link href="https://JamesLiAndroid.github.io/2022/04/17/zai-jenkins-zhong-shi-xian-tong-yong-de-webhook-lian-jie-diao-yong-de-fang-an-shuo-ming/"/>
+    <id>https://JamesLiAndroid.github.io/2022/04/17/zai-jenkins-zhong-shi-xian-tong-yong-de-webhook-lian-jie-diao-yong-de-fang-an-shuo-ming/</id>
+    <published>2022-04-17T03:13:08.000Z</published>
+    <updated>2022-04-17T03:14:55.529Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;在jenkins中实现通用的webhook连接调用的方案说明&quot;&gt;&lt;a href=&quot;#在jenkins中实现通用的webhook连接调用的方案说明&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>VMWare虚拟机使用宿主机vpn的实践</title>
+    <link href="https://JamesLiAndroid.github.io/2022/04/17/vmware-xu-ni-ji-shi-yong-su-zhu-ji-vpn-de-shi-jian/"/>
+    <id>https://JamesLiAndroid.github.io/2022/04/17/vmware-xu-ni-ji-shi-yong-su-zhu-ji-vpn-de-shi-jian/</id>
+    <published>2022-04-17T02:47:11.000Z</published>
+    <updated>2022-04-17T04:09:01.330Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;VMWare虚拟机使用宿主机vpn的实践&quot;&gt;&lt;a href=&quot;#VMWare虚拟机使用宿主机vpn的实践&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>前端构建内存限制问题</title>
     <link href="https://JamesLiAndroid.github.io/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/"/>
     <id>https://JamesLiAndroid.github.io/2022/04/17/qian-duan-gou-jian-nei-cun-xian-zhi-wen-ti/</id>
     <published>2022-04-17T01:53:53.000Z</published>
-    <updated>2022-04-17T02:24:23.287Z</updated>
+    <updated>2022-04-17T02:29:48.278Z</updated>
     
     <summary type="html">
     
@@ -411,50 +455,6 @@
     
     
       <category term="DevOps" scheme="https://JamesLiAndroid.github.io/tags/DevOps/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于nacos的问题排查</title>
-    <link href="https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/"/>
-    <id>https://JamesLiAndroid.github.io/2021/05/24/guan-yu-nacos-de-wen-ti-pai-cha/</id>
-    <published>2021-05-24T03:12:56.000Z</published>
-    <updated>2021-05-24T13:13:54.840Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;关于甲方方面在nacos下的超时问题处理&quot;&gt;&lt;a href=&quot;#关于甲方方面在nacos下的超时问题处理&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>两个gitlab之间的仓库同步问题解决</title>
-    <link href="https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/"/>
-    <id>https://JamesLiAndroid.github.io/2021/04/16/liang-ge-gitlab-zhi-jian-de-cang-ku-tong-bu-wen-ti-jie-jue/</id>
-    <published>2021-04-16T09:26:34.000Z</published>
-    <updated>2021-12-08T07:25:17.431Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;a href=&quot;#两个gitlab之间的仓库同步问题解决&quot; class=&quot;headerlink&quot; title=&quot;两个gitlab之间的仓库同步问题解决&quot;&gt;&lt;/a&gt;两个gitlab之间的仓库同步问题解决&lt;/h1&gt;&lt;h2
-        
-      
-    
-    </summary>
-    
     
   </entry>
   
