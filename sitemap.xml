@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JamesLiAndroid.github.io/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/</loc>
+    
+    <lastmod>2022-06-01T09:27:35.633Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
+    
+    <lastmod>2022-06-01T03:11:56.290Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
+    
+    <lastmod>2022-05-18T09:03:01.109Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
+    
+    <lastmod>2022-05-07T06:03:30.442Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/07/15/guan-yu-elasticsearch-de-shu-ju-qing-li-yi-ji-ri-zhi-qing-li/</loc>
+    
+    <lastmod>2022-05-01T07:29:00.800Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://JamesLiAndroid.github.io/2022/04/17/zai-jenkins-zhong-shi-xian-tong-yong-de-webhook-lian-jie-diao-yong-de-fang-an-shuo-ming/</loc>
     
     <lastmod>2022-04-17T06:00:29.412Z</lastmod>
@@ -26,13 +61,6 @@
     <loc>https://JamesLiAndroid.github.io/2021/04/04/k8s-1-20-5-er-jin-zhi-an-zhuang-jiao-cheng/</loc>
     
     <lastmod>2022-04-03T02:41:42.353Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2021/03/19/k8s-yi-jie-duan-xue-xi-ji-lu/</loc>
-    
-    <lastmod>2022-04-02T08:35:48.780Z</lastmod>
     
   </url>
   
@@ -121,13 +149,6 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/01/31/linux-ri-chang-yun-wei-cao-zuo/</loc>
-    
-    <lastmod>2021-11-29T08:01:55.802Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://JamesLiAndroid.github.io/2021/11/09/mou-jia-fang-xiang-mu-lou-dong-xiu-fu-shuo-ming/</loc>
     
     <lastmod>2021-11-09T01:55:44.696Z</lastmod>
@@ -173,13 +194,6 @@
     <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-yan-zheng-ji-lu-wen-dang/</loc>
     
     <lastmod>2021-07-17T08:18:04.151Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/</loc>
-    
-    <lastmod>2021-07-13T09:51:36.428Z</lastmod>
     
   </url>
   
@@ -331,13 +345,6 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
-    
-    <lastmod>2020-10-14T02:53:43.437Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     
     <lastmod>2020-10-14T02:53:43.437Z</lastmod>
@@ -345,7 +352,14 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
+    
+    <lastmod>2020-10-14T02:53:43.437Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -359,7 +373,7 @@
   </url>
   
   <url>
-    <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     
     <lastmod>2020-10-14T02:53:43.436Z</lastmod>
     
@@ -418,13 +432,6 @@
     <loc>https://JamesLiAndroid.github.io/2020/08/21/nei-wang-qian-yi-fang-an-yu-gui-hua/</loc>
     
     <lastmod>2020-08-21T02:13:09.376Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/15/guan-yu-elasticsearch-de-shu-ju-qing-li-yi-ji-ri-zhi-qing-li/</loc>
-    
-    <lastmod>2020-08-21T01:55:22.536Z</lastmod>
     
   </url>
   

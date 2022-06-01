@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://JamesLiAndroid.github.io/"/>
-  <updated>2022-04-17T06:00:29.412Z</updated>
+  <updated>2022-06-01T09:27:35.633Z</updated>
   <id>https://JamesLiAndroid.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux以及微服务环境下运维管理规范</title>
+    <link href="https://JamesLiAndroid.github.io/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/"/>
+    <id>https://JamesLiAndroid.github.io/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/</id>
+    <published>2022-06-01T09:03:00.000Z</published>
+    <updated>2022-06-01T09:27:35.633Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Linux以及微服务环境下运维管理规范&quot;&gt;&lt;a href=&quot;#Linux以及微服务环境下运维管理规范&quot; class=&quot;headerlink&quot; title=&quot;Linux以及微服务环境下运维管理规范&quot;&gt;&lt;/a&gt;Linux以及微服务环境下运维管理规范&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>在jenkins中实现通用的webhook连接调用的方案说明</title>
@@ -431,30 +453,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>使用lanproxy在vpn环境下进行微服务的开发联调测试</title>
-    <link href="https://JamesLiAndroid.github.io/2021/05/26/shi-yong-lanproxy-zai-vpn-huan-jing-xia-jin-xing-wei-fu-wu-de-kai-fa-lian-diao-ce-shi/"/>
-    <id>https://JamesLiAndroid.github.io/2021/05/26/shi-yong-lanproxy-zai-vpn-huan-jing-xia-jin-xing-wei-fu-wu-de-kai-fa-lian-diao-ce-shi/</id>
-    <published>2021-05-26T05:27:34.000Z</published>
-    <updated>2021-06-03T01:40:02.641Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;使用lanproxy在vpn环境下进行微服务的开发联调测试&quot;&gt;&lt;a href=&quot;#使用lanproxy在vpn环境下进行微服务的开发联调测试&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="DevOps" scheme="https://JamesLiAndroid.github.io/tags/DevOps/"/>
     
   </entry>
   

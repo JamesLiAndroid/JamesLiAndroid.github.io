@@ -291,7 +291,7 @@ log-pilot具有以">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -433,14 +433,14 @@ log-pilot具有以">
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.6k
+                    6.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    31 分
+                    32 分
                 </div>
                 
                 
@@ -1148,6 +1148,15 @@ log-pilot-nwgxn   1/1     Running   1          22h
 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>配置完成后，利用CI/CD流水线进行构建，推送到k8s运行环境中。</p>
+<p><strong>注意：</strong></p>
+<pre><code>
+            # 配置环境变量，类似服务docker启动项中设置的那样
+            - name: aliyun_logs_dict
+              value: stdout
+            # 配置环境变量，配置tag
+            - name: aliyun_logs_dict_tags
+              value: topic=test,env=test,service=dict
+</code></pre><p>aliyun_logs_${服务名称}，该服务名称要和后面value中的<em>service</em>的信息一致！</p>
 <p>注意配置的时候<strong>env=test</strong>，通过该tag确定日志信息来自k8s中的服务，区分于开发环境中的日志。</p>
 <p>最后查看日志信息上报，如下图：</p>
 <p><img src="kibana%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E4%B8%8A%E6%8A%A5-%E7%AD%9B%E9%80%89.png" alt></p>
@@ -1751,7 +1760,7 @@ network.publish_host: 192.168.229.10
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="CKA备考学习">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="CKA备考学习">
                         
                         <span class="card-title">CKA备考学习</span>
                     </div>
@@ -1788,7 +1797,7 @@ kubernetes集群信息，1.18.1
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Linux下不同jdk版本共存问题">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Linux下不同jdk版本共存问题">
                         
                         <span class="card-title">Linux下不同jdk版本共存问题</span>
                     </div>
@@ -1967,7 +1976,7 @@ kubernetes集群信息，1.18.1
             <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">304k</span>
+            <span class="white-color">317.5k</span>
             
 
             <br>

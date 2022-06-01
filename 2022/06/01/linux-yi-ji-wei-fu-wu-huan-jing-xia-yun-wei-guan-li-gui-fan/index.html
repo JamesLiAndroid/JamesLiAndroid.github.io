@@ -1,0 +1,2542 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Linux以及微服务环境下运维管理规范, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="baidu-site-verification" content>
+    <meta name="google-site-verification" content>
+    <meta name="360-site-verification" content>
+    <meta name="description" content="Linux以及微服务环境下运维管理规范规范说明关于运维规范文档，在阅读时，主要区分四个内容：
+
+【必须】严格去执行的，不允许打折，也不允许变更
+【建议】可以执行，也可以不执行的
+【警告】危险操作，预警信息
+【说明】对部分内容的重新解释以及补">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Linux以及微服务环境下运维管理规范 | 时代与猫的脚步</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?46e79e71af0709a5b9106bf20cecc493";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">时代与猫的脚步</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">时代与猫的脚步</div>
+        <div class="logo-desc">
+            
+            山东理工大学 | 电子信息工程
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-link"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JamesLiAndroid" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JamesLiAndroid" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Linux以及微服务环境下运维管理规范
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        <span class="chip bg-color">无标签</span>
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-01
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    JamesLiAndroid
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    12.9k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    59 分
+                </div>
+                
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Linux以及微服务环境下运维管理规范"><a href="#Linux以及微服务环境下运维管理规范" class="headerlink" title="Linux以及微服务环境下运维管理规范"></a>Linux以及微服务环境下运维管理规范</h1><h2 id="规范说明"><a href="#规范说明" class="headerlink" title="规范说明"></a>规范说明</h2><p>关于运维规范文档，在阅读时，主要区分四个内容：</p>
+<ul>
+<li>【必须】严格去执行的，不允许打折，也不允许变更</li>
+<li>【建议】可以执行，也可以不执行的</li>
+<li>【警告】危险操作，预警信息</li>
+<li>【说明】对部分内容的重新解释以及补充</li>
+</ul>
+<p>本说明文档，适用于公司层面的运维管理要求，适用于客户现场环境搭建与项目部署时操作系统层面和中间件层面的管理要求。</p>
+<h2 id="规范内容"><a href="#规范内容" class="headerlink" title="规范内容"></a>规范内容</h2><h3 id="1-Linux使用规范"><a href="#1-Linux使用规范" class="headerlink" title="1. Linux使用规范"></a>1. Linux使用规范</h3><h4 id="1-1-安装部分"><a href="#1-1-安装部分" class="headerlink" title="1.1 安装部分"></a>1.1 安装部分</h4><p>目前使用CentOS 7.9 作为主力的Linux服务器的操作系统，在CentOS 7.9支持到期后，需要确定使用哪个版本的Linux来进行变更。所有操作目前均以CentOS 7.9为例进行说明。</p>
+<p>【必须】安装镜像信息：<a href="http://mirrors.163.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-DVD-2009.iso" target="_blank" rel="noopener">CentOS-7-x86_64-DVD-2009.iso</a> ，大小4G，sha256：e33d7b1ea7a9e2f38c8f693215dd85254c3a4fe446f93f563279715b68d07987 。必须满足上述信息时，才能使用该iso安装。</p>
+<p>【建议】后续CentOS失去更新支持时，在商用搭建方面，使用debian作为操作系统进行环境搭建。</p>
+<p>【建议】安装时，如果是可以连接外网的环境，使用最小化安装进行，如果不能连外网，使用Basic Server安装。需要我们自己创建离线的CentOS源，满足系统部署需求。</p>
+<p>【建议】分区时，通用的分为4到5个分区，对于/data的分区可以不分，但是对于数据量较大的要求，需要分配该分区进行存储。</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>作用</th>
+<th>大小</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/boot</td>
+<td>引导系统分区</td>
+<td>200MB-1G</td>
+</tr>
+<tr>
+<td>/swap</td>
+<td>交换分区(虚拟内存)内存不够swap临时充当内存</td>
+<td>内存小于8G:内存的1.5倍,内存大于8G:8G</td>
+</tr>
+<tr>
+<td>/</td>
+<td>根分区</td>
+<td>20G-100G</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>家目录，分配不同用户执行不同的接口信息根据需要配置</td>
+<td>100G以下</td>
+</tr>
+<tr>
+<td>/data</td>
+<td>存放数据（如果没有数据存储要求，可以不做该分区）</td>
+<td>剩余多少给多少</td>
+</tr>
+</tbody></table>
+<p>​【必须】root密码设置，至少8位，包含字母大小写，数字和特殊符号的组合，尽可能无明显语义信息，不使用完整的单词以及汉语拼音的字母组合。不包含部门或者公司等敏感信息！</p>
+<p>​【建议】在安装时选择性添加信息用户，root密码设置后，可以添加一个和root无关的用户，自行命名。</p>
+<p>​【警告】a. 定期及时更新系统，防止最新的威胁，另外需要注意内核升级特别慎重，可能会造成无法开机的问题。b. 尽可能使用安全的协议，例如ssl或者https。c. 尽可能让单台机器只提供一种服务。d. 对新增和原有机器及时添加监控，异常指标告警，恶意行为发现。</p>
+<h4 id="1-2-网络配置"><a href="#1-2-网络配置" class="headerlink" title="1.2 网络配置"></a>1.2 网络配置</h4><h5 id="1-2-1-网卡配置"><a href="#1-2-1-网卡配置" class="headerlink" title="1.2.1 网卡配置"></a>1.2.1 网卡配置</h5><p>​【必须】公司层面的网卡配置，要求必须使用静态ip地址，并且需要固定ip，配置文件路径为：/etc/sysconfig/network-scripts/ifcfg-ens192，配置示例如下：</p>
+<pre class="line-numbers language-Apache"><code class="language-Apache">TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+#需要设置为static，保证ip不被变更
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens192
+UUID=18c45d2d-1836-45d2-a76d-fe06e36ed020
+DEVICE=ens192
+#重启自动生效
+ONBOOT=yes
+#配置ip地址、GATEWAY地址、NETMASK地址
+IPADDR=192.168.88.239
+NETMASK=255.255.255.0
+PREFIX=24
+GATEWAY=192.168.88.254
+#不强制要求配置DNS信息，可以重新在
+DNS1=202.102.152.3
+DNS2=114.114.114.114
+IPV6_PRIVACY=no<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>配置完成后，务必重启network服务并使用ping命令或者telnet命令测试。</p>
+<h5 id="1-2-2-DNS配置"><a href="#1-2-2-DNS配置" class="headerlink" title="1.2.2 DNS配置"></a>1.2.2 DNS配置</h5><p>【建议】公司层面DNS优先使用202.102.152.3，其次是114.114.114.114，最后是阿里的223.5.5.5和223.6.6.6。客户现场根据需要配置，一般有运维的公司，不会让第三方去安装操作系统以及配置网络。</p>
+<p>【说明】如果在上面网卡配置DNS并无错误信息，不需要再手动配置/etc/resolv.conf内的DNS信息，该文件会从网卡的配置文件中自动添加nameserver。</p>
+<p>【建议】公司内研发环境根据需要创建自己的DNS服务器，尽量通过DNS访问各个系统的接口或者前端服务。</p>
+<h4 id="1-3-yum安装源配置"><a href="#1-3-yum安装源配置" class="headerlink" title="1.3 yum安装源配置"></a>1.3 yum安装源配置</h4><p>【必须】选择稳定的镜像源，例如163、中科大以及华为的源，额外要求添加epel-release源。变更镜像源时，务必对之前的repo文件进行备份后，才能进行变更操作！</p>
+<p>【建议】在执行yum update命令时，手动屏蔽对于内核的更新，尤其是已安装docker服务的机器，谨慎更新内核。可以通过yum update –exclude=kernel*命令屏蔽，也可以通过修改/etc/yum.conf文件实现。</p>
+<h4 id="1-4-必备工具以及可选工具安装"><a href="#1-4-必备工具以及可选工具安装" class="headerlink" title="1.4 必备工具以及可选工具安装"></a>1.4 必备工具以及可选工具安装</h4><h5 id="1-4-1-必备工具"><a href="#1-4-1-必备工具" class="headerlink" title="1.4.1 必备工具"></a>1.4.1 必备工具</h5><p>vim（替代vi）、curl（模拟请求）、wget（文件下载）、unzip（zip解压）、nc（判断端口是否开通）、tree（文件树形目录展示）、htop（替代top）、net-tools（网络工具包）、yum-utils（版本锁定插件适用）、ntpdate（时钟同步工具）</p>
+<h5 id="1-4-2-可选工具"><a href="#1-4-2-可选工具" class="headerlink" title="1.4.2 可选工具"></a>1.4.2 可选工具</h5><p>telnet（判断端口是否正常）、jq（json信息展示）、iftop（实时流量监控）、git（版本控制客户端）、lrzsz（文件传输）、http-tools（压测命令ab）、sshpass（ssh密码传输工具）</p>
+<h5 id="1-4-3-排查问题时的命令参考"><a href="#1-4-3-排查问题时的命令参考" class="headerlink" title="1.4.3 排查问题时的命令参考"></a>1.4.3 排查问题时的命令参考</h5><p>剩余命令参考该图：</p>
+<p><img src="Linux%E5%91%BD%E4%BB%A4%E4%BF%A1%E6%81%AF.png" alt="img"></p>
+<p>排查问题时可用，通过yum进行安装操作。</p>
+<h4 id="1-5-内核信息调整以及系统配置调整"><a href="#1-5-内核信息调整以及系统配置调整" class="headerlink" title="1.5 内核信息调整以及系统配置调整"></a>1.5 内核信息调整以及系统配置调整</h4><h5 id="1-5-1-主机名称"><a href="#1-5-1-主机名称" class="headerlink" title="1.5.1 主机名称"></a>1.5.1 主机名称</h5><p>【必须】对主机名称必须赋予有意义的名称，例如k8s-master-01表示k8s中的第一个master节点。利用hostnamectl命令进行变更。</p>
+<p>【建议】配置各个机器的/etc/hosts文件，或者搭建自己的DNS服务器，在该DNS服务器上配置主机名称访问。</p>
+<h5 id="1-5-2-用户管理"><a href="#1-5-2-用户管理" class="headerlink" title="1.5.2 用户管理"></a>1.5.2 用户管理</h5><p>【必须】root权限不下放，尽可能不使用root用户操作服务器。如果有需要使用root用户并进行了切换操作，务必通知（邮件或者webhook）相关运维人员。</p>
+<p>【必须】建立日常开发用户，只赋予必要的文件操作权限，例如docker镜像的启动停止操作。另外根据环境划分需要，如果是线上环境不允许给予root权限，如果是内部的开发和测试环境，给予root权限进行操作。务必对该开发用户，定期修改密码。</p>
+<p>【必须】定期排查锁定所有在安装系统或者安装组件时自动建立的账号，例如nginx安装时创建了nginx用户和nginx组，需要进行锁定。</p>
+<p>【建议】如果能搭建自己的堡垒机，务必使用堡垒机进行服务登录，并配置操作审计。定期进行操作行为审计工作，并配置自动告警！</p>
+<h5 id="1-5-3-内核调整"><a href="#1-5-3-内核调整" class="headerlink" title="1.5.3 内核调整"></a>1.5.3 内核调整</h5><p>【建议】使用较新且稳定的内核版本，如果该机器上安装了docker，强烈建议使用4.19这样的LTS版本的内核，并设置启动后加载该版本内核。</p>
+<p>【警告】谨慎更新内核版本，如果安装了4.19 LTS版本的内核，务必注意yum update所带来的内核”升级“问题，容易引发服务重启带来的系统崩溃问题。</p>
+<p>【建议】k8s机器通用的内核信息配置项如下：</p>
+<pre class="line-numbers language-properties"><code class="language-properties"><span class="token attr-name">net.ipv4.ip_forward</span><span class="token punctuation">=</span><span class="token attr-value">1  # 允许数据包转发</span>
+<span class="token attr-name">net.bridge.bridge-nf-call-iptables</span><span class="token punctuation">=</span><span class="token attr-value">1  # bridge 设备在二层转发时也去调用 iptables 配置的三层规则 (包含 conntrack)，所以开启这个参数就能够解决上述 Service 同节点通信问题</span>
+<span class="token attr-name">net.bridge.bridge-nf-call-ip6tables</span><span class="token punctuation">=</span><span class="token attr-value">1 # ipv6适配</span>
+<span class="token attr-name">fs.may_detach_mounts</span><span class="token punctuation">=</span><span class="token attr-value">1 </span>
+<span class="token attr-name">vm.overcommit_memory</span><span class="token punctuation">=</span><span class="token attr-value">1 # 设置内存分配策略， 1表示内核允许分配所有的物理内存，而不管当前的内存状态如何</span>
+<span class="token attr-name">vm.panic_on_oom</span><span class="token punctuation">=</span><span class="token attr-value">1 # oom问题处理</span>
+<span class="token attr-name">fs.inotify.max_user_watches</span><span class="token punctuation">=</span><span class="token attr-value">89100 # 表示同一用户同时可以添加的watch数目（watch一般是针对目录，决定了同时同一用户可以监控的目录数量），过小则可能导致too many open files</span>
+<span class="token attr-name">fs.file-max</span><span class="token punctuation">=</span><span class="token attr-value">52706963 # 设置Linux最大打开文件句柄，系统层面，针对所有进程</span>
+<span class="token attr-name">fs.nr_open</span><span class="token punctuation">=</span><span class="token attr-value">52706963 # 设置单个进程可分配的最大文件数，补充：ulimit其实就是对单一程序的限制,进程级别的</span>
+<span class="token attr-name">net.netfilter.nf_conntrack_max</span><span class="token punctuation">=</span><span class="token attr-value">2310720 # 设置最大连接跟踪数，默认sysctl net.netfilter.nf_conntrack_buckets*4</span>
+<span class="token attr-name">net.ipv4.tcp_keepalive_time</span><span class="token punctuation">=</span><span class="token attr-value">600 # 此参数表示TCP发送keepalive探测消息的间隔时间(秒), 用于确认TCP连接是否有效。</span>
+<span class="token attr-name">net.ipv4.tcp_keepalive_probes</span><span class="token punctuation">=</span><span class="token attr-value">3  # 在没有收到对方确认时，进行探测的次数</span>
+<span class="token attr-name">net.ipv4.tcp_keepalive_intvl</span><span class="token punctuation">=</span><span class="token attr-value">15  # 在没有收到对方确认时，会按照这个时间间隔再次探测</span>
+<span class="token attr-name">net.ipv4.tcp_max_tw_buckets</span><span class="token punctuation">=</span><span class="token attr-value">36000  # 针对TIME-WAIT，配置其上限</span>
+<span class="token attr-name">net.ipv4.tcp_tw_reuse</span><span class="token punctuation">=</span><span class="token attr-value">1   # 此参数默认值0，是否重用TIME_WAIT状态的socket用于新的连接。</span>
+<span class="token attr-name">net.ipv4.tcp_max_orphans</span><span class="token punctuation">=</span><span class="token attr-value">327680 # 该参数用于设定系统中最多允许在多少TCP套接字不被关联到任何一个用户文件句柄上，超过则没有与用户文件句柄关联的TCP 套接字将立即被复位</span>
+<span class="token attr-name">net.ipv4.tcp_orphan_retries</span><span class="token punctuation">=</span><span class="token attr-value">3  # 孤儿socket废弃前重试的次数，设置较小的数值，可以有效降低orphans的数量</span>
+<span class="token attr-name">net.ipv4.tcp_syncookies</span><span class="token punctuation">=</span><span class="token attr-value">1  # 此参数应该设置为1，防止SYN Flood。</span>
+<span class="token attr-name">net.ipv4.tcp_max_syn_backlog</span><span class="token punctuation">=</span><span class="token attr-value">16384  # 处于SYN_RECV的TCP最大连接数，当处于SYN_RECV状态的TCP连接数超过tcp_max_syn_backlog后，会丢弃后续的SYN报文</span>
+<span class="token attr-name">net.ipv4.ip_conntrack_max</span><span class="token punctuation">=</span><span class="token attr-value">65536 # 允许的最大跟踪连接条目，默认65536</span>
+<span class="token attr-name">net.ipv4.tcp_timestamps</span><span class="token punctuation">=</span><span class="token attr-value">0  # 开启时间戳选项</span>
+<span class="token attr-name">net.core.somaxconn</span><span class="token punctuation">=</span><span class="token attr-value">16384  # socket 监听( listen )的 backlog 上限，backlog就是 socket的监听队列，当一个请求(request)尚未被处理或者建立时，它就会进入backlog。而socket server可以一次性处理backlog中的所有请求，处理后的请求不再位于监听队列中。当Server处理请求较慢时，导致监听队列被填满后，新来的请求就会被拒绝。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其余机器（不做集群的情况下）通用配置信息如下：</p>
+<pre class="line-numbers language-properties"><code class="language-properties"><span class="token attr-name">net.ipv4.ip_forward</span> <span class="token punctuation">=</span> <span class="token attr-value">0 # 禁止数据包转发</span>
+<span class="token attr-name">net.ipv4.conf.default.rp_filter</span> <span class="token punctuation">=</span> <span class="token attr-value">1  # 控制系统是否开启对数据包源地址的校验。1代表开启严格的反向路径校验。对每个进来的数据包，校验其反向路径是否是最佳路径。如果反向路径不是最佳路径，则直接丢弃该数据包。</span>
+<span class="token attr-name">net.ipv4.conf.default.accept_source_route</span> <span class="token punctuation">=</span> <span class="token attr-value">0 # 不允许数据包的发送者指定数据包的发送路径，以及返回给发送者的数据包所走的路径。</span>
+<span class="token attr-name">kernel.core_uses_pid</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 控制core文件的文件名中是否添加pid作为扩展名。设置为1，表示添加pid作为扩展名，生成的core文件格式为core.xxx;设置为0（默认），表示生成的core文件统一命名为core。</span>
+<span class="token attr-name">net.ipv4.tcp_syncookies</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 此参数应该设置为1，防止SYN Flood。</span>
+<span class="token attr-name">kernel.msgmnb</span> <span class="token punctuation">=</span> <span class="token attr-value">65536 # 内核队列的大小设置。</span>
+<span class="token attr-name">kernel.msgmax</span> <span class="token punctuation">=</span> <span class="token attr-value">65536 # 内核队列中可以发送消息的大小</span>
+<span class="token attr-name">net.ipv6.conf.lo.disable_ipv6</span> <span class="token punctuation">=</span> <span class="token attr-value">1  # 关闭ipv6通信</span>
+<span class="token attr-name">net.ipv4.conf.all.promote_secondaries</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # #主备IP地址切换控制机制（建议值1）0当接口的主IP地址被移除时，删除所有次IP地址；1当接口的主IP地址被移除时，将次IP地址提升为主IP地址</span>
+<span class="token attr-name">net.ipv4.conf.default.promote_secondaries</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 当接口的主IP地址被移除时，将次IP地址提升为主IP地址</span>
+<span class="token attr-name">net.ipv6.neigh.default.gc_thresh3</span> <span class="token punctuation">=</span> <span class="token attr-value">4096 # ARP参数，检查一次相邻层记录的有效性的周期。当相邻层记录失效时，将在给它发送数据前，再解析一次。缺省值是60秒。</span>
+<span class="token attr-name">net.ipv4.neigh.default.gc_thresh3</span> <span class="token punctuation">=</span> <span class="token attr-value">4096</span>
+<span class="token attr-name">kernel.softlockup_panic</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 检测到软锁定时内核是否 panic。</span>
+<span class="token attr-name">net.ipv6.conf.all.disable_ipv6</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 禁用ipv6协议</span>
+<span class="token attr-name">net.ipv6.conf.default.disable_ipv6</span> <span class="token punctuation">=</span> <span class="token attr-value">1</span>
+<span class="token attr-name">kernel.numa_balancing</span> <span class="token punctuation">=</span> <span class="token attr-value">0 # 禁用自动平衡 NUMA 功能</span>
+<span class="token attr-name">kernel.shmmax</span> <span class="token punctuation">=</span> <span class="token attr-value">68719476736 # 配置了最大的内存segment的大小</span>
+<span class="token attr-name">kernel.printk</span> <span class="token punctuation">=</span> <span class="token attr-value">5 # 内核打印信息级别</span>
+<span class="token attr-name">vm.swappiness</span> <span class="token punctuation">=</span> <span class="token attr-value">5 # 使用swap分区积极度</span>
+<span class="token attr-name">kernel.sysrq</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 允许所有的sysrq功能，http://blog.lujun9972.win/blog/2018/08/22/linux%E4%B8%8B%E7%9A%84sysrq%E9%94%AE/index.html</span>
+<span class="token attr-name">vm.overcommit_memory</span> <span class="token punctuation">=</span> <span class="token attr-value">1 # 内存分配策略，允许分配所有的物理内存，而不管当前的内存状态如何</span>
+<span class="token attr-name">vm.max_map_count</span> <span class="token punctuation">=</span> <span class="token attr-value">655360 # 限制单个进程的 VMA（虚拟内存区域）数量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-5-4-selinux、swap、文件描述符"><a href="#1-5-4-selinux、swap、文件描述符" class="headerlink" title="1.5.4 selinux、swap、文件描述符"></a>1.5.4 selinux、swap、文件描述符</h5><p>【建议】文件描述符配置如下：</p>
+<pre class="line-numbers language-conf"><code class="language-conf">cat  /etc/security/limits.conf 
+* soft nofile 655360 
+* hard nofile 131072 
+* soft nproc 655350 
+* hard nproc 655350 
+* soft memlock unlimited 
+* hard memlock unlimited<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>【建议】如果是k8s相关的机器，务必关闭swap；如果是数据库所在的机器，开启swap，但是要在对服务器监控的时候加上swap的指标信息，swap占用量过高需要进行告警操作。</p>
+<p>【建议】同swap，selinux在k8s集群相关的机器上务必进行关闭，在其它机器上还是保持开启。</p>
+<h5 id="1-5-5-ssh登录以及ssh管理"><a href="#1-5-5-ssh登录以及ssh管理" class="headerlink" title="1.5.5 ssh登录以及ssh管理"></a>1.5.5 ssh登录以及ssh管理</h5><p>【必须】只支持SSH v.2协议进行登录操作。</p>
+<p>【必须】严禁直接使用root用户登录的操作，屏蔽root用户直接登录的行为，使用其它用户登录服务器。</p>
+<p>【建议】更改ssh运行的默认端口，不使用22端口作为ssh运行端口信息。</p>
+<p>【建议】合理管理ssh-keygen生成的ssh密钥，除k8s部署阶段，生成了密钥可以发送到其它机器生效，方便文件传输外，不允许通过一台机器直接使用ssh密钥登录另一个机器，服务器之间不使用这种无密码方式登录。</p>
+<p>【建议】ssh配置信息如下：</p>
+<pre class="line-numbers language-conf"><code class="language-conf"># 默认端口号22，变更为其它端口号
+Port 15555
+# 不允许root远程登录
+PermitRootLogin no
+# 使用用户名密码作为连接验证
+PasswordAuthentication yes
+# 生产环境配置，不允许无密码登录，开发测试环境不配置该项
+PermitEmptyPasswords no
+# 是否允许使用基于 GSSAPI 的用户认证，配置为no减少一层解析
+GSSAPIAuthentication no
+# 不使用DNS查找地址，加速连接
+UseDNS no
+# 打印上一次登录的信息
+PrintLastLog yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-5-6-历史记录"><a href="#1-5-6-历史记录" class="headerlink" title="1.5.6 历史记录"></a>1.5.6 历史记录</h5><p>【建议】显示history记录中的时间信息、扩大保存的历史记录信息、执行用户以及ip地址信息，在/etc/profile文件中进行设置如下：</p>
+<pre class="line-numbers language-Shell"><code class="language-Shell"># format history
+# save in /etc/profile
+
+USER_IP=who -u am i 2>/dev/null| awk '{print $NF}'|sed -e 's/[()]//g'
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S whoami@${USER_IP}: "
+export HISTFILESIZE=1000000
+export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
+shopt -s histappend
+
+#bind '"\e[A": history-search-backward'
+#bind '"\e[B": history-search-forward'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>【建议】生产环境下，记录所有登录用户的操作历史记录，重点记录root用户下的操作记录，设置如下：</p>
+<pre class="line-numbers language-profile"><code class="language-profile"># 重复命令只记录一次
+HISTCONTROL=ignoredups
+# 忽略记录的命令，[ ]*指令前面加空白不予记录
+HISTIGNORE="[ ]*:ls:ll:cd:pwd:sync:exit:history*"
+# 该处配置同上文shell脚本中的配置
+# history记录添加时间信息
+#HISTTIMEFORMAT='%F %T '
+# .bash_history文件中可存储的记录总行数
+#HISTFILESIZE=30000
+# 允许当前用户写入多少行记录于磁盘中
+HISTSIZE=7=10000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-5-7-自带firewalld防火墙管理"><a href="#1-5-7-自带firewalld防火墙管理" class="headerlink" title="1.5.7 自带firewalld防火墙管理"></a>1.5.7 自带firewalld防火墙管理</h5><p>【必须】不允许直接关闭firewalld防火墙进程，更不允许firewalld在设置一部分端口开启后，再进行关闭操作，这样会带来不可预知的问题。即使是k8s所在机器，也不允许直接关闭firewalld。</p>
+<p>【建议】默认只开放80和443端口对外访问，修改默认的ssh端口22到其它端口。生产环境尽量不开放其它端口对外访问！</p>
+<p>【建议】开启的端口必须遵循”最小范围“原则，生产环境尽量不要开完整的端口段，例如10000-20000的端口全部开放对外使用。</p>
+<p>【建议】云服务环境下安全组或者安全策略同上！（云服务器上可能已经关闭了firewalld进程，使用安全组管理访问）</p>
+<h5 id="1-5-8-时钟信息"><a href="#1-5-8-时钟信息" class="headerlink" title="1.5.8 时钟信息"></a>1.5.8 时钟信息</h5><p>【必须】设置时钟同步机制，定时任务定期同步，暂行规定每 30 秒同步一次。</p>
+<p>【必须】在无外网网络的环境中，必须搭建ntp时钟服务，配置好时区，一般需要设置为东八区的时间，设置为上海时区即可。其余机器务必同该机器进行网络同步操作！<br>【建议】强时钟依赖的服务，务必注意时钟回拨带来的问题，对时钟回拨现象进行规避，例如分布式id服务。</p>
+<h5 id="1-5-9-ftp与文件传输"><a href="#1-5-9-ftp与文件传输" class="headerlink" title="1.5.9 ftp与文件传输"></a>1.5.9 ftp与文件传输</h5><p>【建议】ftp配置可以参考该文章：<a href="https://www.guitu18.com/post/2018/08/30/23.html" target="_blank" rel="noopener">CentOS 7 搭建FTP服务器和详细权限配置 - 夜月归途</a></p>
+<p>【建议】服务器之间使用scp进行文件传输，在服务器集群环境下，只开放单台机器进行ftp传输，当文件需要传输到其它机器时，使用scp命令进行！</p>
+<h5 id="1-5-10-定时任务"><a href="#1-5-10-定时任务" class="headerlink" title="1.5.10 定时任务"></a>1.5.10 定时任务</h5><p>【必须】定时任务书写规范，确定添加注释,标明作用,时间,编写人；执行内容重定向,指向固定的文件并添加 2&gt;&amp;1 &amp;结尾。例如以下情况：</p>
+<pre class="line-numbers language-Apache"><code class="language-Apache"># 代码统计脚本执行，汇总所有的人员提交代码行数据，2022-04-15，李松阳
+0 2 * * * sh +x /root/python/code-statistics/start_next.sh >> /root/python/venv/running_next.log 2>&1 &<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="1-6-中间件以及常用工具的配置信息管理说明"><a href="#1-6-中间件以及常用工具的配置信息管理说明" class="headerlink" title="1.6 中间件以及常用工具的配置信息管理说明"></a>1.6 中间件以及常用工具的配置信息管理说明</h4><p>【必须】所有中间件以及常用工具的安装，如果是rpm或者安装包安装的，需要认真检查是否能使用systemd作为服务进行启动，配置service文件。对于数据库、缓存、消息队列等工具，如果是服务器安装层面，不允许使用docker运行，也就是生产环境不允许使用docker运行这些工具。如果仅作为开发测试验证用，可以使用docker运行！</p>
+<p>system服务文档编写参考：<a href="https://blog.k8s.li/systemd.html" target="_blank" rel="noopener">Linux 的小伙伴 systemd 详解</a></p>
+<p>【必须】所有中间件以及常用工具的安装后，务必使用对应工具进行服务连接测试，另外务必注意开放防火墙端口信息！</p>
+<h5 id="1-6-1-数据库MySQL"><a href="#1-6-1-数据库MySQL" class="headerlink" title="1.6.1 数据库MySQL"></a>1.6.1 数据库MySQL</h5><p>MySQL目前使用5.7.35版本，默认配置文件为：/etc/my.cnf，使用编译安装的方式进行数据库安装，这样在数据库升级的时候可以进行打补丁。</p>
+<p>针对MySQL 5.7.35版本有以下配置：</p>
+<pre class="line-numbers language-Shell"><code class="language-Shell">[client]
+#如果启用多实例 可根据socket登录mysql下不同端口的实例
+socket=/home/mysql-5.7.35/mysql.sock
+#字符集
+default-character-set=utf8mb4
+
+[mysql]
+#字符集
+default-character-set=utf8mb4
+
+
+[mysqld]
+#字符集
+character-set-server=utf8mb4
+#禁止域名解析
+skip_name_resolve = 1
+#工作目录
+basedir=/home/mysql-5.7.35
+#数据目录
+datadir=/home/mysql-5.7.35/data-5.7.35
+#事务等待获取资源等待的最长时间，超过这个时间还未分配到资源则会返回应用失败
+lock_wait_timeout = 3600
+#文件打开数
+open_files_limit    = 65535
+#MySQL服务器连接请求队列所能处理的最大连接请求数，如果队列放满了，后续的连接才会拒绝。当主要的MySQL线程在很短时间内获取大量连接请求时，这个参数会生效
+back_log = 1024
+#允许最大链接数
+max_connections = 5000
+#如果客户端尝试连接的错误数量超过这个参数设置的值，则服务器不再接受新的客户端连接
+max_connect_errors = 1000000
+#所有线程能打开的表的数量
+table_open_cache = 1024
+#控制总frm文件的数量，还是个hash表，内部维护
+table_definition_cache = 1024
+#打开的表缓存实例的数量
+table_open_cache_instances = 64
+#每个连接线程被创建时，MySQL给它分配的内存大小
+thread_stack = 512K
+#用于多进程条件下为MyISAM数据表进行锁定
+external-locking = FALSE
+#网络传输时单个数据包的大小
+max_allowed_packet = 32M
+#每个会话执行排序操作所分配的内存大小
+sort_buffer_size = 4M
+#用来作普通索引扫描、范围索引扫描和不使用索引而执行全表扫描这些操作所用的缓存大小
+join_buffer_size = 4M
+#为每个线程对MyISAM表执行顺序读所分配的内存
+read_buffer_size = 8M
+#这个参数用在MyISAM表和任何存储引擎表随机读所使用的内存
+read_rnd_buffer_size = 4M
+#MyISAM表使用一种特殊的树状缓存来提高批量插入的速度
+bulk_insert_buffer_size = 64M
+#MySQL服务缓存以重用的线程数
+thread_cache_size = 768
+#Mysql关闭交互连接前的等待时间
+interactive_timeout = 599
+#Mysql关闭非交互连接前的等待时间
+wait_timeout = 599
+#内部内存临时表的最大内存
+tmp_table_size = 32M
+#这个参数设置用户创建的MEMORY表允许增长的最大容量
+max_heap_table_size = 32M
+#binlog的写入方式 基于行写入
+binlog_format = ROW
+#0是性能能最好 1是数据一致性要求高
+sync_binlog = 0
+#在事务中二进制日志使用的缓存大小
+binlog_cache_size = 4M
+#表示的是binlog 能够使用的最大cache 内存大小
+max_binlog_cache_size = 2G
+#二进制日志文件的最大容量
+max_binlog_size = 1G
+#解析binlog，逆向分析出对应的原始SQL 里面对应的是每一条具体行变更的内容
+binlog_rows_query_log_events = 1
+#所有线程所共有的MyISAM表索引缓存，
+key_buffer_size = 32M
+#MyISAM索引排序使用的缓存大小。
+myisam_sort_buffer_size = 128M
+#用来标记 binlog event的源产地，就是SQL语句最开始源自于哪里。
+server-id=1
+#记录对mysql数据库真正执行更改的所有操作
+log_bin=/home/mysql-5.7.35/mysql-bin
+#用来控制binlog日志文件保留时间
+expire_logs_days=5
+#慢日志开启
+slow_query_log=1
+#慢日志输出路径
+slow_query_log_file=/home/mysql-5.7.35/mysql.slow
+#慢查询界定时间
+long_query_time=2
+#InnoDB存储引擎可以并发使用的最大线程数
+innodb_thread_concurrency = 0
+#数据库事务隔离级别
+transaction_isolation = READ-COMMITTED
+#nnDB存储引擎缓存表和索引数据所使用的内存大小
+innodb_buffer_pool_size = 5734M
+#InnoDB缓存池被分成的区域数
+innodb_buffer_pool_instances = 4
+#InnoDB数据文件的路径和大小
+innodb_data_file_path = ibdata1:12M:autoextend
+#MySQL服务在启动时，InnoDB缓冲池通过加载之前的缓存页数据来自动预热
+innodb_buffer_pool_load_at_startup = 1
+#在MySQL服务关闭时，是否记录InnoDB缓存池中的缓存页，以缩短下次重启时的预热过程
+innodb_buffer_pool_dump_at_shutdown = 1
+#当提交相关的I/O操作被批量重新排列时，这个参数控制提交操作的ACID一致性和高性能之间的平衡
+innodb_flush_log_at_trx_commit = 2 
+#nnoDB写入磁盘日志文件所使用的缓存字节大小
+innodb_log_buffer_size = 32M
+#日志组中每个日志文件的字节大小
+innodb_log_file_size = 1G 
+#InnoDB日志组包含的日志个数
+innodb_log_files_in_group = 3
+#了InnoDB后台任务每秒可用的I/O操作数
+innodb_io_capacity = 4000
+#innodb后台任务执行的最大IOPS数。
+innodb_io_capacity_max = 8000
+#InnoDB用来控制buffer pool刷脏页时是否把脏页邻近的其他脏页一起刷到磁盘
+innodb_flush_neighbors = 0
+#控制有多少写后台线程可以被I/O操作使用
+innodb_write_io_threads = 8
+#控制有多少读后台线程可以被I/O操作使用
+innodb_read_io_threads = 8
+#InnoDB任意时刻 可以保持打开.ibd文件的数量
+innodb_open_files = 65535
+#当脏页的百分比超过了这个阈值，InnoDB将快 速地刷写脏页，尝试让脏页的数量更低
+innodb_max_dirty_pages_pct = 50 
+#刷新数据到InnoDB数据文件和日志文件的方法 O_DIRECT有助于避免InnoDB缓存池和操作系统缓存之间的双重缓存
+innodb_flush_method = O_DIRECT
+#该参数用于控制LRU列表中可用页的数量，默认值1024
+innodb_lru_scan_depth = 4000
+#InnDB事务等待行锁的时间长度。默认值是50秒
+innodb_lock_wait_timeout = 10
+#在高交互性的应用系统或OLTP系统上，可以减小这个参数来快速显示用户的反馈或把更新放入队列稍后处理
+innodb_rollback_on_timeout = 1
+#保存全部死锁信息
+innodb_print_all_deadlocks = 1
+#online ddl时并发DML产生的row log最大size，超过这个限制会导致DDL回滚
+innodb_online_alter_log_max_size = 4G
+#开启后会在datadir下生成一个innodb_status.pid文件, 周期性15秒向这个文件输出show engine innodb status. 如果异常关闭数据库, 这个文件不会被删除
+innodb_status_file = 1
+#大小写敏感设置 1不区分大小写
+lower_case_table_names=1
+#当MySQL实例启动时，会将自己的进程ID写入一个文件中——该文件即为pid文件。该文件可由参数pid_file控制，默认位于数据库目录下
+pid-file=/home/mysql-5.7.35/data-5.7.35/mysqld.pid
+#ocket 即 Unix 套接字文件，在类 unix 平台，客户端连接 MySQL 服务端的方式有两种，分别是 TCP/IP 方式与 socket 套接字文件方式。Unix 套接字文件连接的速度比 TCP/IP 快，但是只能连接到同一台计算机上的服务器使用
+socket=/home/mysql-5.7.35/mysql.sock
+#错误日志输出路径
+log-error=/home/mysql-5.7.35/data-5.7.35/mysql.err
+#允许远程连接
+bind-address=0.0.0.0
+
+[mysqldump]
+#导出时不会将数据加载到缓存，而是直接输出。默认就是启用状态
+quick<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-6-2-缓存Redis"><a href="#1-6-2-缓存Redis" class="headerlink" title="1.6.2 缓存Redis"></a>1.6.2 缓存Redis</h5><p>由于redis配置文件太长，无用的信息太多，因此这里只挑重要的文件配置：</p>
+<pre class="line-numbers language-conf"><code class="language-conf">################################## NETWORK #####################################
+
+# IF YOU ARE SURE YOU WANT YOUR INSTANCE TO LISTEN TO ALL THE INTERFACES
+# JUST COMMENT OUT THE FOLLOWING LINE.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+bind 192.168.88.241 -::1
+
+protected-mode yes
+# Accept connections on the specified port, default is 6380 (IANA #815344).
+# If port 0 is specified Redis will not listen on a TCP socket.
+port 6380
+
+timeout 0
+
+# TCP keepalive.
+#
+# If non-zero, use SO_KEEPALIVE to send TCP ACKs to clients in absence
+# of communication. This is useful for two reasons:
+#
+# 1) Detect dead peers.
+# 2) Force network equipment in the middle to consider the connection to be
+#    alive.
+#
+# On Linux, the specified value (in seconds) is the period used to send ACKs.
+# Note that to close the connection the double of the time is needed.
+# On other kernels the period depends on the kernel configuration.
+#
+# A reasonable value for this option is 300 seconds, which is the new
+# Redis default starting with Redis 3.2.1.
+tcp-keepalive 300
+
+# If a pid file is specified, Redis writes it where specified at startup
+# and removes it at exit.
+#
+# When the server runs non daemonized, no pid file is created if none is
+# specified in the configuration. When the server is daemonized, the pid file
+# is used even if not specified, defaulting to "/var/run/redis.pid".
+#
+# Creating a pid file is best effort: if Redis is not able to create it
+# nothing bad happens, the server will start and run normally.
+#
+# Note that on modern Linux systems "/run/redis.pid" is more conforming
+# and should be used instead.
+pidfile /var/run/redis_6380.pid
+
+# Specify the server verbosity level.
+# This can be one of:
+# debug (a lot of information, useful for development/testing)
+# verbose (many rarely useful info, but not a mess like the debug level)
+# notice (moderately verbose, what you want in production probably)
+# warning (only very important / critical messages are logged)
+loglevel notice
+
+# Specify the log file name. Also the empty string can be used to force
+# Redis to log on the standard output. Note that if you use standard
+# output for logging but daemonize, logs will be sent to /dev/null
+logfile "/var/log/redis/redis-6380.log"
+
+# Set the number of databases. The default database is DB 0, you can select
+# a different one on a per-connection basis using SELECT <dbid> where
+# dbid is a number between 0 and 'databases'-1
+databases 16
+
+# By default Redis shows an ASCII art logo only when started to log to the
+# standard output and if the standard output is a TTY and syslog logging is
+# disabled. Basically this means that normally a logo is displayed only in
+# interactive sessions.
+#
+# However it is possible to force the pre-4.0 behavior and always show a
+# ASCII art logo in startup logs by setting the following option to yes.
+always-show-logo no
+
+# By default, Redis modifies the process title (as seen in 'top' and 'ps') to
+# provide some runtime information. It is possible to disable this and leave
+# the process name as executed by setting the following to no.
+set-proc-title yes
+
+# When changing the process title, Redis uses the following template to construct
+# the modified title.
+#
+# Template variables are specified in curly brackets. The following variables are
+# supported:
+#
+# {title}           Name of process as executed if parent, or type of child process.
+# {listen-addr}     Bind address or '*' followed by TCP or TLS port listening on, or
+#                   Unix socket if only that's available.
+# {server-mode}     Special mode, i.e. "[sentinel]" or "[cluster]".
+# {port}            TCP port listening on, or 0.
+# {tls-port}        TLS port listening on, or 0.
+# {unixsocket}      Unix domain socket listening on, or "".
+# {config-file}     Name of configuration file used.
+#
+proc-title-template "{title} {listen-addr} {server-mode}"
+
+# However if you have setup your proper monitoring of the Redis server
+# and persistence, you may want to disable this feature so that Redis will
+# continue to work as usual even if there are problems with disk,
+# permissions, and so forth.
+stop-writes-on-bgsave-error yes
+
+# Compress string objects using LZF when dump .rdb databases?
+# By default compression is enabled as it's almost always a win.
+# If you want to save some CPU in the saving child set it to 'no' but
+# the dataset will likely be bigger if you have compressible values or keys.
+rdbcompression yes
+
+# Since version 5 of RDB a CRC64 checksum is placed at the end of the file.
+# This makes the format more resistant to corruption but there is a performance
+# hit to pay (around 10%) when saving and loading RDB files, so you can disable it
+# for maximum performances.
+#
+# RDB files created with checksum disabled have a checksum of zero that will
+# tell the loading code to skip the check.
+rdbchecksum yes
+
+# Enables or disables full sanitation checks for ziplist and listpack etc when
+# loading an RDB or RESTORE payload. This reduces the chances of a assertion or
+# crash later on while processing commands.
+# Options:
+#   no         - Never perform full sanitation
+#   yes        - Always perform full sanitation
+#   clients    - Perform full sanitation only for user connections.
+#                Excludes: RDB files, RESTORE commands received from the master
+#                connection, and client connections which have the
+#                skip-sanitize-payload ACL flag.
+# The default should be 'clients' but since it currently affects cluster
+# resharding via MIGRATE, it is temporarily set to 'no' by default.
+#
+# sanitize-dump-payload no
+
+# The filename where to dump the DB
+dbfilename dump.rdb
+
+# Remove RDB files used by replication in instances without persistence
+# enabled. By default this option is disabled, however there are environments
+# where for regulations or other security concerns, RDB files persisted on
+# disk by masters in order to feed replicas, or stored on disk by replicas
+# in order to load them for the initial synchronization, should be deleted
+# ASAP. Note that this option ONLY WORKS in instances that have both AOF
+# and RDB persistence disabled, otherwise is completely ignored.
+#
+# An alternative (and sometimes better) way to obtain the same effect is
+# to use diskless replication on both master and replicas instances. However
+# in the case of replicas, diskless is not always an option.
+rdb-del-sync-files no
+
+# The working directory.
+#
+# The DB will be written inside this directory, with the filename specified
+# above using the 'dbfilename' configuration directive.
+#
+# The Append Only File will also be created inside this directory.
+#
+# Note that you must specify a directory here, not a file name.
+dir /home/redis/6380
+
+# ACL LOG
+#
+# The ACL Log tracks failed commands and authentication events associated
+# with ACLs. The ACL Log is useful to troubleshoot failed commands blocked
+# by ACLs. The ACL Log is stored in memory. You can reclaim memory with
+# ACL LOG RESET. Define the maximum entry length of the ACL Log below.
+acllog-max-len 128
+
+# Using an external ACL file
+#
+# Instead of configuring users here in this file, it is possible to use
+# a stand-alone file just listing users. The two methods cannot be mixed:
+# if you configure users here and at the same time you activate the external
+# ACL file, the server will refuse to start.
+#
+# The format of the external ACL user file is exactly the same as the
+# format that is used inside redis.conf to describe users.
+#
+# aclfile /etc/redis/users.acl
+
+# IMPORTANT NOTE: starting with Redis 6 "requirepass" is just a compatibility
+# layer on top of the new ACL system. The option effect will be just setting
+# the password for the default user. Clients will still authenticate using
+# AUTH <password> as usually, or more explicitly with AUTH default <password>
+# if they follow the new protocol: both will work.
+#
+# The requirepass is not compatable with aclfile option and the ACL LOAD
+# command, these will cause requirepass to be ignored.
+#
+requirepass Ht334@TestGGGG978
+
+################################# REPLICATION #################################
+
+# If the master is password protected (using the "requirepass" configuration
+# directive below) it is possible to tell the replica to authenticate before
+# starting the replication synchronization process, otherwise the master will
+# refuse the replica request.
+#
+#  作为slave角色连接到集群，务必设置master节点的密码信息，否则会出现连接不上，爆大量日志，导致短时间内磁盘写满的问题
+masterauth Ht334@TestGGGG978
+
+replica-serve-stale-data yes
+
+# You can configure a replica instance to accept writes or not. Writing against
+# a replica instance may be useful to store some ephemeral data (because data
+# written on a replica will be easily deleted after resync with the master) but
+# may also cause problems if clients are writing to it because of a
+# misconfiguration.
+#
+# Since Redis 2.6 by default replicas are read-only.
+#
+# Note: read only replicas are not designed to be exposed to untrusted clients
+# on the internet. It's just a protection layer against misuse of the instance.
+# Still a read only replica exports by default all the administrative commands
+# such as CONFIG, DEBUG, and so forth. To a limited extent you can improve
+# security of read only replicas using 'rename-command' to shadow all the
+# administrative / dangerous commands.
+replica-read-only yes
+
+
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+
+lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+replica-lazy-flush no
+
+# It is also possible, for the case when to replace the user code DEL calls
+# with UNLINK calls is not easy, to modify the default behavior of the DEL
+# command to act exactly like UNLINK, using the following configuration
+# directive:
+
+lazyfree-lazy-user-del no
+
+# FLUSHDB, FLUSHALL, and SCRIPT FLUSH support both asynchronous and synchronous
+# deletion, which can be controlled by passing the [SYNC|ASYNC] flags into the
+# commands. When neither flag is passed, this directive will be used to determine
+# if the data should be deleted asynchronously.
+
+lazyfree-lazy-user-flush no
+
+################################ REDIS CLUSTER  ###############################
+
+# Normal Redis instances can't be part of a Redis Cluster; only nodes that are
+# started as cluster nodes can. In order to start a Redis instance as a
+# cluster node enable the cluster support uncommenting the following:
+#
+cluster-enabled yes
+
+# Every cluster node has a cluster configuration file. This file is not
+# intended to be edited by hand. It is created and updated by Redis nodes.
+# Every Redis Cluster node requires a different cluster configuration file.
+# Make sure that instances running in the same system do not have
+# overlapping cluster configuration file names.
+#
+cluster-config-file nodes-6380.conf
+
+cluster-require-full-coverage no
+
+
+################################## SLOW LOG ###################################
+
+# The Redis Slow Log is a system to log queries that exceeded a specified
+# execution time. The execution time does not include the I/O operations
+# like talking with the client, sending the reply and so forth,
+# but just the time needed to actually execute the command (this is the only
+# stage of command execution where the thread is blocked and can not serve
+# other requests in the meantime).
+#
+# You can configure the slow log with two parameters: one tells Redis
+# what is the execution time, in microseconds, to exceed in order for the
+# command to get logged, and the other parameter is the length of the
+# slow log. When a new command is logged the oldest one is removed from the
+# queue of logged commands.
+
+# The following time is expressed in microseconds, so 1000000 is equivalent
+# to one second. Note that a negative number disables the slow log, while
+# a value of zero forces the logging of every command.
+slowlog-log-slower-than 10000
+
+# There is no limit to this length. Just be aware that it will consume memory.
+# You can reclaim memory used by the slow log with SLOWLOG RESET.
+slowlog-max-len 128<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-6-3-消息队列RocketMQ、RabbitMQ、kafka"><a href="#1-6-3-消息队列RocketMQ、RabbitMQ、kafka" class="headerlink" title="1.6.3 消息队列RocketMQ、RabbitMQ、kafka"></a>1.6.3 消息队列RocketMQ、RabbitMQ、kafka</h5><p>暂无</p>
+<h5 id="1-6-4-文件存储minio、fastdfs"><a href="#1-6-4-文件存储minio、fastdfs" class="headerlink" title="1.6.4 文件存储minio、fastdfs"></a>1.6.4 文件存储minio、fastdfs</h5><p>暂无</p>
+<h5 id="1-6-5-非关系数据库mongodb"><a href="#1-6-5-非关系数据库mongodb" class="headerlink" title="1.6.5 非关系数据库mongodb"></a>1.6.5 非关系数据库mongodb</h5><p>暂无</p>
+<h5 id="1-6-6-时序数据库influxdb、neo4j"><a href="#1-6-6-时序数据库influxdb、neo4j" class="headerlink" title="1.6.6 时序数据库influxdb、neo4j"></a>1.6.6 时序数据库influxdb、neo4j</h5><p>暂无</p>
+<h5 id="1-6-7-前端服务器nginx"><a href="#1-6-7-前端服务器nginx" class="headerlink" title="1.6.7 前端服务器nginx"></a>1.6.7 前端服务器nginx</h5><pre class="line-numbers language-conf"><code class="language-conf">#user  nobody;
+worker_processes  4;
+worker_rlimit_nofile 65535;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+# 环境变量，环境变量只能设置一个，多一个都加载不了，这个问题目前没解决
+env GATEWAY_HOST;
+# 加载模块信息
+load_module modules/ngx_http_perl_module.so;
+
+events {
+    use epoll;
+    worker_connections  204800;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    gzip on;
+    gzip_min_length  1000;
+    gzip_buffers     4 8k;
+    gzip_http_version 1.1;
+    gzip_types       text/plain application/x-javascript text/css application/xml application/javascript application/json;
+
+    client_header_buffer_size 4k;
+
+
+    #运用perl获取环境变量赋值
+        perl_set $GATEWAY_HOST 'sub { return $ENV{"GATEWAY_HOST"}; }';
+        #perl_set $GATEWAY_HOST_2 'sub { return $ENV{"GATEWAY_HOST_2"}; }';
+        #perl_set $GATEWAY_HOST_3 'sub { return $ENV{"GATEWAY_HOST_3"}; }';
+
+        #配置反向代理gateway路径
+    #upstream gateway {
+    #    server 192.168.66.232:19020 weight=1 max_fails=3 fail_timeout=10s;
+    #    server 192.168.66.239:19020 weight=1 max_fails=3 fail_timeout=15s;
+    #    server 192.168.66.233:19020 weight=1 max_fails=3 fail_timeout=15s;
+    #}
+
+    server {
+        listen       80;
+        server_name  localhost;
+        # 设置文件上传大小
+        client_body_buffer_size 50m;
+        client_max_body_size 100m;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 前端配置
+            location / {
+               # 避免浏览器缓存
+               if ($request_filename ~* .*\.(?:htm|html)$)
+           {
+              add_header Cache-Control no-cache;
+              add_header Cache-Control private;
+           }
+
+            root /var/www;
+
+                try_files $uri $uri/ @router;
+            index  index.html index.htm;
+            #nginx对于静态文件的处理模块，开启后会寻找以.gz结尾的文件，直接返回，不会占用cpu进行压缩。如果找不到则不进行压缩。
+            gzip_static on;
+            # #决定是否开启gzip模块，on表示开启，off表示关闭；
+            # gzip on;
+            # #设置允许压缩的页面最小字节(从header头的Content-Length中获取) ，当返回内容大于此值时才会使用gzip进行压缩,以K为单位,当值为0时，所有页面都进行压缩。建议大于1k
+            # gzip_min_length 1k;
+            # #设置gzip申请内存的大小,其作用是按块大小的倍数申请内存空间,param2:int(k) 后面单位是k。这里设置以16k为单位,按照原始数据大小以16k为单位的4倍申请内存
+            # gzip_buffers 4 16k;
+            # #识别http协议的版本,早起浏览器可能不支持gzip自解压,用户会看到乱码
+            # gzip_http_version 1.1;
+            # #设置gzip压缩等级，等级越底压缩速度越快文件压缩比越小，反之速度越慢文件压缩比越大；等级1-9，最小的压缩最快 但是消耗cpu，建议为6
+            # gzip_comp_level 6;
+            # #设置需要压缩的MIME类型,非设置值不进行压缩，即匹配压缩类型
+            # gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript image/jpeg image/gif image/png;
+            # #启用应答头"Vary: Accept-Encoding"
+            # gzip_vary on;
+            # #配置禁用gzip条件，支持正则。此处表示ie6及以下不启用gzip（因为ie低版本不支持）
+            # gzip_disable "MSIE [1-6]\.";
+        }
+
+            location @router {
+            rewrite ^.*$ /index.html last;
+        }
+
+        # 后端接口配置
+        location /api/ {
+            proxy_set_header Host $http_host;
+            #proxy_pass http://gateway;
+            proxy_pass http://$GATEWAY_HOST;
+            # base项目前端适配，去掉请求中的/api/信息
+            rewrite "^/api/(.*)$" /$1 break;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+
+    }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-6-8-日志ELK"><a href="#1-6-8-日志ELK" class="headerlink" title="1.6.8 日志ELK"></a>1.6.8 日志ELK</h5><p>请参考<a href="http://myxinhua.xyz/2020/07/10/log-pilot-kafka-elk-gou-jian-sheng-chan-ji-ri-zhi-guan-li-xi-tong/" target="_blank" rel="noopener">log-pilot+kafka+ELK构建生产级日志管理系统</a></p>
+<p>注意：日志告警使用ElastAlert这个工具进行。由于ElastAlert这个工具，没有对于企业微信或者飞书告警的插件支持，可以直接使用ElasticAlert中的command方式调用飞书或者企业微信的机器人接口传递数据即可！</p>
+<h5 id="1-6-9-全链路监控Skywalking"><a href="#1-6-9-全链路监控Skywalking" class="headerlink" title="1.6.9 全链路监控Skywalking"></a>1.6.9 全链路监控Skywalking</h5><p>【待补充部分】</p>
+<h5 id="1-6-10-监控平台Prometheus"><a href="#1-6-10-监控平台Prometheus" class="headerlink" title="1.6.10 监控平台Prometheus"></a>1.6.10 监控平台Prometheus</h5><p>参考地址：<a href="http://myxinhua.xyz/2021/06/22/cadvisor-node-exporter-prometheus-grafana-da-jian-zhu-ji-he-docker-rong-qi-jian-kong/" target="_blank" rel="noopener">cadvisor+node-exporter+prometheus+grafana搭建主机和docker容器监控</a></p>
+<h5 id="1-6-11-配置中心和注册中心nacos"><a href="#1-6-11-配置中心和注册中心nacos" class="headerlink" title="1.6.11 配置中心和注册中心nacos"></a>1.6.11 配置中心和注册中心nacos</h5><p>目前在用的nacos有1.4.2版本以及2.0.3版本。新项目以2.0.3版本为例，在安装配置时需要注意以下几点：</p>
+<ul>
+<li>无论单机还是集群模式，都需要连接后向的mysql数据库，保存配置文件修改的记录。</li>
+<li>启动时，务必注意从防火墙开放端口信息。</li>
+<li>及时关注github上的issue，关注对应的CVE漏洞信息，并及时修复（fastjson的教训）。</li>
+<li>配置集群后，务必检查集群内各个节点存储的元数据是否一致，在结构上是否一致。</li>
+</ul>
+<p>application.properties配置文件信息如下：</p>
+<pre class="line-numbers language-Shell"><code class="language-Shell">#
+# Copyright 1999-2021 Alibaba Group Holding Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#*************** Spring Boot Related Configurations ***************#
+### Default web context path:
+server.servlet.contextPath=/nacos
+### Default web server port:
+## 修改端口号信息
+server.port=18848
+
+#*************** Network Related Configurations ***************#
+### If prefer hostname over ip for Nacos server addresses in cluster.conf:
+# nacos.inetutils.prefer-hostname-over-ip=false
+
+### Specify local server's IP:
+## 设置nacos自身ip地址
+nacos.inetutils.ip-address=192.168.229.242
+
+
+#*************** Config Module Related Configurations ***************#
+### If use MySQL as datasource:
+spring.datasource.platform=mysql
+
+### Count of DB:
+db.num=1
+
+### Connect URL of DB:
+## 配置数据库连接信息
+db.url.0=jdbc:mysql://192.168.229.242:3306/nacos?characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+db.user.0=nacos
+db.password.0=NacosTest-660
+
+### Connection pool configuration: hikariCP
+db.pool.config.connectionTimeout=30000
+db.pool.config.validationTimeout=10000
+db.pool.config.maximumPoolSize=20
+db.pool.config.minimumIdle=2
+
+#*************** Naming Module Related Configurations ***************#
+### Data dispatch task execution period in milliseconds: Will removed on v2.1.X, replace with nacos.core.protocol.distro.data.sync.delayMs
+# nacos.naming.distro.taskDispatchPeriod=200
+
+### Data count of batch sync task: Will removed on v2.1.X. Deprecated
+# nacos.naming.distro.batchSyncKeyCount=1000
+
+### Retry delay in milliseconds if sync task failed: Will removed on v2.1.X, replace with nacos.core.protocol.distro.data.sync.retryDelayMs
+# nacos.naming.distro.syncRetryDelay=5000
+
+### If enable data warmup. If set to false, the server would accept request without local data preparation:
+# nacos.naming.data.warmup=true
+
+### If enable the instance auto expiration, kind like of health check of instance:
+# nacos.naming.expireInstance=true
+
+### will be removed and replaced by `nacos.naming.clean` properties
+nacos.naming.empty-service.auto-clean=true
+nacos.naming.empty-service.clean.initial-delay-ms=50000
+nacos.naming.empty-service.clean.period-time-ms=30000
+
+### Add in 2.0.0
+### The interval to clean empty service, unit: milliseconds.
+# nacos.naming.clean.empty-service.interval=60000
+
+### The expired time to clean empty service, unit: milliseconds.
+# nacos.naming.clean.empty-service.expired-time=60000
+
+### The interval to clean expired metadata, unit: milliseconds.
+# nacos.naming.clean.expired-metadata.interval=5000
+
+### The expired time to clean metadata, unit: milliseconds.
+# nacos.naming.clean.expired-metadata.expired-time=60000
+
+### The delay time before push task to execute from service changed, unit: milliseconds.
+# nacos.naming.push.pushTaskDelay=500
+
+### The timeout for push task execute, unit: milliseconds.
+# nacos.naming.push.pushTaskTimeout=5000
+
+### The delay time for retrying failed push task, unit: milliseconds.
+# nacos.naming.push.pushTaskRetryDelay=1000
+
+### Since 2.0.3
+### The expired time for inactive client, unit: milliseconds.
+# nacos.naming.client.expired.time=180000
+
+#*************** CMDB Module Related Configurations ***************#
+### The interval to dump external CMDB in seconds:
+# nacos.cmdb.dumpTaskInterval=3600
+
+### The interval of polling data change event in seconds:
+# nacos.cmdb.eventTaskInterval=10
+
+### The interval of loading labels in seconds:
+# nacos.cmdb.labelTaskInterval=300
+
+### If turn on data loading task:
+# nacos.cmdb.loadDataAtStart=false
+
+
+#*************** Metrics Related Configurations ***************#
+### Metrics for prometheus
+#management.endpoints.web.exposure.include=*
+
+### Metrics for elastic search
+management.metrics.export.elastic.enabled=false
+#management.metrics.export.elastic.host=http://localhost:9200
+
+### Metrics for influx
+management.metrics.export.influx.enabled=false
+#management.metrics.export.influx.db=springboot
+#management.metrics.export.influx.uri=http://localhost:8086
+#management.metrics.export.influx.auto-create-db=true
+#management.metrics.export.influx.consistency=one
+#management.metrics.export.influx.compressed=true
+
+#*************** Access Log Related Configurations ***************#
+### If turn on the access log:
+server.tomcat.accesslog.enabled=false
+
+### The access log pattern:
+server.tomcat.accesslog.pattern=%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i
+
+### The directory of access log:
+server.tomcat.basedir=
+
+#*************** Access Control Related Configurations ***************#
+### If enable spring security, this option is deprecated in 1.2.0:
+#spring.security.enabled=false
+
+### The ignore urls of auth, is deprecated in 1.2.0:
+nacos.security.ignore.urls=/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-ui/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**
+
+### The auth system to use, currently only 'nacos' and 'ldap' is supported:
+nacos.core.auth.system.type=nacos
+
+### If turn on auth system:
+nacos.core.auth.enabled=true
+
+### worked when nacos.core.auth.system.type=ldap，{0} is Placeholder,replace login username
+# nacos.core.auth.ldap.url=ldap://localhost:389
+# nacos.core.auth.ldap.userdn=cn={0},ou=user,dc=company,dc=com
+
+### The token expiration in seconds:
+nacos.core.auth.default.token.expire.seconds=18000
+
+### The default token:
+nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+
+### Turn on/off caching of auth information. By turning on this switch, the update of auth information would have a 15 seconds delay.
+nacos.core.auth.caching.enabled=true
+
+### Since 1.4.1, Turn on/off white auth for user-agent: nacos-server, only for upgrade from old version.
+nacos.core.auth.enable.userAgentAuthWhite=false
+
+### Since 1.4.1, worked when nacos.core.auth.enabled=true and nacos.core.auth.enable.userAgentAuthWhite=false.
+### The two properties is the white list for auth and used by identity the request from other server.
+## 这两个配置一定不要注释，规避CVE漏洞
+nacos.core.auth.server.identity.key=serverIdentity
+nacos.core.auth.server.identity.value=security
+
+#*************** Istio Related Configurations ***************#
+### If turn on the MCP server:
+nacos.istio.mcp.server.enabled=false
+
+#*************** Core Related Configurations ***************#
+
+### set the WorkerID manually
+# nacos.core.snowflake.worker-id=
+
+### Member-MetaData
+# nacos.core.member.meta.site=
+# nacos.core.member.meta.adweight=
+# nacos.core.member.meta.weight=
+
+### MemberLookup
+### Addressing pattern category, If set, the priority is highest
+# nacos.core.member.lookup.type=[file,address-server]
+## Set the cluster list with a configuration file or command-line argument
+# nacos.member.list=192.168.16.101:8847?raft_port=8807,192.168.16.101?raft_port=8808,192.168.16.101:8849?raft_port=8809
+## for AddressServerMemberLookup
+# Maximum number of retries to query the address server upon initialization
+# nacos.core.address-server.retry=5
+## Server domain name address of [address-server] mode
+# address.server.domain=jmenv.tbsite.net
+## Server port of [address-server] mode
+# address.server.port=8080
+## Request address of [address-server] mode
+# address.server.url=/nacos/serverlist
+
+#*************** JRaft Related Configurations ***************#
+
+### Sets the Raft cluster election timeout, default value is 5 second
+# nacos.core.protocol.raft.data.election_timeout_ms=5000
+### Sets the amount of time the Raft snapshot will execute periodically, default is 30 minute
+# nacos.core.protocol.raft.data.snapshot_interval_secs=30
+### raft internal worker threads
+# nacos.core.protocol.raft.data.core_thread_num=8
+### Number of threads required for raft business request processing
+# nacos.core.protocol.raft.data.cli_service_thread_num=4
+### raft linear read strategy. Safe linear reads are used by default, that is, the Leader tenure is confirmed by heartbeat
+# nacos.core.protocol.raft.data.read_index_type=ReadOnlySafe
+### rpc request timeout, default 5 seconds
+# nacos.core.protocol.raft.data.rpc_request_timeout_ms=5000
+
+#*************** Distro Related Configurations ***************#
+
+### Distro data sync delay time, when sync task delayed, task will be merged for same data key. Default 1 second.
+# nacos.core.protocol.distro.data.sync.delayMs=1000
+
+### Distro data sync timeout for one sync data, default 3 seconds.
+# nacos.core.protocol.distro.data.sync.timeoutMs=3000
+
+### Distro data sync retry delay time when sync data failed or timeout, same behavior with delayMs, default 3 seconds.
+# nacos.core.protocol.distro.data.sync.retryDelayMs=3000
+
+### Distro data verify interval time, verify synced data whether expired for a interval. Default 5 seconds.
+# nacos.core.protocol.distro.data.verify.intervalMs=5000
+
+### Distro data verify timeout for one verify, default 3 seconds.
+# nacos.core.protocol.distro.data.verify.timeoutMs=3000
+
+### Distro data load retry delay when load snapshot data failed, default 30 seconds.
+# nacos.core.protocol.distro.data.load.retryDelayMs=30000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果配置集群启动的话，需要设置cluster.conf配置文件：</p>
+<pre class="line-numbers language-Apache"><code class="language-Apache">#2022-05-09T09:08:22.185
+192.168.88.241:18848
+192.168.88.242:18848
+192.168.88.243:18848<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="1-6-12-容器运行docker"><a href="#1-6-12-容器运行docker" class="headerlink" title="1.6.12 容器运行docker"></a>1.6.12 容器运行docker</h5><p>docker的配置文件默认在/etc/docker/daemon.json，设置如下：</p>
+<pre class="line-numbers language-JSON"><code class="language-JSON">{
+    "registry-mirrors": [
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://registry.cn-hangzhou.aliyuncs.com",
+        "https://mirror.baidubce.com",
+        "https://hub-mirror.c.163.com"
+    ],
+    "insecure-registries": [
+        "192.168.66.193",
+        "192.168.88.243"
+    ],
+    "live-restore": true,
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "50m",
+        "max-file": "3"
+    }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其中比较重要的是insecure-registries和live-restore两个配置，insecure-registries可以满足不配置ssl证书的情况下从harbor中进行服务拉取，live-restore是保证正常重启docker服务时，容器不会重启或者处于Exited状态，在重启docker服务后，容器会和之前的状态一样运行！</p>
+<p>注意：docker运行时尽可能使用较高版本、较稳定的内核，不使用默认的3.10内核，并对内核谨慎更新。</p>
+<p>单个Docker基础镜像的设置，后端服务基础镜像如下：</p>
+<pre class="line-numbers language-Dockerfile"><code class="language-Dockerfile">### 后端Docker基础镜像信息
+### author:lisongyang
+### 以openjdk为基础进行构建  
+### 名称为base_backend:0.0.1
+
+# 1.FROM XX---指定基础镜像
+FROM openjdk:8-alpine
+
+# 2.WORKDIR 设置工作目录
+WORKDIR /app
+
+# 3.添加全局变量
+
+# 启动方式---对应-Dspring.profiles.active
+ENV CHANNEL=""
+
+# 基础IP地址信息---对应-Dspring.cloud.client.ip-address
+ENV IP_ADDR=""
+
+# nacos配置
+
+# Nacos所在地址---对应-Dnacos_ip，需要更换时指定
+ENV NACOS_IP="192.168.88.161:18848"
+
+# Nacos配置的命名空间---对应-Dnacos_namespace，需要更换时指定
+ENV NACOS_NAMESPACE="858b37b1-35be-4564-a24e-dc2c322d5784"
+
+# nacos用户名信息，对应-Dnacos_username
+ENV NACOS_UNAME=""
+
+# nacos密码信息，对应-Dnacos_passwd
+ENV NACOS_PASSWD=""
+
+# skywalking配置
+
+# skywalking的命名空间，对应-Dskywalking.agent.namespace
+ENV SKYWALKING_NAMESPACE=""
+
+# 目标微服务名称，传入的服务名称，对应-Dskywalking.agent.service_name
+# 同时对应jar的名称
+ENV SKYWALKING_TARGET_SERVICE_NAME=""
+
+# Skywalking地址，对应-Dskywalking.collector.backend_service
+ENV SKYWALKING_IP_PORT=""
+
+# 4.复制Skywalking的jar包放入目录
+COPY ./skywalking-agent /app/skywalking-agent
+
+# 5. 写入对应的时区信息
+ENV TZ=Asia/Shanghai
+
+# 安装相应的依赖信息
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&\ 
+    apk update && apk add --no-cache tzdata &&\ 
+    apk add --no-cache tini &&\
+    ln -sf /usr/share/zoneinfo/$TZ /etc/localtime &&\ 
+    echo $TZ > /etc/timezone
+
+# 字体信息安装
+# 安装字体库管理工具并创建文件夹
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&\
+    apk add --no-cache ttf-dejavu fontconfig && \
+    mkdir -p /usr/share/fonts/chinese
+
+# 复制字体到文件夹中
+COPY fonts/msyh.ttf /usr/share/fonts/chinese/
+COPY fonts/msyhbd.ttf /usr/share/fonts/chinese/
+COPY fonts/simsun.ttc /usr/share/fonts/chinese/
+
+# 执行字体缓存创建
+RUN cd /usr/share/fonts/chinese/ && mkfontscale && fc-list :lang=zh
+
+# 6. 安装curl工具并添加优雅停机脚本到基础镜像中
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories &&\
+    apk add --no-cache curl 
+
+COPY ./scripts /app/scripts
+
+# 7. 添加jmx监控设施
+COPY ./jmx /app/jmx
+
+# 8. 设置入口点
+ENTRYPOINT ["/sbin/tini","--"]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>后端基础镜像中需要注意的点如下：</p>
+<ol>
+<li>ENTRYPOINT [“/sbin/tini”,”–”]，以tini进行启动，这样服务进程的pid不是1，可以进行额外很多的事情，例如对服务调试、进程attach。</li>
+<li>单个服务添加了jmx监控，可以在业务服务启动的时候选择是否使用。包括单个服务也添加了skywalking agent</li>
+<li>scripts文件夹下的文件如下：</li>
+</ol>
+<pre class="line-numbers language-Shell"><code class="language-Shell">#!/bin/bash
+# 服务停机前操作，从nacos下线服务
+# 通过环境变量获取下列参数
+serviceName="${SERVICE_NAME}"
+groupName="DEFAULT_GROUP"
+metadata="preserved.register.source=SPRING_CLOUD"
+podIp="${IP_ADDR}"
+podPort="${SERVICE_PORT}"
+nacosIp="${NACOS_IP}"
+nacosNamespace="${NACOS_NAMESPACE}"
+nacosUname="${NACOS_UNAME}"
+nacosPasswd="${NACOS_PASSWD}"
+
+echo "$serviceName, $podIp, $podPort"
+
+# 获取nacos的认证信息
+Token=$(curl -s --location --request POST "http://${nacosIp}/nacos/v1/auth/users/login" --form "username=${nacosUname}" --form "password=${nacosPasswd}" | awk -F"accessToken" '{print $2}' | awk -F":" '{print $2}' | awk -F'"' '{print $2}')
+
+echo "=========$Token=============="
+
+# 从nacos注册中心下线
+curl --location --request PUT "http://${nacosIp}/nacos/v1/ns/instance?&accessToken=${Token}" \
+--form "serviceName=${serviceName}" \
+--form "clusterName=DEFAULT" \
+--form "groupName=${groupName}" \
+--form "metadata=${metadata}" \
+--form "namespaceId=${nacosNamespace}" \
+--form "ip=${podIp}" \
+--form "port=${podPort}" \
+--form "ephemeral=true" \
+--form "weight=1" \
+--form "enabled=false"
+
+# 等待30s，刷新nacos网关缓存
+sleep 30<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>通过shell脚本实现服务主动下线的操作，实现不停机更新业务服务的操作！（需要配合k8s进行）参考地址：<a href="http://myxinhua.xyz/2022/01/13/k8s-he-nacos-lian-he-shi-xian-fu-wu-de-bu-ting-ji-geng-xin-wen-ti-yan-jiu/" target="_blank" rel="noopener">k8s和nacos联合实现服务的不停机更新问题研究</a></p>
+<h5 id="1-6-13-k8s、istio、ciluim"><a href="#1-6-13-k8s、istio、ciluim" class="headerlink" title="1.6.13 k8s、istio、ciluim"></a>1.6.13 k8s、istio、ciluim</h5><h5 id="1-6-14-问题排查工具：arthas"><a href="#1-6-14-问题排查工具：arthas" class="headerlink" title="1.6.14 问题排查工具：arthas"></a>1.6.14 问题排查工具：arthas</h5><p>在线上后端服务出现OOM或者运行问题时，使用Arthas工具进行排查。由于我们使用完整的openjdk作为docker内的服务运行环境，因此可以无缝接入Arthas。</p>
+<p>Arthas需要将安装包拷贝到当前运行的容器中执行。教程请参考：<a href="https://arthas.aliyun.com/doc/advanced-use.html" target="_blank" rel="noopener">进阶使用 ‒ Arthas 3.6.1 文档</a></p>
+<h5 id="1-6-15-后端服务jvm设置"><a href="#1-6-15-后端服务jvm设置" class="headerlink" title="1.6.15 后端服务jvm设置"></a>1.6.15 后端服务jvm设置</h5><p>以单个服务启动项命令解析：</p>
+<pre class="line-numbers language-Nginx"><code class="language-Nginx">java -Djava.rmi.server.hostname=192.168.88.239 -Dcom.sun.management.jmxremote.port=10001 -Dcom.sun.management.jmxremote.rmi.port=10001 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -XX:MaxRAMPercentage=75.0 -XX:MaxRAM=4000m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/app/heap_mem.hprof -javaagent:/app/skywalking-agent/skywalking-agent.jar -Dskywalking.agent.namespace=${SKYWALKING_NAMESPACE} -Dskywalking.agent.service_name=${SKYWALKING_TARGET_SERVICE_NAME} -Dskywalking.collector.backend_service=${SKYWALKING_IP_PORT}  -Dspring.profiles.active=${CHANNEL} -Dspring.cloud.client.ip-address=${IP_ADDR} -Dnacos_ip=${NACOS_IP} -Dnacos_namespace=${NACOS_NAMESPACE} -Dnacos_username=${NACOS_UNAME} -Dnacos_passwd=${NACOS_PASSWD} -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5019 -jar platform-base-system-2.0.0-SNAPSHOT.jar"<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>远程监控信息：</p>
+<pre class="line-numbers language-Groovy"><code class="language-Groovy">-Djava.rmi.server.hostname=192.168.88.239 // 远程服务器的主机名
+-Dcom.sun.management.jmxremote.port=10001 // 是JMX远程监控端口号，需要在防火墙开放该端口
+-Dcom.sun.management.jmxremote.rmi.port=10001 // RMI端口号，JMX在远程连接时，会随机开启一个RMI端口作为连接的数据端口，可以和JMX端口号相同。
+-Dcom.sun.management.jmxremote.ssl=false // 表示是否对连接开启SSL加密，默认开启
+-Dcom.sun.management.jmxremote.authenticate=false // 是否需要开启用户认证，默认开启，如果开启需要额外配置授权文件；<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>配置远程jmx监控内容，需要对外映射10001端口号，通过开发机的jconsole或者jvisualvm等工具进行连接，查看服务运行情况。</p>
+<p>jvm内存分配：</p>
+<pre class="line-numbers language-Groovy"><code class="language-Groovy">-XX:MaxRAMPercentage=75.0 // 支持JDK版本：Java 8 update 191及更高,设置JVM使用容器内存百分比。由于存在系统组件开销，建议最大不超过75.0，推荐设置为70.0。
+-XX:MaxRAM=4000m // 总计使用的最大内存量
+-XX:+UnlockExperimentalVMOptions //  
+-XX:+UseCGroupMemoryLimitForHeap // 
+-XX:+HeapDumpOnOutOfMemoryError // 打印OOM错误信息
+-XX:HeapDumpPath=/app/heap_mem.hprof // 将OOM错误信息输出到本地
+-XX:+PrintGCDetails     // (后续添加)输出GC详细信息。
+-XX:+PrintGCDateStamps    // （后续添加）输出GC时间戳。日期形式，例如2019-12-24T21:53:59.234+0800。
+-XX:+UseContainerSupport  // 默认参数，无需显式配置，<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Skywalking 监控设置：</p>
+<pre class="line-numbers language-Groovy"><code class="language-Groovy"> -javaagent:/app/skywalking-agent/skywalking-agent.jar // skywalking依赖
+ -Dskywalking.agent.namespace=${SKYWALKING_NAMESPACE}  // skywalking 服务所在命名空间
+ -Dskywalking.agent.service_name=${SKYWALKING_TARGET_SERVICE_NAME} // 服务名称
+ -Dskywalking.collector.backend_service=${SKYWALKING_IP_PORT}  // skywalking 服务端和数据收集的端口<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其它设置：</p>
+<pre class="line-numbers language-Groovy"><code class="language-Groovy">-Dspring.profiles.active=${CHANNEL} // 配置文件后缀信息
+-Dspring.cloud.client.ip-address=${IP_ADDR}  // 指定服务所在ip地址
+-Dnacos_ip=${NACOS_IP} 
+-Dnacos_namespace=${NACOS_NAMESPACE} 
+-Dnacos_username=${NACOS_UNAME} 
+-Dnacos_passwd=${NACOS_PASSWD} 
+-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5019<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>给出一个阿里云的jvm配置实践：<a href="https://help.aliyun.com/document_detail/383255.html" target="_blank" rel="noopener">JVM内存配置最佳实践 - Serverless应用引擎 - 阿里云</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/474539888" target="_blank" rel="noopener">Java容器化参数配置最佳实践</a></p>
+<h5 id="1-6-16-DNS-Server安装配置"><a href="#1-6-16-DNS-Server安装配置" class="headerlink" title="1.6.16  DNS Server安装配置"></a>1.6.16  DNS Server安装配置</h5><p>【待补充部分】</p>
+<p>参考地址：<a href>dns-cheater 安装部署及配置使用</a></p>
+<h4 id="1-7-安全策略"><a href="#1-7-安全策略" class="headerlink" title="1.7 安全策略"></a>1.7 安全策略</h4><h5 id="1-7-1-密码定期更换（生产环境）"><a href="#1-7-1-密码定期更换（生产环境）" class="headerlink" title="1.7.1  密码定期更换（生产环境）"></a>1.7.1  密码定期更换（生产环境）</h5><p>【必须】强度：10位以上；包含了字母（大写字母和小写字母），数字和特殊符号；不允许包含英文单词，必须是无意义的组合；</p>
+<p>【必须】变更频率：每120天一换。</p>
+<h5 id="1-7-2-固定ip登录"><a href="#1-7-2-固定ip登录" class="headerlink" title="1.7.2 固定ip登录"></a>1.7.2 固定ip登录</h5><p>【建议】限制登录的ip范围以及只允许特定ip登录！</p>
+<h5 id="1-7-3-限制外部ping命令"><a href="#1-7-3-限制外部ping命令" class="headerlink" title="1.7.3 限制外部ping命令"></a>1.7.3 限制外部ping命令</h5><p>【必须】限制服务器禁止其它用户执行Ping命令。</p>
+<h5 id="1-7-4-777目录和文件"><a href="#1-7-4-777目录和文件" class="headerlink" title="1.7.4 777目录和文件"></a>1.7.4 777目录和文件</h5><p>【必须】禁止设置777状态的文件和文件夹，对文件或者文件夹合理授权，合理划定分组和用户权限。</p>
+<p>后续可以参考该文档：<a href="https://linux.cn/article-6753-1.html" target="_blank" rel="noopener">https://linux.cn/article-6753-1.html</a></p>
+<h4 id="1-8-定期漏洞扫描"><a href="#1-8-定期漏洞扫描" class="headerlink" title="1.8 定期漏洞扫描"></a>1.8 定期漏洞扫描</h4><p>应尽快确定漏洞扫描工具，通过购买或者通过开源工具搭建。（待继续编写）</p>
+<h4 id="1-9-shell编程规范"><a href="#1-9-shell编程规范" class="headerlink" title="1.9 shell编程规范"></a>1.9 shell编程规范</h4><p><a href="http://itxx00.github.io/blog/2020/01/03/shell-standards/" target="_blank" rel="noopener">shell style guide</a>，所有shell脚本编写前参考该风格指南进行！</p>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Linux以及微服务环境下运维管理规范》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                JamesLiAndroid
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '',
+        appKey: '',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Linux以及微服务环境下运维管理规范">
+                        
+                        <span class="card-title">Linux以及微服务环境下运维管理规范</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Linux以及微服务环境下运维管理规范规范说明关于运维规范文档，在阅读时，主要区分四个内容：
+
+【必须】严格去执行的，不允许打折，也不允许变更
+【建议】可以执行，也可以不执行的
+【警告】危险操作，预警信息
+【说明】对部分内容的重新解释以及补
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-06-01
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/17/zai-jenkins-zhong-shi-xian-tong-yong-de-webhook-lian-jie-diao-yong-de-fang-an-shuo-ming/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="在jenkins中实现通用的webhook连接调用的方案说明">
+                        
+                        <span class="card-title">在jenkins中实现通用的webhook连接调用的方案说明</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            在jenkins中实现通用的webhook连接调用的方案说明前言由于公司层面更换了办公通讯软件，由企业微信更换为飞书，导致我们之前在jenkins中配置的企业微信webhook构建信息发布，无法在飞书中使用。由于我司DevOps人员在编码层
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-04-17
+                            </span>
+                        <span class="publish-author">
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: 时代与猫的脚步<br />'
+            + '作者: JamesLiAndroid<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。感谢您的支持。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2019 WeiYang. All Rights Reserved.
+            <a href="http://www.beian.miit.gov.cn">鲁ICP备17011350号</a>
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">317.5k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/JamesLiAndroid" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:lsy1234567@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/li-tian-90-66" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2020, 01, 28, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>
