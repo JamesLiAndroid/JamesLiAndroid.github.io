@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://JamesLiAndroid.github.io/2022/06/02/guan-yu-ganymed-ssh2-wu-fa-lian-jie-fu-wu-qi-de-wen-ti-pai-cha/</loc>
+    <lastmod>2022-06-02</lastmod>
+  </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/</loc>
     <lastmod>2022-06-01</lastmod>
   </url>  <url>
@@ -148,19 +151,19 @@
     <loc>https://JamesLiAndroid.github.io/2020/08/03/qian-duan-wei-fu-wu-zai-jenkins-xia-de-gou-jian-gai-zao/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
+    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
+    <lastmod>2020-10-14</lastmod>
+  </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/04/04/wei-fu-wu-cong-docker-dao-k8s-de-gai-zao-li-cheng/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/04/16/xiang-mu-qian-yi-dao-k8s-de-pei-zhi-xiu-gai-he-wen-ti-ji-lu/</loc>
+    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/05/14/guan-yu-k8s-huan-jing-zhong-wei-fu-wu-diao-yong-wen-ti-pai-cha-fang-shi/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/12/jenkins-qian-yi-ji-lu/</loc>
-    <lastmod>2020-10-14</lastmod>
-  </url>  <url>
-    <loc>https://JamesLiAndroid.github.io/2020/07/30/guan-yu-eureka-wu-fa-xiang-hu-zhu-ce-qie-fu-wu-zhi-shi-zhu-ce-dao-dan-yi-eureka-de-wen-ti-zong-jie/</loc>
     <lastmod>2020-10-14</lastmod>
   </url>  <url>
     <loc>https://JamesLiAndroid.github.io/2020/06/09/gitlab-qian-yi-he-zhuan-ru-cao-zuo-ji-lu/</loc>

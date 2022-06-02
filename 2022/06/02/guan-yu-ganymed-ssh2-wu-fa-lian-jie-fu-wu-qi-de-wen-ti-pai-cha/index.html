@@ -4,20 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="《微服务架构设计模式》读书笔记, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
+    <meta name="keywords" content="关于ganymed-ssh2无法连接服务器的问题排查, Java Android Python DevOps JamesLiAndroid 小李 运维 ">
     <meta name="baidu-site-verification" content>
     <meta name="google-site-verification" content>
     <meta name="360-site-verification" content>
-    <meta name="description" content="《微服务架构设计模式》读书笔记从单体架构到微服务，演化路线和注意事项，如何一步步重构单体架构到微服务架构，包含以下内容：
+    <meta name="description" content="关于ganymed-ssh2无法连接服务器的问题排查问题描述原来给甲方使用的服务发布系统，内部依赖了ssh连接库ganymed-ssh2，如下：
 
-单体地狱
-服务拆分策略
-通信模式
-数据一致性
-领域驱动设计（DDD）
-事件溯源
-API组合、CQRS
-网关和外部请求">
+        &amp;lt;dependency&gt;
+            &amp;lt;groupI">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -25,7 +19,7 @@ API组合、CQRS
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>《微服务架构设计模式》读书笔记 | 时代与猫的脚步</title>
+    <title>关于ganymed-ssh2无法连接服务器的问题排查 | 时代与猫的脚步</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -299,13 +293,13 @@ API组合、CQRS
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        《微服务架构设计模式》读书笔记
+                        关于ganymed-ssh2无法连接服务器的问题排查
                     </div>
                 </div>
             </div>
@@ -427,7 +421,7 @@ API组合、CQRS
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-06
+                    2022-06-02
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -441,14 +435,14 @@ API组合、CQRS
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    7 分
                 </div>
                 
                 
@@ -459,77 +453,188 @@ API组合、CQRS
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="《微服务架构设计模式》读书笔记"><a href="#《微服务架构设计模式》读书笔记" class="headerlink" title="《微服务架构设计模式》读书笔记"></a>《微服务架构设计模式》读书笔记</h1><p>从单体架构到微服务，演化路线和注意事项，如何一步步重构单体架构到微服务架构，包含以下内容：</p>
-<ul>
-<li>单体地狱</li>
-<li>服务拆分策略</li>
-<li>通信模式</li>
-<li>数据一致性</li>
-<li>领域驱动设计（DDD）</li>
-<li>事件溯源</li>
-<li>API组合、CQRS</li>
-<li>网关和外部请求</li>
-<li>微服务测试转变</li>
-<li>到达生产环境之前–安全性、外部化可配置、服务可观测</li>
-<li>部署模式</li>
-<li>从单体到微服务的重构</li>
+                <h1 id="关于ganymed-ssh2无法连接服务器的问题排查"><a href="#关于ganymed-ssh2无法连接服务器的问题排查" class="headerlink" title="关于ganymed-ssh2无法连接服务器的问题排查"></a>关于ganymed-ssh2无法连接服务器的问题排查</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>原来给甲方使用的服务发布系统，内部依赖了ssh连接库ganymed-ssh2，如下：</p>
+<pre class="line-numbers language-xml"><code class="language-xml">
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>ch.ethz.ganymed<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>ganymed-ssh2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>262<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在今天早上进行ssh连接的时候，报错，服务报错信息如下：</p>
+<pre class="line-numbers language-log"><code class="language-log">
+2022-06-02 08:58:12.351  INFO 108898 --- [io-55592-exec-1] c.i.g.fcdplus.entity.SSHRegisterEntity   : login:
+Key exchange was not finished, connection is closed.
+java.io.IOException: Key exchange was not finished, connection is closed.
+        at ch.ethz.ssh2.transport.KexManager.getOrWaitForConnectionInfo(KexManager.java:75)
+        at ch.ethz.ssh2.transport.TransportManager.getConnectionInfo(TransportManager.java:169)
+        at ch.ethz.ssh2.Connection.connect(Connection.java:759)
+        at ch.ethz.ssh2.Connection.connect(Connection.java:628)
+        at com.icpcloud.gift.fcdplus.entity.SSHRegisterEntity.login(SSHRegisterEntity.java:62)
+        at com.icpcloud.gift.fcdplus.entity.SSHRegisterEntity.exec(SSHRegisterEntity.java:112)
+        at com.icpcloud.gift.fcdplus.controller.FcdController.deployBackendDockerImage(FcdController.java:72)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+        at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+        at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878)
+        at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792)
+        at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+        at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+        at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+        at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+        at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+        at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+        at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+        at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+        at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+        at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+        at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+        at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+        at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:888)
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1597)
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+        at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: Cannot negotiate, proposals do not match.
+        at ch.ethz.ssh2.transport.ClientKexManager.handleMessage(ClientKexManager.java:123)
+        at ch.ethz.ssh2.transport.TransportManager.receiveLoop(TransportManager.java:572)
+        at ch.ethz.ssh2.transport.TransportManager$1.run(TransportManager.java:261)
+        ... 1 more
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样无法通过java程序去连接服务器执行shell命令。</p>
+<h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><ol>
+<li>简易解决</li>
+</ol>
+<p>获取ssh版本以及其支持的加密算法信息，如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+$ ssh -V
+OpenSSH_8.5p1, OpenSSL 1.0.2k-fips  26 Jan 2017
+
+$  ssh -Q cipher
+3des-cbc
+aes128-cbc
+aes192-cbc
+aes256-cbc
+rijndael-cbc@lysator.liu.se
+aes128-ctr
+aes192-ctr
+aes256-ctr
+aes128-gcm@openssh.com
+aes256-gcm@openssh.com
+chacha20-poly1305@openssh.com
+
+
+$ ssh -Q mac
+hmac-sha1
+hmac-sha1-96
+hmac-sha2-256
+hmac-sha2-512
+hmac-md5
+hmac-md5-96
+umac-64@openssh.com
+umac-128@openssh.com
+hmac-sha1-etm@openssh.com
+hmac-sha1-96-etm@openssh.com
+hmac-sha2-256-etm@openssh.com
+hmac-sha2-512-etm@openssh.com
+hmac-md5-etm@openssh.com
+hmac-md5-96-etm@openssh.com
+umac-64-etm@openssh.com
+umac-128-etm@openssh.com
+
+
+$ ssh -Q kex
+diffie-hellman-group1-sha1
+diffie-hellman-group14-sha1
+diffie-hellman-group14-sha256
+diffie-hellman-group16-sha512
+diffie-hellman-group18-sha512
+diffie-hellman-group-exchange-sha1
+diffie-hellman-group-exchange-sha256
+ecdh-sha2-nistp256
+ecdh-sha2-nistp384
+ecdh-sha2-nistp521
+curve25519-sha256
+curve25519-sha256@libssh.org
+sntrup4591761x25519-sha512@tinyssh.org
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后从ganymed-ssh2的代码中得知，其支持的加密算法如下：</p>
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token comment" spellcheck="true">// ch.ethz.ssh2.transport.KexManager类中方法</span>
+
+   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getDefaultClientKexAlgorithmList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token string">"diffie-hellman-group-exchange-sha1"</span><span class="token punctuation">,</span> "diffie<span class="token operator">-</span>hellman<span class="token operator">-</span> 
+             group14<span class="token operator">-</span>sha1<span class="token string">","</span>diffie<span class="token operator">-</span>hellman<span class="token operator">-</span>group1<span class="token operator">-</span>sha1" <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>显然在openssh 8.5版本中，kex算法并没有*”diffie-hellman-group-exchange-sha1”, “diffie-hellman-group14-sha1”,”diffie-hellman-group1-sha1”*这三种算法。上面三种算法在8.5版本的ssh中已经被淘汰，导致ganymed-ssh2无法在高版本的openssh中连接到服务器，至此原因找到。</p>
+<p>尝试使用ssh指定kex算法方式进行连接，如下：</p>
+<pre class="line-numbers language-shell"><code class="language-shell">
+$ ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 tempuser@10.3.61.244
+The authenticity of host '10.3.61.244 (10.3.61.244)' can't be established.
+ED25519 key fingerprint is SHA256:woV+J8/jmRaIhtAXSG4GIQ8jP7GAlLA+moVwRGLu+zE.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? no
+Host key verification failed.
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>侧面证实了openssh高版本组件中并未包含这些加密算法。</p>
+<p>直接的解决方式如下：</p>
+<pre><code>
+// 管理员权限执行
+# echo &quot;KexAlgorithms +diffie-hellman-group1-sha1,+diffie-hellman-group14-sha1,+diffie-hellman-group-exchange-sha1&quot; &gt; /etc/ssh/sshd_config
+
+// 重启ssh进程
+# systemctl daemon-reload &amp;&amp; systemctl restart sshd
+</code></pre><ol start="2">
+<li>更换依赖信息</li>
+</ol>
+<p>弃用ganymed-ssh2，使用jsch实现。其使用的算法可以满足项目需要，并进行了集成。</p>
+<p>集成也相对简单，项目中引用相关依赖即可</p>
+<pre class="line-numbers language-xml"><code class="language-xml">
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.jcraft<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jsch<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>0.1.55<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>官网也有很多集成案例可以上去<a href="http://www.jcraft.com/jsch/examples/" target="_blank" rel="noopener">参考</a>。</p>
+<h2 id="参考地址"><a href="#参考地址" class="headerlink" title="参考地址"></a>参考地址</h2><ul>
+<li><a href="https://blog.csdn.net/u014639848/article/details/120553106" target="_blank" rel="noopener">https://blog.csdn.net/u014639848/article/details/120553106</a></li>
+<li><a href="https://www.openssh.com/legacy.html" target="_blank" rel="noopener">https://www.openssh.com/legacy.html</a></li>
+<li><a href="https://blog.csdn.net/weixin_42404727/article/details/121994029" target="_blank" rel="noopener">https://blog.csdn.net/weixin_42404727/article/details/121994029</a></li>
+<li><a href="https://tech.forums.softwareag.com/t/configuring-an-openssh-server-to-use-the-key-exchange-methods-allowed-by-command-central/240713" target="_blank" rel="noopener">https://tech.forums.softwareag.com/t/configuring-an-openssh-server-to-use-the-key-exchange-methods-allowed-by-command-central/240713</a></li>
 </ul>
-<p>要结合我们当前的开发模式、团队协作模式进行思考，考虑做的好与不好的地方，顺便指出需要补充的知识体系。</p>
-<h2 id="番外"><a href="#番外" class="headerlink" title="番外"></a>番外</h2><p>我始终不赞同直接使用微服务架构模式来开发一个从0开始的软件系统，受限于个人认知和对后端开发的认知，从零开始，就要先去解决有无的问题，我认为此时是可以直接走单体架构的。如果扯到时下很火的中台概念，系统是基于中台的基础设施进行开发，那无可厚非，有业务积累和沉淀，自然可借鉴可拆分的内容就更多了。</p>
-<p>我们现在从零开始开发，只有跨语言的技术积累，以及业务逻辑的积累，但并不是同一技术栈的实现方式，自然转换时会存在偏差。我个人坚持先实现业务功能，而不是立刻去做微服务的开发，当能够满足需求后再考虑架构演进，考虑周边设施。</p>
-<p>如果一定要去实践运行，我的思考是，前期在人员不足、资源不足的情况下，优先考虑把微服务做大，先去划分较大功能范围且有明确边界的微服务，颗粒度要大，但是边界要清晰。然后由此进行开发，尽量维持三人一个微服务的维护团队，尽量让所有人均能承担前端和后端的开发任务！</p>
-<h2 id="单体地狱"><a href="#单体地狱" class="headerlink" title="单体地狱"></a>单体地狱</h2><p>存在问题-&gt;解决方式：微服务架构-&gt;微服务架构的好坏-&gt;描述模式-&gt;流程和组织如何变更</p>
-<ol>
-<li><p>不是银弹</p>
-</li>
-<li><p>对微服务架构的认知普及，统一团队思想，确定演进路线。但是要注意团队变小后，团队内部如何进行自治，如何变被动为主动。</p>
-</li>
-<li><p>DevOps理念的引入，CI\CD外加自动部署</p>
-</li>
-<li><p>运维保障的规划，可观测、可衡量、可追溯</p>
-</li>
-<li><p>架构模式和模式描述语言</p>
-</li>
-</ol>
-<h2 id="服务拆分策略"><a href="#服务拆分策略" class="headerlink" title="服务拆分策略"></a>服务拆分策略</h2><p>架构-&gt;如何定义</p>
-<ol>
-<li><p>非功能性因素：可维护、可测试、可部署、可扩展</p>
-</li>
-<li><p>分层与六边形架构描述</p>
-</li>
-<li><p>如何定义：定义系统操作、定义服务、定义服务API和协作方式。</p>
-</li>
-</ol>
-<p><strong>补充内容：</strong>这里需要补充面向对象设计和UML描述的相关知识</p>
-<ol start="4">
-<li>分解模式：业务能力、领域驱动DDD</li>
-</ol>
-<p><strong>补充内容：</strong>这里需要补充领域驱动设计（DDD）的相关知识，补充分布式架构的相关知识</p>
-<h2 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h2><p>进程间通信-&gt;通信方式(REST、gRPC、消息队列)-&gt;异步消息提高可用性</p>
-<ol>
-<li>交互方式：一对一、一对多、同步、异步</li>
-</ol>
-<p>一对一：请求/响应、异步请求/响应、单向通知<br>一对多：发布/订阅、发布/异步响应</p>
-<ol start="2">
-<li><p>API演化：语义化版本及其兼容策略、消息格式确定（文本、二进制）</p>
-</li>
-<li><p>同步远程过程调用模式：REST模式、gRPC模式、断路器、服务注册和发现</p>
-</li>
-<li><p>异步消息模式：消息队列、发布订阅、消息代理、并发和重复消息处理、事务性消息处理</p>
-</li>
-</ol>
-<p><strong>补充内容：</strong>这里需要补充消息队列的相关知识</p>
-<h2 id="Saga事务模型"><a href="#Saga事务模型" class="headerlink" title="Saga事务模型"></a>Saga事务模型</h2><p>微服务事务管理-&gt;Saga模型设计（协同式、编排式）-&gt;解决隔离问题-&gt;设计案例</p>
-<ol>
-<li><p>事务管理：数据一致性、补偿事务回滚操作</p>
-</li>
-<li><p>协调模式：协同式、编排式。基于消息队列的协调机制、ACD事务模型带来的隔离性问题。</p>
-</li>
-<li><p>解决隔离问题：ACD缺乏I、丢失更新、脏读、模糊或不可重复读</p>
-</li>
-</ol>
-<p>对策：语义锁、交换式更新、悲观视图、重读值、版本文件、业务风险评级</p>
-<h2 id="业务逻辑设计"><a href="#业务逻辑设计" class="headerlink" title="业务逻辑设计"></a>业务逻辑设计</h2>
+
             </div>
             <hr />
 
@@ -687,9 +792,9 @@ API组合、CQRS
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《《微服务架构设计模式》读书笔记》
+                    《关于ganymed-ssh2无法连接服务器的问题排查》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/02/06/wei-fu-wu-jia-gou-she-ji-mo-shi-du-shu-bi-ji/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2022/06/02/guan-yu-ganymed-ssh2-wu-fa-lian-jie-fu-wu-qi-de-wen-ti-pai-cha/" property="cc:attributionName"
                rel="cc:attributionURL">
                 JamesLiAndroid
             </a> 采用
@@ -991,34 +1096,39 @@ API组合、CQRS
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2020/02/12/k8s-fang-an-gui-hua/">
+                <a href="/2022/06/02/guan-yu-ganymed-ssh2-wu-fa-lian-jie-fu-wu-qi-de-wen-ti-pai-cha/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="k8s方案规划">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="关于ganymed-ssh2无法连接服务器的问题排查">
                         
-                        <span class="card-title">k8s方案规划</span>
+                        <span class="card-title">关于ganymed-ssh2无法连接服务器的问题排查</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            k8s方案规划概述随着我们微服务开发的深入，从微服务的单一jar包部署转到了单一镜像部署模式，初步实现了CI/CD自动化流水线部署模式，能够极大的满足我们目前的开发方式。但是随着微服务数量的增加，运维的难度也在不断升高，bug的排除，请求的
+                            关于ganymed-ssh2无法连接服务器的问题排查问题描述原来给甲方使用的服务发布系统，内部依赖了ssh连接库ganymed-ssh2，如下：
+
+        &lt;dependency>
+            &lt;groupI
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-02-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-06-02
+                            </span>
                         <span class="publish-author">
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -1029,51 +1139,34 @@ API组合、CQRS
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/31/chi-xu-ji-cheng-shi-jian-da-gang/">
+                <a href="/2022/06/01/linux-yi-ji-wei-fu-wu-huan-jing-xia-yun-wei-guan-li-gui-fan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="持续集成实践大纲">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Linux以及微服务环境下运维管理规范">
                         
-                        <span class="card-title">持续集成实践大纲</span>
+                        <span class="card-title">Linux以及微服务环境下运维管理规范</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            持续集成实践当前进度
-未完成触发规则的内容，jenkins设置和gitlab中webhook设置
-未完成镜像环境变量的传递
-jenkins插件列表需要重新整理
-未完成Dockerfile的自定义编写以及环境变量的使用
+                            Linux以及微服务环境下运维管理规范规范说明关于运维规范文档，在阅读时，主要区分四个内容：
 
-前提
-尽量进行一步一
+【必须】严格去执行的，不允许打折，也不允许变更
+【建议】可以执行，也可以不执行的
+【警告】危险操作，预警信息
+【说明】对部分内容的重新解释以及补
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-01-31
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2022-06-01
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/CI-CD/" class="post-category" target="_blank">
-                                    CI/CD
-                                </a>
-                            
-                            
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Linux-DevOps-CI-CD/" target="_blank">
-                        <span class="chip bg-color">Linux DevOps CI/CD</span>
-                    </a>
-                    
                 </div>
                 
             </div>
