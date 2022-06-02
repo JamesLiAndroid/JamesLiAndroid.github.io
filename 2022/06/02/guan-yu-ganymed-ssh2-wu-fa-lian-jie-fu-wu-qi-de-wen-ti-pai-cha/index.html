@@ -470,9 +470,9 @@ java.io.IOException: Key exchange was not finished, connection is closed.
         at ch.ethz.ssh2.transport.TransportManager.getConnectionInfo(TransportManager.java:169)
         at ch.ethz.ssh2.Connection.connect(Connection.java:759)
         at ch.ethz.ssh2.Connection.connect(Connection.java:628)
-        at com.icpcloud.gift.fcdplus.entity.SSHRegisterEntity.login(SSHRegisterEntity.java:62)
-        at com.icpcloud.gift.fcdplus.entity.SSHRegisterEntity.exec(SSHRegisterEntity.java:112)
-        at com.icpcloud.gift.fcdplus.controller.FcdController.deployBackendDockerImage(FcdController.java:72)
+        at com.testcloud.gift.fcdplus.entity.SSHRegisterEntity.login(SSHRegisterEntity.java:62)
+        at com.testcloud.gift.fcdplus.entity.SSHRegisterEntity.exec(SSHRegisterEntity.java:112)
+        at com.testcloud.gift.fcdplus.controller.FcdController.deployBackendDockerImage(FcdController.java:72)
         at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
         at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -600,8 +600,8 @@ sntrup4591761x25519-sha512@tinyssh.org
 <p>显然在openssh 8.5版本中，kex算法并没有*”diffie-hellman-group-exchange-sha1”, “diffie-hellman-group14-sha1”,”diffie-hellman-group1-sha1”*这三种算法。上面三种算法在8.5版本的ssh中已经被淘汰，导致ganymed-ssh2无法在高版本的openssh中连接到服务器，至此原因找到。</p>
 <p>尝试使用ssh指定kex算法方式进行连接，如下：</p>
 <pre class="line-numbers language-shell"><code class="language-shell">
-$ ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 tempuser@10.3.61.244
-The authenticity of host '10.3.61.244 (10.3.61.244)' can't be established.
+$ ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 tempuser@192.168.61.244
+The authenticity of host '192.168.61.244 (192.168.61.244)' can't be established.
 ED25519 key fingerprint is SHA256:woV+J8/jmRaIhtAXSG4GIQ8jP7GAlLA+moVwRGLu+zE.
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? no
